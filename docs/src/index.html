@@ -1,0 +1,718 @@
+<header
+  class="p-2 sticky top-0 border-b border-zinc-300 dark:border-zinc-70 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30"
+>
+  <nav class="flex justify-between items-center">
+    <a href="/" class="text-xl font-bold no-underline flex items-center gap">
+      <img src="/logo.svg" alt="Logo" class="h-12" />
+      <span>{pageName}</span>
+    </a>
+    <ul class="list-none flex gap-4 p-0 m-0">
+      <li><a href="#getting-started">{nav.gettingStarted}</a></li>
+      <li><a href="#features">{nav.features}</a></li>
+      <li><a href="#deploy">{nav.deploy}</a></li>
+      <li><a href="#configuration">{nav.configuration}</a></li>
+      <li><a href="#api-reference">{nav.apiReference}</a></li>
+      <li>
+        <a
+          href="//github.com/m-dressler/cf-page"
+          class="flex items-center gap-1"
+        >
+          <svg height="16" viewBox="0 0 24 24" width="16" class="fill-current">
+            <path
+              d="M12.5.75C6.146.75 1 5.896 1 12.25c0 5.089 3.292 9.387 7.863 10.91.575.101.79-.244.79-.546 0-.273-.014-1.178-.014-2.142-2.889.532-3.636-.704-3.866-1.35-.13-.331-.69-1.352-1.18-1.625-.402-.216-.977-.748-.014-.762.906-.014 1.553.834 1.769 1.179 1.035 1.74 2.688 1.25 3.349.948.1-.747.402-1.25.733-1.538-2.559-.287-5.232-1.279-5.232-5.678 0-1.25.445-2.285 1.178-3.09-.115-.288-.517-1.467.115-3.048 0 0 .963-.302 3.163 1.179.92-.259 1.897-.388 2.875-.388.977 0 1.955.13 2.875.388 2.2-1.495 3.162-1.179 3.162-1.179.633 1.581.23 2.76.115 3.048.733.805 1.179 1.825 1.179 3.09 0 4.413-2.688 5.39-5.247 5.678.417.36.776 1.05.776 2.128 0 1.538-.014 2.774-.014 3.162 0 .302.216.662.79.547C20.709 21.637 24 17.324 24 12.25 24 5.896 18.854.75 12.5.75Z"
+            >
+            </path>
+          </svg>
+          {nav.github}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main class="grow px-4 flex flex-col justify-center py-4">
+  <!-- Hero Section -->
+  <section class="text-center mb-8">
+    <h1>{hero.title}</h1>
+    <p class="text-lg text-secondary">{@md hero.description}</p>
+  </section>
+
+  <!-- Getting Started -->
+  <section id="getting-started" class="section-container text-center">
+    <h2>{gettingStarted.title}</h2>
+    <p class="mb-4">{@md gettingStarted.description}</p>
+    <div class="mt-4 mb-4">
+      <div class="flex gap-1 justify-center">
+        <code class="command-display"> {gettingStarted.command}</code>
+        <button class="copy-button" type="copy">
+          <img
+            src="/res/icons/copy.svg"
+            alt="Copy"
+            class="h-full dark:invert"
+          />
+        </button>
+      </div>
+    </div>
+    <p class="mb-4">{gettingStarted.whatItDoes}</p>
+    <ul class="list-disc pl-5 mb-4 inline-block text-start">
+      {#each gettingStarted.steps as step}
+      <li>{step}</li>
+      {/each}
+    </ul>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="section-container">
+    <h2 class="text-center">{features.title}</h2>
+
+    <!-- TypeScript & Bundling -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.typescript.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.typescript.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.typescript.featuresTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.typescript.features as feature}
+            <li>{feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.typescript.howItWorksTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.typescript.howItWorks as step}
+            <li>{@md step}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div>
+          <h4>{features.typescript.exampleTitle}</h4>
+          <pre><code>{features.typescript.exampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.typescript.exampleDescription}
+          </p>
+        </div>
+      </div>
+    </details>
+
+    <!-- Tailwind CSS -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.tailwind.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.tailwind.description}</p>
+        <div class="feature-detail">
+          <h4>{features.tailwind.featuresTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.tailwind.features as feature}
+            <li>{feature}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- File Minification -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.minification.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.minification.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.minification.productionOnlyTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.minification.productionOnly as item}
+            <li>{@md item}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.minification.cssDetailsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.minification.cssDetails as detail}
+            <li>{detail}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.minification.jsMinificationTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.minification.jsMinification as item}
+            <li>{item}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div>
+          <h4>{features.minification.devVsProdTitle}</h4>
+          <pre><code>{features.minification.devVsProdCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.minification.devVsProdDescription}
+          </p>
+        </div>
+      </div>
+    </details>
+
+    <!-- Cache-Busting -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.cacheBusting.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.cacheBusting.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.cacheBusting.supportedElementsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.cacheBusting.supportedElements as element}
+            <li>{@md element}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.cacheBusting.hashProcessTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.cacheBusting.hashProcess as step}
+            <li>{step}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.cacheBusting.beforeAfterTitle}</h4>
+          <pre><code>{features.cacheBusting.beforeAfterCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.cacheBusting.beforeAfterDescription}
+          </p>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.cacheBusting.benefitsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.cacheBusting.benefits as benefit}
+            <li>{@md benefit}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- HTML Templating -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.templating.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.templating.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.templating.coreFeaturesTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.templating.coreFeatures as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.templating.layoutExampleTitle}</h4>
+          <pre><code>{features.templating.layoutExampleCode}</code></pre>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.templating.pageExampleTitle}</h4>
+          <pre><code>{features.templating.pageExampleCode}</code></pre>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.templating.howItWorksTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.templating.howItWorks as step}
+            <li>{step}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.templating.benefitsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.templating.benefits as benefit}
+            <li>{benefit}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Translation Engine -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.translation.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.translation.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.translation.featuresTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.translation.features as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.translation.parameterSyntaxTitle}</h4>
+          <p class="mb-4">{features.translation.parameterSyntaxDescription}</p>
+          <pre><code>{features.translation.parameterSyntaxCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {@md features.translation.parameterSyntaxNote}
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.translation.parameterExamplesTitle}</h4>
+          <p class="mb-4">
+            {features.translation.parameterExamplesDescription}
+          </p>
+          <pre><code>{features.translation.parameterExamplesCode}</code></pre>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.translation.conditionalSyntaxTitle}</h4>
+          <p class="mb-4">
+            {features.translation.conditionalSyntaxDescription}
+          </p>
+          <pre><code>{features.translation.conditionalSyntaxCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {@md features.translation.conditionalSyntaxNote}
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.translation.languageFilesTitle}</h4>
+          <p class="mb-4">{features.translation.languageFilesDescription}</p>
+          <pre><code>{features.translation.languageFilesCode}</code></pre>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.translation.markdownTitle}</h4>
+          <p class="mb-4">{@md features.translation.markdownDescription}</p>
+          <pre><code>{features.translation.markdownCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {@md features.translation.markdownNote}
+          </p>
+        </div>
+
+        <div>
+          <h4>{features.translation.htmlUsageTitle}</h4>
+          <pre><code>{features.translation.htmlUsageCode}</code></pre>
+        </div>
+      </div>
+    </details>
+
+    <!-- Image Optimization -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.imageOptimization.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.imageOptimization.description}</p>
+        <div class="feature-detail">
+          <h4>{features.imageOptimization.optimizationsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.imageOptimization.optimizations as optimization}
+            <li>{optimization}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- SASS/SCSS -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.sass.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.sass.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.sass.supportedSyntaxTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.sass.supportedSyntax as syntax}
+            <li>{@md syntax}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.sass.advancedFeaturesTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.sass.advancedFeatures as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.sass.exampleTitle}</h4>
+          <pre><code>{features.sass.exampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.sass.exampleDescription}
+          </p>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.sass.compilationTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.sass.compilation as step}
+            <li>{@md step}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.sass.developmentBenefitsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.sass.developmentBenefits as benefit}
+            <li>{@md benefit}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Live Reload -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.liveReload.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.liveReload.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.liveReload.fileSystemTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.liveReload.fileSystem as feature}
+            <li>{feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.liveReload.browserCommTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.liveReload.browserComm as feature}
+            <li>{feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.liveReload.performanceTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.liveReload.performance as item}
+            <li>{item}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.liveReload.devExperienceTitle}</h4>
+          <pre><code>{features.liveReload.devExperienceCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.liveReload.devExperienceDescription}
+          </p>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.liveReload.smartReloadTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.liveReload.smartReload as type}
+            <li>{type}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Hot CSS Reload -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.hotCssReload.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.hotCssReload.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.hotCssReload.supportedTypesTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.hotCssReload.supportedTypes as type}
+            <li>{type}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.hotCssReload.hotReloadProcessTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.hotCssReload.hotReloadProcess as step}
+            <li>{step}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.hotCssReload.technicalTitle}</h4>
+          <pre><code>{features.hotCssReload.technicalCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.hotCssReload.technicalDescription}
+          </p>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.hotCssReload.devWorkflowTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.hotCssReload.devWorkflow as item}
+            <li>{item}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Function Emulation -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.functionEmulation.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.functionEmulation.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.functionEmulation.localDevTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.functionEmulation.localDev as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div>
+          <h4>{features.functionEmulation.quickExampleTitle}</h4>
+          <pre><code>{features.functionEmulation.quickExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {@md features.functionEmulation.quickExampleDescription}
+          </p>
+        </div>
+      </div>
+    </details>
+
+    <!-- Middleware Emulation -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.middlewareEmulation.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.middlewareEmulation.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.middlewareEmulation.localMiddlewareTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.middlewareEmulation.localMiddleware as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div>
+          <h4>{features.middlewareEmulation.middlewareExampleTitle}</h4>
+          <pre><code>{features.middlewareEmulation.middlewareExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {@md features.middlewareEmulation.middlewareExampleDescription}
+          </p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- Configuration -->
+  <section id="deploy" class="section-container">
+    <h2 class="text-center">{deploy.title}</h2>
+
+    <div class="mb-8">
+      <p class="mb-4">{@md deploy.description}</p>
+
+      <ol class="list-decimal pl-16">
+        {#each deploy.steps as step}
+        <li>{@md step}</li>
+        {/each}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Configuration -->
+  <section id="configuration" class="section-container">
+    <h2 class="text-center">{configuration.title}</h2>
+
+    <div class="mb-8">
+      <p class="mb-4">{configuration.description}</p>
+
+      <pre><code>{configuration.configCode}</code></pre>
+    </div>
+
+    <div class="mb-8">
+      <h3>{configuration.optionsTitle}</h3>
+      <div class="config-grid">
+        <div class="feature-card">
+          <h4><code>{configuration.options.port.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.port.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.port.default}</code>
+          </p>
+          <p class="text-sm">{configuration.options.port.description}</p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.srcDir.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.srcDir.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.srcDir.default}</code>
+          </p>
+          <p class="text-sm">{configuration.options.srcDir.description}</p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.outDir.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.outDir.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.outDir.default}</code>
+          </p>
+          <p class="text-sm">{configuration.options.outDir.description}</p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.bundle.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.bundle.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.bundle.default}</code>
+          </p>
+          <p class="text-sm">{configuration.options.bundle.description}</p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.index.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.index.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.index.default}</code>
+          </p>
+          <p class="text-sm">{configuration.options.index.description}</p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.functionName.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.functionName.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.functionName.default}</code>
+          </p>
+          <p class="text-sm">
+            {configuration.options.functionName.description}
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.middlewareName.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.middlewareName.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.middlewareName.default}</code>
+          </p>
+          <p class="text-sm">
+            {configuration.options.middlewareName.description}
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.layoutName.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.layoutName.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.layoutName.default}</code>
+          </p>
+          <p class="text-sm">{configuration.options.layoutName.description}</p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.langfileName.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.langfileName.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.langfileName.default}</code>
+          </p>
+          <p class="text-sm">
+            {configuration.options.langfileName.description}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API Reference -->
+  <section id="api-reference" class="section-container">
+    <h2>{apiReference.title}</h2>
+
+    <div class="mb-8">
+      <h3>{apiReference.cliCommandsTitle}</h3>
+      <div class="space-y-4">
+        <div class="feature-card">
+          <h4>{apiReference.commands.init.title}</h4>
+          <pre><code>{apiReference.commands.init.code}</code></pre>
+        </div>
+
+        <div class="feature-card">
+          <h4>{apiReference.commands.serve.title}</h4>
+          <pre><code>{apiReference.commands.serve.code}</code></pre>
+        </div>
+
+        <div class="feature-card">
+          <h4>{apiReference.commands.build.title}</h4>
+          <pre><code>{apiReference.commands.build.code}</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="py-5 text-center border-t border-zinc-300 dark:border-zinc-700">
+  <p class="text-sm text-zinc-600 dark:text-zinc-400">
+    {footer.copyright, year: {cf:year}}
+  </p>
+</footer>

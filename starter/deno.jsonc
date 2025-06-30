@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "dev": "deno run --env-file -A jsr:@md/cf-page serve",
+    "build": "deno run -A jsr:@md/cf-page build"
+  },
+  "compilerOptions": {
+    "types": ["npm:@cloudflare/workers-types"],
+    "lib": ["esnext", "dom"]
+  },
+  "@md/cf-page": {
+    "port": 8081
+  }
+}

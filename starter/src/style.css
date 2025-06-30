@@ -1,0 +1,33 @@
+@import "tailwindcss"; /* Enables tailwind 4 in your project */
+
+@theme {
+  --font-display: "Satoshi", "sans-serif";
+  --color-wine: oklch(49.88% 0.1998 31.76);
+}
+
+/** Base styles for the entire application */
+@layer base {
+  section:not(:first-child) {
+    @apply mt-4;
+  }
+
+  h1 {
+    @apply text-4xl mb-6;
+  }
+
+  h2 {
+    @apply text-2xl mb-4;
+  }
+
+  button {
+    @apply bg-wine text-white font-bold py-2 px-4 rounded;
+  }
+
+  input {
+    @apply border border-gray-300 rounded-md py-0.5 px-2;
+  }
+
+  a {
+    @apply text-blue-500 hover:text-blue-700;
+  }
+}

@@ -1,0 +1,9 @@
+en:
+  appName: Ping Pong
+  startGame: Start Game
+  gameInstructions: "Player 1: W/S keys | Player 2: ↑/↓ arrows"
+
+de:
+  appName: Ping Pong
+  startGame: Spiel Starten
+  gameInstructions: "Spieler 1: W/S Tasten | Spieler 2: ↑/↓ Pfeile"

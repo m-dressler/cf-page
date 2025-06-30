@@ -1,0 +1,35 @@
+$defaultLanguage: en
+
+global:
+  pageName: "@md/cf-page"
+
+en:
+  go_to_app: Open App
+  welcome_to_your_site: Welcome to your site
+
+  login: Log In
+  unauthenticated: Unauthenticated
+  unauthenticated_message: You are not authenticated. Please log in to access this page.
+
+  welcome: Welcome to {name}
+  this_is_a_sample: This is a sample project to show you the ropes.
+  optimized_for_all_screens: It is optimized for any screen size, supports dark mode, and leverages all the features of @md/cf-page.
+
+  footer:
+    # See https://news.ycombinator.com/item?id=34880663 for why the year can be static at build time
+    copyright: Copyright © {year} mdressler. All rights reserved.
+
+de:
+  go_to_app: App Öffnen
+  welcome_to_your_site: Willkommen auf deiner Website
+
+  login: Anmelden
+  unauthenticated: Un-authentifiziert
+  unauthenticated_message: Sie sind nicht authentifiziert. Bitte melden Sie sich an, um auf diese Seite zuzugreifen.
+
+  welcome: Willkommen bei {name}
+  this_is_a_sample: Dies ist ein Beispielprojekt, das dir die Grundlagen zeigt.
+  optimized_for_all_screens: Es ist für alle Bildschirmgrößen optimiert, unterstützt den Dunkelmodus und nutzt alle Funktionen von @md/cf-page.
+
+  footer:
+    copyright: Copyright © {year} mdressler. Alle Rechte vorbehalten.

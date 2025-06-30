@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{cf:lang}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <slot name="head">
+      <title>{pageName} | {appName}</title>
+    </slot>
+    <link rel="shortcut icon" href="/logo.svg" />
+    <link rel="stylesheet" href="../style.css" />
+    <slot name="scripts" />
+    <slot name="styles" />
+  </head>
+  <body
+    class="dark:bg-neutral-800 dark:text-gray-100 flex flex-col min-h-screen p-2"
+  >
+    <header>
+      <nav class="flex items-center">
+        <a
+          href="/app"
+          class="flex items-center gap-1 text-black dark:text-white"
+        >
+          <img src="/logo.svg" alt="Logo" class="dark:invert" />
+          <span>{pageName} | {appName}</span>
+        </a>
+        <select id="lang-select" class="ml-auto mr-1">
+          <option name="en" value="en" selected>🇺🇸</option>
+          <option name="de" value="de">🇩🇪</option>
+        </select>
+        <form action="/logout" method="post">
+          <button
+            type="submit"
+            class="bg-wine text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Logout
+          </button>
+        </form>
+      </nav>
+    </header>
+    <main class="text-center grow">
+      <slot />
+    </main>
+    <footer class="text-center mt-4">
+      <slot name="footer" />
+    </footer>
+  </body>
+</html>

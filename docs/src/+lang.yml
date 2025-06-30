@@ -1,0 +1,824 @@
+$defaultLanguage: en
+
+global:
+  pageName: "@md/cf-page"
+
+en:
+  # Header Navigation
+  nav:
+    gettingStarted: "Getting Started"
+    features: "Features"
+    deploy: "Deploy"
+    configuration: "Configuration"
+    apiReference: "API Reference"
+    github: "GitHub"
+
+  # Hero Section
+  hero:
+    title: "@md/cf-page"
+    description: "An opinionated, HTML-close web framework for creating [Cloudflare Pages](https://developers.cloudflare.com/pages/) with full local development support."
+
+  # Getting Started Section
+  gettingStarted:
+    title: "Getting Started"
+    description: "Ensure you have [Deno](//deno.com) installed and then run:"
+    command: "deno run jsr:@md/cf-page -W=. -R=. -N=cf-page.mdressler.dev init"
+    whatItDoes: "This will:"
+    steps:
+      - "Prompt you for a domain name"
+      - "Download the starter template"
+      - "Extract it to a new directory"
+      - "Show you links to create a GitHub repository and set up Cloudflare Pages"
+
+  # Features Section
+  features:
+    title: "Features"
+
+    # TypeScript & Bundling
+    typescript:
+      title: "⚡ TypeScript Transpilation & Bundling"
+      description: "Automatic [TypeScript](https://www.typescriptlang.org/) compilation with full bundling support using [Deno's native transpiler and bundler](https://docs.deno.com/runtime/reference/deno_namespace_apis/#denoemit) via the `@deno/emit` package."
+      featuresTitle: "Features:"
+      features:
+        - "Automatic TypeScript to JavaScript transpilation"
+        - "Module bundling with dependency resolution using data URI encoding"
+        - "Minification enabled automatically in production builds"
+        - "Support for both local and remote imports (JSR, npm, HTTP)"
+        - "Type checking during build process"
+        - "Self-contained builds with base64 encoded dependencies"
+      howItWorksTitle: "How it works:"
+      howItWorks:
+        - "**Transpilation**: TypeScript files are compiled to modern JavaScript"
+        - "**Bundling**: All dependencies are resolved and bundled into a single file"
+        - "**Remote imports**: External dependencies are fetched and included in the bundle"
+        - "**Production optimization**: Automatic minification reduces file size for production builds"
+      exampleTitle: "Example"
+      exampleCode: "// src/main.ts\nimport { serve } from \"https://deno.land/std/http/server.ts\";\nimport { helper } from \"./utils.ts\";\n\nexport default function() {\n  return helper(\"Hello TypeScript!\");\n}"
+      exampleDescription: "This TypeScript file will be automatically transpiled, bundled with its dependencies, and served as optimized JavaScript."
+
+    # Tailwind CSS
+    tailwind:
+      title: "🎨 Tailwind CSS"
+      description: "Built-in [Tailwind CSS 4](https://tailwindcss.com/) support for utility-first styling. See the [Tailwind documentation](https://tailwindcss.com/docs) for complete class reference and usage patterns."
+      featuresTitle: "Features:"
+      features:
+        - "Tailwind CSS 4 integration"
+        - "Automatic class detection and purging"
+        - "Custom component layers support"
+        - "Dark mode variants"
+
+    # File Minification
+    minification:
+      title: "🗜️ File Minification"
+      description: "Intelligent file optimization that automatically reduces file sizes in production builds while preserving functionality and maintaining development-friendly source code."
+      productionOnlyTitle: "Production-Only Minification:"
+      productionOnly:
+        - "**CSS**: PostCSS with cssnano plugin for optimal compression"
+        - "**JavaScript**: Built-in minification via Deno's bundler"
+        - "**TypeScript**: Compiled and minified during bundling process"
+      cssDetailsTitle: "CSS Minification Details:"
+      cssDetails:
+        - "Removes unnecessary whitespace and comments"
+        - "Optimizes CSS rules and declarations"
+        - "Merges identical selectors and rules"
+        - "Shortens color values and units where possible"
+        - "Only runs in production builds to maintain readable development code"
+      jsMinificationTitle: "JavaScript Minification:"
+      jsMinification:
+        - "Variable name shortening and code compression"
+        - "Dead code elimination removes unused functions"
+        - "Integrated with the bundling process for optimal results"
+        - "Preserves source functionality while reducing bundle size"
+      devVsProdTitle: "Development vs Production"
+      devVsProdCode: "// Development: Readable, unminified code\n.header {\n  background-color: #ffffff;\n  padding: 1rem 2rem;\n}\n\n// Production: Minified and optimized\n.header{background:#fff;padding:1rem 2rem}"
+      devVsProdDescription: "Minification only occurs during production builds, keeping your development experience fast and debuggable."
+
+    # Cache-Busting
+    cacheBusting:
+      title: "🔄 Automatic Cache-Busting"
+      description: "Intelligent cache-busting system that automatically adds version parameters to asset URLs, ensuring users always receive the latest versions while enabling aggressive browser caching."
+      supportedElementsTitle: "Supported Elements:"
+      supportedElements:
+        - '**Scripts**: `&lt;script src="...">` tags'
+        - '**Stylesheets**: `&lt;link rel="stylesheet">` tags'
+        - '**Images**: `&lt;img src="...">` tags'
+        - "**Media**: `&lt;video>`, `&lt;audio>`, `&lt;source>`, `&lt;track>` elements"
+      hashProcessTitle: "Hash Generation Process:"
+      hashProcess:
+        - "Content-based hashing using file contents for accuracy"
+        - "Base64URL encoding for URL-safe hash values"
+        - "Handles relative (`./`, `../`) and absolute (`/`) paths"
+        - "Only processes local assets, skips external URLs"
+        - "Rehype plugin integration for reliable HTML processing"
+      beforeAfterTitle: "Before and After"
+      beforeAfterCode: "<!-- Before cache-busting -->\n<link rel=\"stylesheet\" href=\"/style.css\">\n<script src=\"./main.js\"></script>\n<img src=\"../images/logo.png\" alt=\"Logo\">\n\n<!-- After cache-busting -->\n<link rel=\"stylesheet\" href=\"/style.css?v=abc123def456\">\n<script src=\"./main.js?v=xyz789uvw012\"></script>\n<img src=\"../images/logo.png?v=mno345pqr678\" alt=\"Logo\">"
+      beforeAfterDescription: "Query parameters are automatically added based on file content hashes. When files change, new hashes ensure cache invalidation."
+      benefitsTitle: "Benefits:"
+      benefits:
+        - "**Aggressive Caching**: Set long cache headers without fear of stale content"
+        - "**Instant Updates**: Content changes immediately invalidate caches"
+        - "**CDN Optimization**: Perfect compatibility with CDN caching strategies"
+        - "**Zero Configuration**: Works automatically on all supported asset types"
+
+    # HTML Templating
+    templating:
+      title: "📄 Compile-time HTML Templating"
+      description: "Advanced slot-based templating system with layout inheritance that processes templates at build time, ensuring zero runtime overhead and optimal performance."
+      coreFeaturesTitle: "Core Features:"
+      coreFeatures:
+        - "**Layout Inheritance**: Hierarchical `+layout.html` files"
+        - '**Named Slots**: Content injection with `&lt;slot name="...">`'
+        - "**Default Content**: Fallback content when slots aren't filled"
+        - "**Directory-based**: Automatic layout discovery walking up the file tree"
+        - "**Compile-time Processing**: Templates resolved during build, not runtime"
+      layoutExampleTitle: "Layout Structure Example"
+      layoutExampleCode: "<!-- src/+layout.html -->\n<!DOCTYPE html>\n<html>\n<head>\n  <title><slot name=\"title\">Default Title</slot></title>\n</head>\n<body>\n  <header><slot name=\"header\"></slot></header>\n  <main><slot>Default main content</slot></main>\n  <footer><slot name=\"footer\">© {cf:year}</slot></footer>\n</body>\n</html>"
+      pageExampleTitle: "Page Content Example"
+      pageExampleCode: "<!-- src/about/index.html -->\n<slot name=\"title\">About Us</slot>\n<slot name=\"header\">\n  <nav><a href=\"/\">Home</a></nav>\n</slot>\n\n<h1>About Our Company</h1>\n<p>This content goes into the default slot.</p>"
+      howItWorksTitle: "How it Works:"
+      howItWorks:
+        - "Layout Discovery: Walks up directory tree to find nearest +layout.html"
+        - "String Processing: Processes templates before HTML parsing to preserve structure"
+        - "Slot Injection: Replaces <slot> elements with matching content"
+        - "Default Handling: Uses slot default content when no replacement is provided"
+        - "Build-time Resolution: All templates fully resolved during build process"
+      benefitsTitle: "Benefits:"
+      benefits:
+        - "Zero Runtime Cost: Templates compiled away during build"
+        - "SEO Friendly: Generates complete, static HTML files"
+        - "Maintainable: Shared layouts reduce code duplication"
+        - "Flexible: Named slots allow precise content placement"
+
+    # Translation Engine
+    translation:
+      title: "🌍 Translation Engine"
+      description: "Built-in multi-language support with YAML translation files, parameter interpolation, and conditional rendering capabilities."
+      featuresTitle: "Features:"
+      features:
+        - "YAML-based translation files (`+lang.yml`)"
+        - "Parameter interpolation with flexible syntax"
+        - "**Markdown support**: Use `{@md key}` directive for formatted content"
+        - "Conditional rendering: `{#if condition}` and `{#else}` blocks"
+        - "Array iteration: `{#each array as item}` loops"
+        - "Cascading translation override system"
+        - "Auto-detection of supported languages from root `+lang.yml`"
+        - "Global and page-specific translations"
+        - "Configuration via `$defaultLanguage` key in language files"
+        - "**Multi-language Build**: Generates separate versions for each language (e.g., `/en/`, `/de/`)"
+      parameterSyntaxTitle: "Parameter Syntax"
+      parameterSyntaxDescription: "Translation values can include parameters that are replaced at build time. The syntax supports multiple parameter types:"
+      parameterSyntaxCode: "<!-- Basic syntax: {key, param1: value1, param2: value2} -->\n\n<!-- String literal parameters -->\n<h1>{greeting, name: \"John Doe\"}</h1>\n<!-- Output: Hello John Doe! -->\n\n<!-- Translation key references -->\n<h1>{welcome, name: {siteName}}</h1>\n<!-- Output: Welcome to My Site! -->\n\n<!-- Nested translation keys -->\n<footer>{footer.copyright, year: {cf:year}}</footer>\n<!-- Output: Copyright © 2025 mdressler. All rights reserved. -->\n\n<!-- Mixed parameter types -->\n<p>{message, user: {userName}, time: \"10:30 AM\", date: {cf:year}}</p>\n<!-- Output: User John Doe logged in at 10:30 AM on 2025 -->\n\n<!-- Built-in variables -->\n<div lang=\"{cf:lang}\">{cf:path}</div>\n<!-- Output: <div lang=\"en\">/about.html</div> -->"
+      parameterSyntaxNote: "**Parameter Types**:\n- **String literals**: Enclosed in double quotes: `\"value\"`\n- **Translation keys**: Enclosed in braces: `{key}` or `{nested.key}`\n- **Built-in variables**: `{cf:lang}` (current language), `{cf:path}` (current path), `{cf:year}` (current year)"
+      parameterExamplesTitle: "More Parameter Examples"
+      parameterExamplesDescription: "The parameter syntax is flexible and supports complex use cases:"
+      parameterExamplesCode: "<!-- Language file with nested structure -->\n# src/+lang.yml\nen:\n  messages:\n    greeting: \"Hello {user}, welcome to {app}!\"\n  footer:\n    copyright: \"© {year} {company}. All rights reserved.\"\n  products:\n    price: \"${amount} USD\"\n    \n<!-- Using nested keys with parameters -->\n<h1>{messages.greeting, user: \"Alice\", app: {siteName}}</h1>\n<!-- Output: Hello Alice, welcome to My Site! -->\n\n<!-- Multiple levels of nesting -->\n<footer>{footer.copyright, year: {cf:year}, company: \"ACME Corp\"}</footer>\n<!-- Output: © 2025 ACME Corp. All rights reserved. -->\n\n<!-- Combining with conditionals -->\n{#if isOnSale}\n  <span class=\"price\">{products.price, amount: \"49.99\"}</span>\n{#else}\n  <span class=\"price\">{products.price, amount: \"99.99\"}</span>\n{/if}"
+      conditionalSyntaxTitle: "Conditional & Loop Syntax"
+      conditionalSyntaxDescription: "Use conditional blocks and loops to show or hide content and iterate over arrays:"
+      conditionalSyntaxCode: "<!-- Conditional rendering based on translation values -->\n{#if userLoggedIn}\n  <p>Welcome back, {userName}!</p>\n  <a href=\"/logout\">Logout</a>\n{#else}\n  <p>Please log in to continue.</p>\n  <a href=\"/login\">Login</a>\n{/if}\n\n<!-- Array iteration with markdown support -->\n{#each menuItems as item}\n  <li>\n    <a href=\"/{item}\">{navigation[item]}</a>\n    <!-- Use @md directive to process markdown in array items -->\n    <p>{@md item} section with [additional info](/{item}/info)</p>\n  </li>\n{/each}\n\n<!-- Conditional content based on feature flags -->\n{#if featureEnabled}\n  <div class=\"new-feature\">\n    <h3>🎉 New Feature Available!</h3>\n    <p>{newFeatureDescription}</p>\n  </div>\n{/if}"
+      conditionalSyntaxNote: "**Note**: Conditional blocks work with any translation key that resolves to a truthy/falsy value. Loop blocks work with arrays. To enable markdown processing within these blocks, use the `{@md key}` directive (see Markdown Processing section below)."
+      markdownTitle: "Markdown Processing"
+      markdownDescription: "Process markdown-formatted content from translation values using the `{@md key}` directive:"
+      markdownCode: "<!-- Language file content -->\n# src/+lang.yml\nen:\n  boldText: \"This is **very important**\"\n  linkText: \"Visit [our website](https://example.com)\"\n  codeExample: \"Use the `npm install` command\"\n  richContent: \"This has **bold** and `code` and [links](/) all together\"\n\n<!-- HTML template -->\n<!-- Regular placeholders - markdown NOT processed -->\n<p>{boldText}</p>  \n<!-- Outputs: This is **very important** -->\n\n<!-- Markdown directive - markdown IS processed -->\n<p>{@md boldText}</p>  \n<!-- Outputs: This is <strong>very important</strong> -->\n\n<p>{@md linkText}</p>\n<!-- Outputs: Visit <a href=\"https://example.com\">our website</a> -->\n\n<p>Command: {@md codeExample}</p>\n<!-- Outputs: Command: Use the <code>npm install</code> command -->\n\n<div>{@md richContent}</div>\n<!-- Outputs: This has <strong>bold</strong> and <code>code</code> and <a href=\"/\">links</a> all together -->"
+      markdownNote: "**Important**: Markdown processing only occurs when using the `{@md key}` directive. Regular translation placeholders like `{key}` will output raw markdown text without processing. This explicit approach gives you full control over when markdown formatting is applied."
+      languageFilesTitle: "Language Files"
+      languageFilesDescription: "Create a +lang.yml file in your source directory to define languages and translations:"
+      languageFilesCode: "# src/+lang.yml\n$defaultLanguage: en\n\nglobal:\n  siteName: \"My Site\"\n  userLoggedIn: false\n  featureEnabled: true\n  menuItems: [\"home\", \"about\", \"contact\"]\n\nen:\n  welcome: \"Welcome to {name}!\"\n  userName: \"John Doe\"\n  newFeatureDescription: \"Try our new dashboard with enhanced analytics!\"\n  navigation:\n    home: \"Home\"\n    about: \"About\"\n    contact: \"Contact\"\n\nde:\n  welcome: \"Willkommen bei {name}!\"\n  userName: \"Johann Müller\"\n  newFeatureDescription: \"Probieren Sie unser neues Dashboard mit erweiterten Analysen!\"\n  navigation:\n    home: \"Startseite\"\n    about: \"Über uns\"\n    contact: \"Kontakt\""
+      htmlUsageTitle: "Using Translations in HTML"
+      htmlUsageCode: "<!-- src/index.html -->\n<h1>{welcome, name: {siteName}}</h1>\n\n<!-- Conditional user interface -->\n{#if userLoggedIn}\n  <p>Welcome back, {userName}!</p>\n  <a href=\"/logout\">Logout</a>\n{#else}\n  <p>Please log in to continue.</p>\n  <a href=\"/login\">Login</a>\n{/if}\n\n<!-- Dynamic navigation with arrays -->\n<nav>\n  <ul>\n    {#each menuItems as item}\n      <li>\n        <a href=\"/{item}\">{navigation[item]}</a>\n        <!-- Use @md directive to process markdown formatting -->\n        <small>{@md item} section</small>\n      </li>\n    {/each}\n  </ul>\n</nav>\n\n<!-- Feature flag example -->\n{#if featureEnabled}\n  <div class=\"feature-banner\">\n    <h3>🎉 New Feature Available!</h3>\n    <p>{newFeatureDescription}</p>\n  </div>\n{/if}"
+
+    # Image Optimization
+    imageOptimization:
+      title: "🖼️ Automatic Image Optimization"
+      description: "Intelligent image processing for optimal web delivery without quality loss."
+      optimizationsTitle: "Optimizations:"
+      optimizations:
+        - "Lossless PNG compression"
+        - "JPG quality optimization"
+        - "SVG minification and cleaning"
+        - "Automatic format selection"
+
+    # SASS/SCSS
+    sass:
+      title: "🎨 SASS/SCSS Transpilation"
+      description: "Complete [SASS and SCSS](https://sass-lang.com/) preprocessing support using the official [Dart Sass compiler](https://sass-lang.com/dart-sass/), providing all modern SASS features with automatic compilation to optimized CSS."
+      supportedSyntaxTitle: "Supported Syntax:"
+      supportedSyntax:
+        - "**SCSS**: CSS-compatible syntax with braces and semicolons (`.scss`)"
+        - "**SASS**: Indented syntax without braces (`.sass`)"
+        - "**CSS Imports**: Standard CSS `@import` statements"
+        - "**SASS Imports**: `@use` and `@forward` for module system"
+      advancedFeaturesTitle: "Advanced Features:"
+      advancedFeatures:
+        - "**Variables**: CSS custom properties and SASS variables"
+        - "**Mixins**: Reusable style patterns with parameters"
+        - "**Functions**: Custom functions and built-in SASS functions"
+        - "**Nesting**: Hierarchical rule nesting with parent selectors"
+        - "**Control Flow**: `@if`, `@for`, `@each`, `@while`"
+        - "**Module System**: Modern `@use` and `@forward` imports"
+      exampleTitle: "Example SCSS Usage"
+      exampleCode: "// src/styles.scss\n$primary-color: #f48120;\n$border-radius: 0.5rem;\n\n@mixin button-style($bg-color) {\n  background: $bg-color;\n  border-radius: $border-radius;\n  padding: 0.5rem 1rem;\n  \n  &:hover {\n    background: darken($bg-color, 10%);\n  }\n}\n\n.btn-primary {\n  @include button-style($primary-color);\n}"
+      exampleDescription: "Compiled automatically to optimized CSS with all SASS features resolved."
+      compilationTitle: "Compilation Process:"
+      compilation:
+        - "**Dart Sass Engine**: Uses the official, most up-to-date SASS implementation"
+        - "**Automatic Detection**: Processes `.scss` and `.sass` files automatically"
+        - "**Import Resolution**: Resolves imports and dependencies correctly"
+        - "**Error Reporting**: Clear error messages with line numbers and context"
+        - "**Hot Reload Integration**: Works seamlessly with CSS hot reloading"
+      developmentBenefitsTitle: "Development Benefits:"
+      developmentBenefits:
+        - "Modern SASS: Latest SASS features and syntax support"
+        - "Fast Compilation: Dart Sass performance optimizations"
+        - "Full Documentation: All [SASS documentation](https://sass-lang.com/documentation/) applies"
+        - "Production Ready: Integrates with minification and optimization pipeline"
+
+    # Live Reload
+    liveReload:
+      title: "🔄 Live Reload"
+      description: "Advanced development server with intelligent file watching that automatically rebuilds and refreshes your browser when source files change, featuring smart CSS hot-reloading and build error reporting."
+      fileSystemTitle: "File System Monitoring:"
+      fileSystem:
+        - "Source Directory Watching: Monitors entire srcDir for changes"
+        - "Intelligent Debouncing: Prevents excessive rebuilds during rapid file changes"
+        - "Selective Rebuilding: Only rebuilds affected files and dependencies"
+        - "Abort Controller Integration: Cancels ongoing builds when new changes detected"
+      browserCommTitle: "Browser Communication:"
+      browserComm:
+        - "Server-Sent Events: Uses /listen endpoint for real-time updates"
+        - "Client Script Injection: Automatically injects reload script into HTML pages"
+        - "Event Polling: Client polls for file change events"
+        - "Smart Refresh Logic: Differentiates between CSS-only and full page reloads"
+      performanceTitle: "Performance Monitoring:"
+      performance:
+        - "Build time measurement and reporting"
+        - "Per-file processing time tracking"
+        - "Performance bottleneck identification"
+        - "Build error detection and console reporting"
+      devExperienceTitle: "Development Experience"
+      devExperienceCode: "// Start the development server\ndeno run -A jsr:@md/cf-page serve\n\n// File change detected: src/style.css\n// → Rebuilding...\n// → Build complete (23ms)\n// → Browser refreshed (CSS only)\n\n// File change detected: src/index.html  \n// → Rebuilding...\n// → Build complete (156ms)\n// → Browser refreshed (full page)"
+      devExperienceDescription: "The development server provides detailed feedback about build times and refresh types, helping you understand your development workflow performance."
+      smartReloadTitle: "Smart Reload Types:"
+      smartReload:
+        - "CSS Hot Reload: Updates stylesheets without page refresh for .css, .scss, .sass"
+        - "Full Page Reload: Complete refresh for HTML, JavaScript, and other asset changes"
+        - "Error Recovery: Automatically retries failed builds and reports errors"
+
+    # Hot CSS Reload
+    hotCssReload:
+      title: "🔥 Hot CSS Reload"
+      description: "Advanced CSS hot-reloading that intelligently updates stylesheets without page refresh, providing the fastest possible development feedback loop."
+      supportedTypesTitle: "Supported File Types:"
+      supportedTypes:
+        - "CSS: Direct stylesheet updates (.css)"
+        - "SCSS/SASS: Preprocessed styles (.scss, .sass)"
+        - "Tailwind: Utility-first CSS framework integration"
+        - "PostCSS: All PostCSS-processed stylesheets"
+      hotReloadProcessTitle: "Hot Reload Process:"
+      hotReloadProcess:
+        - "File Detection: Identifies CSS-only changes vs. other file types"
+        - "Stylesheet Removal: Removes existing <link> elements from DOM"
+        - "Cache Busting: Adds timestamp parameters to prevent browser caching"
+        - "Re-injection: Adds updated stylesheets back to document head"
+      technicalTitle: "Technical Implementation"
+      technicalCode: "// Hot CSS reload process\n1. File change detected: src/style.scss\n2. SCSS compiled to CSS\n3. Browser receives \"reload-css\" event\n4. Client script execution:\n   - Remove: link[rel=\"stylesheet\"]\n   - Add: timestamp to URLs (?t=1234567890)\n   - Re-inject: updated stylesheets\n5. Styles update instantly ⚡"
+      technicalDescription: "The entire process typically completes in under 50ms, providing near-instantaneous feedback."
+      devWorkflowTitle: "Development Workflow:"
+      devWorkflow:
+        - "Instant Feedback: See styling changes immediately without losing context"
+        - "Rapid Iteration: Perfect for fine-tuning layouts and animations"
+        - "Cross-browser Testing: Multiple browser windows stay in sync"
+        - "Complex State Testing: Style modal dialogs, complex forms without re-setup"
+
+    # Function Emulation
+    functionEmulation:
+      title: "⚡ Cloudflare Function Emulation"
+      description: "@md/cf-page provides full local emulation of [Cloudflare Pages Functions](https://developers.cloudflare.com/pages/functions/). Files named `+fn.ts` become API endpoints with the same API as production."
+      localDevTitle: "Local Development Features:"
+      localDev:
+        - "Perfect Emulation: Full `EventContext` object with request, env, and utilities"
+        - "HTTP Methods: Support for all [HTTP method handlers](https://developers.cloudflare.com/pages/functions/routing/#functions)"
+        - "Environment Variables: Access via `context.env` just like in production"
+        - "Assets API: Local `context.env.ASSETS` serving"
+        - "Cloudflare-compatible request/response handling"
+      quickExampleTitle: "Quick Example"
+      quickExampleCode: "// src/api/hello/+fn.ts\nexport const onRequest: PagesFunction = async (context) => {\n  return new Response(\"Hello World!\");\n};"
+      quickExampleDescription: "For complete API documentation, see [Cloudflare Pages Functions API Reference](https://developers.cloudflare.com/pages/functions/api/)."
+
+    # Middleware Emulation
+    middlewareEmulation:
+      title: "🔒 Cloudflare Middleware Emulation"
+      description: "@md/cf-page supports [Cloudflare Pages Middleware](https://developers.cloudflare.com/pages/functions/middleware/) with full local emulation. Files named `+middleware.ts` run before pages and functions."
+      localMiddlewareTitle: "Local Middleware Features:"
+      localMiddleware:
+        - "Directory-based Execution: Middleware hierarchy matches [Cloudflare's path matching](https://developers.cloudflare.com/pages/functions/middleware/#middleware-path-matching)"
+        - "Request Context: Full `context.next()` and context sharing support"
+        - "Authentication Patterns: Perfect for protecting routes and handling auth"
+        - "Production Parity: Same execution order as Cloudflare Pages"
+      middlewareExampleTitle: "Quick Example"
+      middlewareExampleCode: "// src/admin/+middleware.ts\nexport const onRequest: PagesFunction = async (context) => {\n  const isAuthenticated = checkAuth(context.request);\n  \n  if (!isAuthenticated) {\n    return new Response(\"Unauthorized\", { status: 401 });\n  }\n\n  return context.next();\n};"
+      middlewareExampleDescription: "For complete middleware documentation, see [Cloudflare Pages Middleware Guide](https://developers.cloudflare.com/pages/functions/middleware/)."
+
+  # Deploy Section
+  deploy:
+    title: "Deploying to Cloudflare Pages"
+    description: "The easiest way to deploy your @md/cf-page project is by connecting it to [GitHub](//github.com). Follow these steps to get started:"
+    steps:
+      - "Create a [new GitHub repository](//github.com/new)"
+      - "Create a [new Cloudflare Page](//dash.cloudflare.com/?to=/:account/pages/new/provider/github)"
+      - "Link the repository you just created"
+      - "Set the build command to `curl -fsSL https://cf-page.mdressler.dev/build.sh | bash`"
+      - "Set the output directory to `dist`"
+      - '"Save and Deploy" your page'
+      - "Push your code to the repository using the instructions from GitHub"
+      - "You can then also enable build caching for faster builds"
+
+  # Configuration Section
+  configuration:
+    title: "Configuration"
+    description: "Configure @md/cf-page by adding settings to your deno.jsonc or deno.json file under the @md/cf-page key:"
+    configCode: |
+      {
+        "name": "my-site",
+        "tasks": { /** Your build and dev tasks */ },
+        "@md/cf-page": {
+          "port": 3000,
+          "srcDir": "./src",
+          // Any configuration overrides; see options below
+        }
+      }
+    optionsTitle: "Configuration Options"
+    options:
+      port:
+        title: "port"
+        type: "number"
+        default: "3000"
+        description: "Port for the development server."
+      srcDir:
+        title: "srcDir"
+        type: "string"
+        default: '"./src"'
+        description: "Directory containing your source files (converted to absolute path)."
+      outDir:
+        title: "outDir"
+        type: "string"
+        default: '"./dist"'
+        description: "Directory where built files are output (converted to absolute path)."
+      bundle:
+        title: "bundle"
+        type: "boolean"
+        default: "true"
+        description: "Whether to bundle TypeScript/JavaScript files."
+      index:
+        title: "index"
+        type: "string"
+        default: '"index.html"'
+        description: "Default index file name for directories."
+      functionName:
+        title: "functionName"
+        type: "string"
+        default: '"+fn"'
+        description: "File name for Cloudflare Functions (without extension)."
+      middlewareName:
+        title: "middlewareName"
+        type: "string"
+        default: '"+middleware"'
+        description: "File name for Cloudflare Middleware (without extension)."
+      layoutName:
+        title: "layoutName"
+        type: "string"
+        default: '"+layout.html"'
+        description: "File name for HTML layout templates."
+      langfileName:
+        title: "langfileName"
+        type: "string"
+        default: '"+lang.yml"'
+        description: "File name for YAML language/translation files."
+
+  # API Reference Section
+  apiReference:
+    title: "API Reference"
+    cliCommandsTitle: "CLI Commands"
+    commands:
+      init:
+        title: "init - Initialize a new project with the starter template."
+        code: "deno run -A jsr:@md/cf-page init"
+      serve:
+        title: "serve - Start the development server with live reload."
+        code: "deno run -A jsr:@md/cf-page serve"
+      build:
+        title: "build - Build the project for production or development."
+        code: "deno run -A jsr:@md/cf-page build"
+
+  # Footer
+  footer:
+    copyright: "Copyright © {year} mdressler. All rights reserved."
+
+de:
+  # Header Navigation
+  nav:
+    gettingStarted: "Erste Schritte"
+    features: "Funktionen"
+    deploy: "Ausrollen"
+    configuration: "Konfiguration"
+    apiReference: "API-Referenz"
+    github: "GitHub"
+
+  # Hero Section
+  hero:
+    title: "@md/cf-page"
+    description: "Ein opinioniertes, HTML-nahes Web-Framework zur Erstellung von [Cloudflare Pages](https://developers.cloudflare.com/pages/) mit vollständiger lokaler Entwicklungsunterstützung."
+
+  # Getting Started Section
+  gettingStarted:
+    title: "Erste Schritte"
+    description: "Stellen Sie sicher, dass [Deno](//deno.com) installiert ist und führen Sie dann aus:"
+    command: "deno run jsr:@md/cf-page -W=. -R=. -N=cf-page.mdressler.dev init"
+    whatItDoes: "Dies wird:"
+    steps:
+      - "Sie nach einem Domainnamen fragen"
+      - "Die Starter-Vorlage herunterladen"
+      - "Sie in ein neues Verzeichnis extrahieren"
+      - "Ihnen Links zum Erstellen eines GitHub-Repositories und zur Einrichtung von Cloudflare Pages zeigen"
+
+  # Features Section
+  features:
+    title: "Funktionen"
+
+    # TypeScript & Bundling
+    typescript:
+      title: "⚡ TypeScript-Transpilation & Bundling"
+      description: "Automatische [TypeScript](https://www.typescriptlang.org/)-Kompilierung mit vollständiger Bundling-Unterstützung unter Verwendung von [Denos nativem Transpiler und Bundler](https://docs.deno.com/runtime/reference/deno_namespace_apis/#denoemit) über das `@deno/emit`-Paket."
+      featuresTitle: "Funktionen:"
+      features:
+        - "Automatische TypeScript zu JavaScript Transpilation"
+        - "Modul-Bundling mit Dependency-Auflösung mittels Data-URI-Kodierung"
+        - "Minifikation automatisch in Produktions-Builds aktiviert"
+        - "Unterstützung für lokale und Remote-Imports (JSR, npm, HTTP)"
+        - "Typprüfung während des Build-Prozesses"
+        - "Eigenständige Builds mit base64-kodierten Abhängigkeiten"
+      howItWorksTitle: "Wie es funktioniert:"
+      howItWorks:
+        - "**Transpilation**: TypeScript-Dateien werden zu modernem JavaScript kompiliert"
+        - "**Bundling**: Alle Abhängigkeiten werden aufgelöst und in eine einzige Datei gebündelt"
+        - "**Remote-Imports**: Externe Abhängigkeiten werden abgerufen und in das Bundle einbezogen"
+        - "**Produktionsoptimierung**: Automatische Minifikation reduziert die Dateigröße für Produktions-Builds"
+      exampleTitle: "Beispiel"
+      exampleCode: "// src/main.ts\nimport { serve } from \"https://deno.land/std/http/server.ts\";\nimport { helper } from \"./utils.ts\";\n\nexport default function() {\n  return helper(\"Hallo TypeScript!\");\n}"
+      exampleDescription: "Diese TypeScript-Datei wird automatisch transpiliert, mit ihren Abhängigkeiten gebündelt und als optimiertes JavaScript bereitgestellt."
+
+    # Tailwind CSS
+    tailwind:
+      title: "🎨 Tailwind CSS"
+      description: "Eingebaute [Tailwind CSS 4](https://tailwindcss.com/)-Unterstützung für Utility-First-Styling. Siehe die [Tailwind-Dokumentation](https://tailwindcss.com/docs) für vollständige Klassenreferenz und Verwendungsmuster."
+      featuresTitle: "Funktionen:"
+      features:
+        - "Tailwind CSS 4 Integration"
+        - "Automatische Klassenerkennung und -bereinigung"
+        - "Unterstützung für benutzerdefinierte Komponentenebenen"
+        - "Dark-Mode-Varianten"
+
+    # File Minification
+    minification:
+      title: "🗜️ Datei-Minifikation"
+      description: "Intelligente Dateioptimierung, die automatisch Dateigrößen in Produktions-Builds reduziert, während Funktionalität erhalten bleibt und entwicklerfreundlicher Quellcode beibehalten wird."
+      productionOnlyTitle: "Nur-Produktions-Minifikation:"
+      productionOnly:
+        - "**CSS**: PostCSS mit cssnano-Plugin für optimale Kompression"
+        - "**JavaScript**: Eingebaute Minifikation über Denos Bundler"
+        - "**TypeScript**: Kompiliert und minifiziert während des Bundling-Prozesses"
+      cssDetailsTitle: "CSS-Minifikation Details:"
+      cssDetails:
+        - "Entfernt unnötige Leerzeichen und Kommentare"
+        - "Optimiert CSS-Regeln und -Deklarationen"
+        - "Führt identische Selektoren und Regeln zusammen"
+        - "Verkürzt Farbwerte und Einheiten wo möglich"
+        - "Läuft nur in Produktions-Builds, um lesbaren Entwicklungscode zu erhalten"
+      jsMinificationTitle: "JavaScript-Minifikation:"
+      jsMinification:
+        - "Variablennamen-Verkürzung und Code-Kompression"
+        - "Dead-Code-Eliminierung entfernt unbenutzte Funktionen"
+        - "Integriert in den Bundling-Prozess für optimale Ergebnisse"
+        - "Erhält Quellfunktionalität bei reduzierter Bundle-Größe"
+      devVsProdTitle: "Entwicklung vs. Produktion"
+      devVsProdCode: "// Entwicklung: Lesbarer, nicht-minifizierter Code\n.header {\n  background-color: #ffffff;\n  padding: 1rem 2rem;\n}\n\n// Produktion: Minifiziert und optimiert\n.header{background:#fff;padding:1rem 2rem}"
+      devVsProdDescription: "Minifikation erfolgt nur während Produktions-Builds, was Ihre Entwicklungserfahrung schnell und debuggbar hält."
+
+    # Cache-Busting
+    cacheBusting:
+      title: "🔄 Automatisches Cache-Busting"
+      description: "Intelligentes Cache-Busting-System, das automatisch Versionsparameter zu Asset-URLs hinzufügt, um sicherzustellen, dass Benutzer immer die neuesten Versionen erhalten, während aggressives Browser-Caching ermöglicht wird."
+      supportedElementsTitle: "Unterstützte Elemente:"
+      supportedElements:
+        - '**Skripte**: `&lt;script src="...">` Tags'
+        - '**Stylesheets**: `&lt;link rel="stylesheet">` Tags'
+        - '**Bilder**: `&lt;img src="...">` Tags'
+        - "**Medien**: `&lt;video>`, `&lt;audio>`, `&lt;source>`, `&lt;track>` Elemente"
+      hashProcessTitle: "Hash-Generierungsprozess:"
+      hashProcess:
+        - "Inhaltsbasiertes Hashing unter Verwendung von Dateiinhalten für Genauigkeit"
+        - "Base64URL-Kodierung für URL-sichere Hash-Werte"
+        - "Behandelt relative (`./`, `../`) und absolute (`/`) Pfade"
+        - "Verarbeitet nur lokale Assets, überspringt externe URLs"
+        - "Rehype-Plugin-Integration für zuverlässige HTML-Verarbeitung"
+      beforeAfterTitle: "Vorher und Nachher"
+      beforeAfterCode: "<!-- Vor Cache-Busting -->\n<link rel=\"stylesheet\" href=\"/style.css\">\n<script src=\"./main.js\"></script>\n<img src=\"../images/logo.png\" alt=\"Logo\">\n\n<!-- Nach Cache-Busting -->\n<link rel=\"stylesheet\" href=\"/style.css?v=abc123def456\">\n<script src=\"./main.js?v=xyz789uvw012\"></script>\n<img src=\"../images/logo.png?v=mno345pqr678\" alt=\"Logo\">"
+      beforeAfterDescription: "Query-Parameter werden automatisch basierend auf Dateiinhalt-Hashes hinzugefügt. Wenn sich Dateien ändern, sorgen neue Hashes für Cache-Invalidierung."
+      benefitsTitle: "Vorteile:"
+      benefits:
+        - "**Aggressives Caching**: Setzen Sie lange Cache-Header ohne Angst vor veralteten Inhalten"
+        - "**Sofortige Updates**: Inhaltsänderungen invalidieren Caches sofort"
+        - "**CDN-Optimierung**: Perfekte Kompatibilität mit CDN-Caching-Strategien"
+        - "**Null-Konfiguration**: Funktioniert automatisch bei allen unterstützten Asset-Typen"
+
+    # HTML Templating
+    templating:
+      title: "📄 Compile-Time HTML Templating"
+      description: "Erweiterte slot-basierte Templating-System mit Layout-Vererbung, das Templates zur Build-Zeit verarbeitet und null Runtime-Overhead sowie optimale Performance gewährleistet."
+      coreFeaturesTitle: "Kernfunktionen:"
+      coreFeatures:
+        - "**Layout-Vererbung**: Hierarchische `+layout.html` Dateien"
+        - '**Benannte Slots**: Inhalts-Injektion mit `&lt;slot name="...">`'
+        - "**Standard-Inhalt**: Fallback-Inhalt wenn Slots nicht gefüllt sind"
+        - "**Verzeichnis-basiert**: Automatische Layout-Erkennung beim Durchlaufen des Dateibaums"
+        - "**Compile-Time-Verarbeitung**: Templates zur Build-Zeit aufgelöst, nicht zur Laufzeit"
+      layoutExampleTitle: "Layout-Struktur Beispiel"
+      layoutExampleCode: "<!-- src/+layout.html -->\n<!DOCTYPE html>\n<html>\n<head>\n  <title><slot name=\"title\">Standard-Titel</slot></title>\n</head>\n<body>\n  <header><slot name=\"header\"></slot></header>\n  <main><slot>Standard-Hauptinhalt</slot></main>\n  <footer><slot name=\"footer\">© {cf:year}</slot></footer>\n</body>\n</html>"
+      pageExampleTitle: "Seiten-Inhalt Beispiel"
+      pageExampleCode: "<!-- src/about/index.html -->\n<slot name=\"title\">Über uns</slot>\n<slot name=\"header\">\n  <nav><a href=\"/\">Startseite</a></nav>\n</slot>\n\n<h1>Über unser Unternehmen</h1>\n<p>Dieser Inhalt geht in den Standard-Slot.</p>"
+      howItWorksTitle: "Wie es funktioniert:"
+      howItWorks:
+        - "Layout-Erkennung: Durchläuft Verzeichnisbaum um nächste +layout.html zu finden"
+        - "String-Verarbeitung: Verarbeitet Templates vor HTML-Parsing um Struktur zu erhalten"
+        - "Slot-Injektion: Ersetzt <slot>-Elemente mit passendem Inhalt"
+        - "Standard-Behandlung: Verwendet Slot-Standardinhalt wenn kein Ersatz bereitgestellt wird"
+        - "Build-Time-Auflösung: Alle Templates vollständig zur Build-Zeit aufgelöst"
+      benefitsTitle: "Vorteile:"
+      benefits:
+        - "Null Runtime-Kosten: Templates zur Build-Zeit wegkompiliert"
+        - "SEO-freundlich: Generiert vollständige, statische HTML-Dateien"
+        - "Wartbar: Geteilte Layouts reduzieren Code-Duplikation"
+        - "Flexibel: Benannte Slots ermöglichen präzise Inhaltsplatzierung"
+
+    # Translation Engine
+    translation:
+      title: "🌍 Übersetzungs-Engine"
+      description: "Eingebaute Mehrsprachigkeitsunterstützung mit YAML-Übersetzungsdateien, Parameter-Interpolation und bedingten Rendering-Fähigkeiten."
+      featuresTitle: "Funktionen:"
+      features:
+        - "YAML-basierte Übersetzungsdateien (`+lang.yml`)"
+        - "Parameter-Interpolation mit flexibler Syntax"
+        - "**Markdown-Unterstützung**: Verwenden Sie `{@md key}` Direktive für formatierten Inhalt"
+        - "Bedingtes Rendering: `{#if condition}` und `{#else}` Blöcke"
+        - "Array-Iteration: `{#each array as item}` Schleifen"
+        - "Kaskadierende Übersetzungs-Override-System"
+        - "Auto-Erkennung unterstützter Sprachen aus Root `+lang.yml`"
+        - "Globale und seitenspezifische Übersetzungen"
+        - "Konfiguration über `$defaultLanguage` Schlüssel in Sprachdateien"
+        - "**Mehrsprachiger Build**: Generiert separate Versionen für jede Sprache (z.B. `/en/`, `/de/`)"
+      parameterSyntaxTitle: "Parameter-Syntax"
+      parameterSyntaxDescription: "Übersetzungswerte können Parameter enthalten, die zur Build-Zeit ersetzt werden. Die Syntax unterstützt mehrere Parameter-Typen:"
+      parameterSyntaxCode: "<!-- Grundsyntax: {key, param1: value1, param2: value2} -->\n\n<!-- String-Literal-Parameter -->\n<h1>{greeting, name: \"Max Mustermann\"}</h1>\n<!-- Ausgabe: Hallo Max Mustermann! -->\n\n<!-- Übersetzungsschlüssel-Referenzen -->\n<h1>{welcome, name: {siteName}}</h1>\n<!-- Ausgabe: Willkommen bei Meine Seite! -->\n\n<!-- Verschachtelte Übersetzungsschlüssel -->\n<footer>{footer.copyright, year: {cf:year}}</footer>\n<!-- Ausgabe: Copyright © 2025 mdressler. Alle Rechte vorbehalten. -->\n\n<!-- Gemischte Parameter-Typen -->\n<p>{message, user: {userName}, time: \"10:30\", date: {cf:year}}</p>\n<!-- Ausgabe: Benutzer Max Mustermann hat sich um 10:30 am 2025 angemeldet -->\n\n<!-- Eingebaute Variablen -->\n<div lang=\"{cf:lang}\">{cf:path}</div>\n<!-- Ausgabe: <div lang=\"de\">/about.html</div> -->"
+      parameterSyntaxNote: "**Parameter-Typen**:\n- **String-Literale**: In Anführungszeichen eingeschlossen: `\"wert\"`\n- **Übersetzungsschlüssel**: In Klammern eingeschlossen: `{key}` oder `{nested.key}`\n- **Eingebaute Variablen**: `{cf:lang}` (aktuelle Sprache), `{cf:path}` (aktueller Pfad), `{cf:year}` (aktuelles Jahr)"
+      parameterExamplesTitle: "Weitere Parameter-Beispiele"
+      parameterExamplesDescription: "Die Parameter-Syntax ist flexibel und unterstützt komplexe Anwendungsfälle:"
+      parameterExamplesCode: "<!-- Sprachdatei mit verschachtelter Struktur -->\n# src/+lang.yml\nde:\n  messages:\n    greeting: \"Hallo {user}, willkommen bei {app}!\"\n  footer:\n    copyright: \"© {year} {company}. Alle Rechte vorbehalten.\"\n  products:\n    price: \"{amount} EUR\"\n    \n<!-- Verwendung verschachtelter Schlüssel mit Parametern -->\n<h1>{messages.greeting, user: \"Alice\", app: {siteName}}</h1>\n<!-- Ausgabe: Hallo Alice, willkommen bei Meine Seite! -->\n\n<!-- Mehrere Verschachtelungsebenen -->\n<footer>{footer.copyright, year: {cf:year}, company: \"ACME GmbH\"}</footer>\n<!-- Ausgabe: © 2025 ACME GmbH. Alle Rechte vorbehalten. -->\n\n<!-- Kombination mit Bedingungen -->\n{#if isOnSale}\n  <span class=\"price\">{products.price, amount: \"49,99\"}</span>\n{#else}\n  <span class=\"price\">{products.price, amount: \"99,99\"}</span>\n{/if}"
+      conditionalSyntaxTitle: "Bedingungs- & Schleifen-Syntax"
+      conditionalSyntaxDescription: "Verwenden Sie bedingte Blöcke und Schleifen um Inhalt zu zeigen oder zu verstecken und über Arrays zu iterieren:"
+      conditionalSyntaxCode: "<!-- Bedingtes Rendering basierend auf Übersetzungswerten -->\n{#if userLoggedIn}\n  <p>Willkommen zurück, {userName}!</p>\n  <a href=\"/logout\">Abmelden</a>\n{#else}\n  <p>Bitte melden Sie sich an um fortzufahren.</p>\n  <a href=\"/login\">Anmelden</a>\n{/if}\n\n<!-- Array-Iteration mit Markdown-Unterstützung -->\n{#each menuItems as item}\n  <li>\n    <a href=\"/{item}\">{navigation[item]}</a>\n    <!-- Verwenden Sie @md Direktive um Markdown in Array-Elementen zu verarbeiten -->\n    <p>{@md item} Bereich mit [zusätzlichen Informationen](/{item}/info)</p>\n  </li>\n{/each}\n\n<!-- Bedingter Inhalt basierend auf Feature-Flags -->\n{#if featureEnabled}\n  <div class=\"new-feature\">\n    <h3>🎉 Neue Funktion verfügbar!</h3>\n    <p>{newFeatureDescription}</p>\n  </div>\n{/if}"
+      conditionalSyntaxNote: "**Hinweis**: Bedingte Blöcke funktionieren mit jedem Übersetzungsschlüssel, der zu einem truthy/falsy Wert aufgelöst wird. Schleifen-Blöcke funktionieren mit Arrays. Um Markdown-Verarbeitung innerhalb dieser Blöcke zu aktivieren, verwenden Sie die `{@md key}` Direktive (siehe Markdown-Verarbeitung Abschnitt unten)."
+      markdownTitle: "Markdown-Verarbeitung"
+      markdownDescription: "Verarbeiten Sie markdown-formatierten Inhalt aus Übersetzungswerten mit der `{@md key}` Direktive:"
+      markdownCode: "<!-- Sprachdatei-Inhalt -->\n# src/+lang.yml\nde:\n  boldText: \"Das ist **sehr wichtig**\"\n  linkText: \"Besuchen Sie [unsere Website](https://example.com)\"\n  codeExample: \"Verwenden Sie den `npm install` Befehl\"\n  richContent: \"Das hat **fett** und `code` und [Links](/) alle zusammen\"\n\n<!-- HTML-Template -->\n<!-- Normale Platzhalter - Markdown NICHT verarbeitet -->\n<p>{boldText}</p>  \n<!-- Ausgabe: Das ist **sehr wichtig** -->\n\n<!-- Markdown-Direktive - Markdown IST verarbeitet -->\n<p>{@md boldText}</p>  \n<!-- Ausgabe: Das ist <strong>sehr wichtig</strong> -->\n\n<p>{@md linkText}</p>\n<!-- Ausgabe: Besuchen Sie <a href=\"https://example.com\">unsere Website</a> -->\n\n<p>Befehl: {@md codeExample}</p>\n<!-- Ausgabe: Befehl: Verwenden Sie den <code>npm install</code> Befehl -->\n\n<div>{@md richContent}</div>\n<!-- Ausgabe: Das hat <strong>fett</strong> und <code>code</code> und <a href=\"/\">Links</a> alle zusammen -->"
+      markdownNote: "**Wichtig**: Markdown-Verarbeitung erfolgt nur bei Verwendung der `{@md key}` Direktive. Normale Übersetzungsplatzhalter wie `{key}` geben rohen Markdown-Text ohne Verarbeitung aus. Dieser explizite Ansatz gibt Ihnen volle Kontrolle darüber, wann Markdown-Formatierung angewendet wird."
+      languageFilesTitle: "Sprachdateien"
+      languageFilesDescription: "Erstellen Sie eine +lang.yml Datei in Ihrem Quellverzeichnis um Sprachen und Übersetzungen zu definieren:"
+      languageFilesCode: "# src/+lang.yml\n$defaultLanguage: de\n\nglobal:\n  siteName: \"Meine Seite\"\n  userLoggedIn: false\n  featureEnabled: true\n  menuItems: [\"home\", \"about\", \"contact\"]\n\nde:\n  welcome: \"Willkommen bei {name}!\"\n  userName: \"Max Mustermann\"\n  newFeatureDescription: \"Probieren Sie unser neues Dashboard mit erweiterten Analysen!\"\n  navigation:\n    home: \"Startseite\"\n    about: \"Über uns\"\n    contact: \"Kontakt\"\n\nen:\n  welcome: \"Welcome to {name}!\"\n  userName: \"John Doe\"\n  newFeatureDescription: \"Try our new dashboard with enhanced analytics!\"\n  navigation:\n    home: \"Home\"\n    about: \"About\"\n    contact: \"Contact\""
+      htmlUsageTitle: "Verwenden von Übersetzungen in HTML"
+      htmlUsageCode: "<!-- src/index.html -->\n<h1>{welcome, name: {siteName}}</h1>\n\n<!-- Bedingte Benutzeroberfläche -->\n{#if userLoggedIn}\n  <p>Willkommen zurück, {userName}!</p>\n  <a href=\"/logout\">Abmelden</a>\n{#else}\n  <p>Bitte melden Sie sich an um fortzufahren.</p>\n  <a href=\"/login\">Anmelden</a>\n{/if}\n\n<!-- Dynamische Navigation mit Arrays -->\n<nav>\n  <ul>\n    {#each menuItems as item}\n      <li>\n        <a href=\"/{item}\">{navigation[item]}</a>\n        <!-- Verwenden Sie @md Direktive um Markdown-Formatierung zu verarbeiten -->\n        <small>{@md item} Bereich</small>\n      </li>\n    {/each}\n  </ul>\n</nav>\n\n<!-- Feature-Flag Beispiel -->\n{#if featureEnabled}\n  <div class=\"feature-banner\">\n    <h3>🎉 Neue Funktion verfügbar!</h3>\n    <p>{newFeatureDescription}</p>\n  </div>\n{/if}"
+
+    # Image Optimization
+    imageOptimization:
+      title: "🖼️ Automatische Bildoptimierung"
+      description: "Intelligente Bildverarbeitung für optimale Web-Bereitstellung ohne Qualitätsverlust."
+      optimizationsTitle: "Optimierungen:"
+      optimizations:
+        - "Verlustfreie PNG-Kompression"
+        - "JPG-Qualitätsoptimierung"
+        - "SVG-Minifikation und -Bereinigung"
+        - "Automatische Formatauswahl"
+
+    # SASS/SCSS
+    sass:
+      title: "🎨 SASS/SCSS Transpilation"
+      description: "Vollständige [SASS und SCSS](https://sass-lang.com/) Preprocessing-Unterstützung unter Verwendung des offiziellen [Dart Sass Compilers](https://sass-lang.com/dart-sass/), der alle modernen SASS-Funktionen mit automatischer Kompilierung zu optimiertem CSS bietet."
+      supportedSyntaxTitle: "Unterstützte Syntax:"
+      supportedSyntax:
+        - "**SCSS**: CSS-kompatible Syntax mit Klammern und Semikolons (`.scss`)"
+        - "**SASS**: Eingerückte Syntax ohne Klammern (`.sass`)"
+        - "**CSS-Imports**: Standard CSS `@import` Anweisungen"
+        - "**SASS-Imports**: `@use` und `@forward` für Modulsystem"
+      advancedFeaturesTitle: "Erweiterte Funktionen:"
+      advancedFeatures:
+        - "**Variablen**: CSS Custom Properties und SASS-Variablen"
+        - "**Mixins**: Wiederverwendbare Style-Muster mit Parametern"
+        - "**Funktionen**: Benutzerdefinierte Funktionen und eingebaute SASS-Funktionen"
+        - "**Verschachtelung**: Hierarchische Regel-Verschachtelung mit Eltern-Selektoren"
+        - "**Kontrollfluss**: `@if`, `@for`, `@each`, `@while`"
+        - "**Modulsystem**: Moderne `@use` und `@forward` Imports"
+      exampleTitle: "SCSS-Verwendung Beispiel"
+      exampleCode: "// src/styles.scss\n$primary-color: #f48120;\n$border-radius: 0.5rem;\n\n@mixin button-style($bg-color) {\n  background: $bg-color;\n  border-radius: $border-radius;\n  padding: 0.5rem 1rem;\n  \n  &:hover {\n    background: darken($bg-color, 10%);\n  }\n}\n\n.btn-primary {\n  @include button-style($primary-color);\n}"
+      exampleDescription: "Automatisch zu optimiertem CSS kompiliert mit allen aufgelösten SASS-Funktionen."
+      compilationTitle: "Kompilierungsprozess:"
+      compilation:
+        - "**Dart Sass Engine**: Verwendet die offizielle, aktuellste SASS-Implementierung"
+        - "**Automatische Erkennung**: Verarbeitet `.scss` und `.sass` Dateien automatisch"
+        - "**Import-Auflösung**: Löst Imports und Abhängigkeiten korrekt auf"
+        - "**Fehlerberichterstattung**: Klare Fehlermeldungen mit Zeilennummern und Kontext"
+        - "**Hot-Reload-Integration**: Funktioniert nahtlos mit CSS-Hot-Reloading"
+      developmentBenefitsTitle: "Entwicklungsvorteile:"
+      developmentBenefits:
+        - "Modernes SASS: Neueste SASS-Funktionen und Syntaxunterstützung"
+        - "Schnelle Kompilierung: Dart Sass Performance-Optimierungen"
+        - "Vollständige Dokumentation: Alle [SASS-Dokumentation](https://sass-lang.com/documentation/) gilt"
+        - "Produktionsbereit: Integriert in Minifikations- und Optimierungspipeline"
+
+    # Live Reload
+    liveReload:
+      title: "🔄 Live Reload"
+      description: "Erweiterte Entwicklungsserver mit intelligenter Dateiüberwachung, der automatisch rebuildet und Ihren Browser aktualisiert, wenn sich Quelldateien ändern, mit intelligentem CSS-Hot-Reloading und Build-Fehlerberichterstattung."
+      fileSystemTitle: "Dateisystem-Überwachung:"
+      fileSystem:
+        - "Quellverzeichnis-Überwachung: Überwacht gesamtes srcDir auf Änderungen"
+        - "Intelligente Entprellung: Verhindert übermäßige Rebuilds bei schnellen Dateiänderungen"
+        - "Selektive Rebuilds: Rebuildet nur betroffene Dateien und Abhängigkeiten"
+        - "Abort Controller Integration: Bricht laufende Builds ab wenn neue Änderungen erkannt werden"
+      browserCommTitle: "Browser-Kommunikation:"
+      browserComm:
+        - "Server-Sent Events: Verwendet /listen Endpunkt für Echtzeit-Updates"
+        - "Client-Skript-Injektion: Injiziert automatisch Reload-Skript in HTML-Seiten"
+        - "Event-Polling: Client fragt Dateiänderungs-Events ab"
+        - "Intelligente Refresh-Logik: Unterscheidet zwischen CSS-only und vollständigen Seiten-Reloads"
+      performanceTitle: "Performance-Überwachung:"
+      performance:
+        - "Build-Zeit-Messung und -Berichterstattung"
+        - "Pro-Datei-Verarbeitungszeit-Tracking"
+        - "Performance-Engpass-Identifikation"
+        - "Build-Fehlererkennung und Konsolen-Berichterstattung"
+      devExperienceTitle: "Entwicklungserfahrung"
+      devExperienceCode: "// Starten Sie den Entwicklungsserver\ndeno run -A jsr:@md/cf-page serve\n\n// Dateiänderung erkannt: src/style.css\n// → Rebuilding...\n// → Build komplett (23ms)\n// → Browser aktualisiert (nur CSS)\n\n// Dateiänderung erkannt: src/index.html  \n// → Rebuilding...\n// → Build komplett (156ms)\n// → Browser aktualisiert (vollständige Seite)"
+      devExperienceDescription: "Der Entwicklungsserver bietet detailliertes Feedback über Build-Zeiten und Refresh-Typen und hilft Ihnen dabei, Ihre Entwicklungsworkflow-Performance zu verstehen."
+      smartReloadTitle: "Intelligente Reload-Typen:"
+      smartReload:
+        - "CSS Hot Reload: Aktualisiert Stylesheets ohne Seitenaktualisierung für .css, .scss, .sass"
+        - "Vollständige Seitenaktualisierung: Komplette Aktualisierung für HTML, JavaScript und andere Asset-Änderungen"
+        - "Fehlerwiederherstellung: Wiederholt automatisch fehlgeschlagene Builds und meldet Fehler"
+
+    # Hot CSS Reload
+    hotCssReload:
+      title: "🔥 Hot CSS Reload"
+      description: "Erweiterte CSS-Hot-Reload-Funktion, die Stylesheets intelligent ohne Seitenaktualisierung aktualisiert und die schnellstmögliche Entwicklungsrückmeldung bietet."
+      supportedTypesTitle: "Unterstützte Dateitypen:"
+      supportedTypes:
+        - "CSS: Direkte Stylesheet-Updates (.css)"
+        - "SCSS/SASS: Vorverarbeitete Styles (.scss, .sass)"
+        - "Tailwind: Utility-First CSS Framework Integration"
+        - "PostCSS: Alle PostCSS-verarbeiteten Stylesheets"
+      hotReloadProcessTitle: "Hot Reload Prozess:"
+      hotReloadProcess:
+        - "Dateierkennung: Identifiziert reine CSS-Änderungen vs. andere Dateitypen"
+        - "Stylesheet-Entfernung: Entfernt vorhandene <link>-Elemente aus dem DOM"
+        - "Cache-Umgehung: Fügt Zeitstempel-Parameter hinzu, um Browser-Caching zu verhindern"
+        - "Neueinspritzung: Fügt aktualisierte Stylesheets zurück in den Document Head"
+      technicalTitle: "Technische Implementierung"
+      technicalCode: "// Hot CSS Reload Prozess\n1. Dateiänderung erkannt: src/style.scss\n2. SCSS zu CSS kompiliert\n3. Browser erhält \"reload-css\" Event\n4. Client-Script-Ausführung:\n   - Entfernen: link[rel=\"stylesheet\"]\n   - Hinzufügen: Zeitstempel zu URLs (?t=1234567890)\n   - Neueinspritzung: aktualisierte Stylesheets\n5. Styles werden sofort aktualisiert ⚡"
+      technicalDescription: "Der gesamte Prozess dauert normalerweise unter 50ms und bietet nahezu sofortiges Feedback."
+      devWorkflowTitle: "Entwicklungsworkflow:"
+      devWorkflow:
+        - "Sofortiges Feedback: Styling-Änderungen sofort sehen ohne Kontextverlust"
+        - "Schnelle Iteration: Perfekt für Feinabstimmung von Layouts und Animationen"
+        - "Cross-Browser-Tests: Mehrere Browserfenster bleiben synchron"
+        - "Komplexe Zustandstests: Style-Modal-Dialoge, komplexe Formulare ohne Neueinrichtung"
+
+    # Function Emulation
+    functionEmulation:
+      title: "⚡ Cloudflare Function Emulation"
+      description: "@md/cf-page bietet vollständige lokale Emulation von [Cloudflare Pages Functions](https://developers.cloudflare.com/pages/functions/). Dateien namens `+fn.ts` werden zu API-Endpunkten mit derselben API wie in der Produktion."
+      localDevTitle: "Lokale Entwicklungsfeatures:"
+      localDev:
+        - "Perfekte Emulation: Vollständiges `EventContext`-Objekt mit request, env und Utilities"
+        - "HTTP-Methoden: Unterstützung für alle [HTTP-Methoden-Handler](https://developers.cloudflare.com/pages/functions/routing/#functions)"
+        - "Umgebungsvariablen: Zugriff über `context.env` genau wie in der Produktion"
+        - "Assets API: Lokale `context.env.ASSETS` Bereitstellung"
+        - "Cloudflare-kompatible Request/Response-Behandlung"
+      quickExampleTitle: "Schnelles Beispiel"
+      quickExampleCode: "// src/api/hello/+fn.ts\nexport const onRequest: PagesFunction = async (context) => {\n  return new Response(\"Hello World!\");\n};"
+      quickExampleDescription: "Für vollständige API-Dokumentation siehe [Cloudflare Pages Functions API Reference](https://developers.cloudflare.com/pages/functions/api/)."
+
+    # Middleware Emulation
+    middlewareEmulation:
+      title: "🔒 Cloudflare Middleware Emulation"
+      description: "@md/cf-page unterstützt [Cloudflare Pages Middleware](https://developers.cloudflare.com/pages/functions/middleware/) mit vollständiger lokaler Emulation. Dateien namens `+middleware.ts` laufen vor Seiten und Funktionen."
+      localMiddlewareTitle: "Lokale Middleware-Features:"
+      localMiddleware:
+        - "Verzeichnisbasierte Ausführung: Middleware-Hierarchie entspricht [Cloudflares Pfad-Matching](https://developers.cloudflare.com/pages/functions/middleware/#middleware-path-matching)"
+        - "Request-Kontext: Vollständige `context.next()` und Kontext-Sharing-Unterstützung"
+        - "Authentifizierungsmuster: Perfekt für Routenschutz und Auth-Behandlung"
+        - "Produktionsparität: Gleiche Ausführungsreihenfolge wie Cloudflare Pages"
+      middlewareExampleTitle: "Schnelles Beispiel"
+      middlewareExampleCode: "// src/admin/+middleware.ts\nexport const onRequest: PagesFunction = async (context) => {\n  const isAuthenticated = checkAuth(context.request);\n  \n  if (!isAuthenticated) {\n    return new Response(\"Unauthorized\", { status: 401 });\n  }\n\n  return context.next();\n};"
+      middlewareExampleDescription: "Für vollständige Middleware-Dokumentation siehe [Cloudflare Pages Middleware Guide](https://developers.cloudflare.com/pages/functions/middleware/)."
+
+  # Deployment Section
+  deploy:
+    title: "Bereitstellung auf Cloudflare Pages"
+    description: "Der einfachste Weg, dein @md/cf-page-Projekt bereitzustellen, ist die Verbindung mit [GitHub](//github.com). Folge diesen Schritten, um loszulegen:"
+    steps:
+      - "Erstelle ein [neues GitHub-Repository](//github.com/new)"
+      - "Erstelle eine [neue Cloudflare Page](//dash.cloudflare.com/?to=/:account/pages/new/provider/github)"
+      - "Verknüpfe das gerade erstellte Repository"
+      - "Setze den Build-Befehl auf `curl -fsSL https://cf-page.mdressler.dev/build.sh | bash`"
+      - "Setze das Ausgabeverzeichnis auf `dist`"
+      - "Klicke auf „Speichern und Bereitstellen“"
+      - "Pushe deinen Code ins Repository mithilfe der Anweisungen von GitHub"
+      - "Du kannst anschließend auch Build-Caching für schnellere Builds aktivieren"
+
+  # Configuration Section
+  configuration:
+    title: "Konfiguration"
+    description: "Konfigurieren Sie @md/cf-page durch Hinzufügen von Einstellungen zu Ihrer deno.jsonc oder deno.json Datei unter dem @md/cf-page Schlüssel:"
+    configCode: |
+      {
+        "name": "my-site",
+        "tasks": { /** Ihre Build- und Dev-Tasks */ },
+        "@md/cf-page": {
+          "port": 3000,
+          "srcDir": "./src",
+          // Beliebige Konfigurationsüberschreibungen; siehe Optionen unten
+        }
+      }
+    optionsTitle: "Konfigurationsoptionen"
+    options:
+      port:
+        title: "port"
+        type: "number"
+        default: "3000"
+        description: "Port für den Entwicklungsserver."
+      srcDir:
+        title: "srcDir"
+        type: "string"
+        default: '"./src"'
+        description: "Verzeichnis mit Ihren Quelldateien (wird zu absolutem Pfad konvertiert)."
+      outDir:
+        title: "outDir"
+        type: "string"
+        default: '"./dist"'
+        description: "Verzeichnis, in das gebaute Dateien ausgegeben werden (wird zu absolutem Pfad konvertiert)."
+      bundle:
+        title: "bundle"
+        type: "boolean"
+        default: "true"
+        description: "Ob TypeScript/JavaScript-Dateien gebündelt werden sollen."
+      index:
+        title: "index"
+        type: "string"
+        default: '"index.html"'
+        description: "Standard-Index-Dateiname für Verzeichnisse."
+      functionName:
+        title: "functionName"
+        type: "string"
+        default: '"+fn"'
+        description: "Dateiname für Cloudflare Functions (ohne Erweiterung)."
+      middlewareName:
+        title: "middlewareName"
+        type: "string"
+        default: '"+middleware"'
+        description: "Dateiname für Cloudflare Middleware (ohne Erweiterung)."
+      layoutName:
+        title: "layoutName"
+        type: "string"
+        default: '"+layout.html"'
+        description: "Dateiname für HTML-Layout-Templates."
+      langfileName:
+        title: "langfileName"
+        type: "string"
+        default: '"+lang.yml"'
+        description: "Dateiname für YAML-Sprach-/Übersetzungsdateien."
+
+  # API Reference Section
+  apiReference:
+    title: "API-Referenz"
+    cliCommandsTitle: "CLI-Befehle"
+    commands:
+      init:
+        title: "init - Initialisiert ein neues Projekt mit der Starter-Vorlage."
+        code: "deno run -A jsr:@md/cf-page init"
+      serve:
+        title: "serve - Startet den Entwicklungsserver mit Live-Reload."
+        code: "deno run -A jsr:@md/cf-page serve"
+      build:
+        title: "build - Baut das Projekt für Produktion oder Entwicklung."
+        code: "deno run -A jsr:@md/cf-page build"
+
+  # Footer
+  footer:
+    copyright: "Copyright © {year} mdressler. Alle Rechte vorbehalten."

@@ -1,0 +1,71 @@
+<slot name="head">
+  <title>{appName} - {pageName}</title>
+  <meta
+    name="description"
+    content="Play a classic Pong game built with TypeScript"
+  />
+</slot>
+
+<section>
+  <h1>{appName}</h1>
+  <div id="pong-game">
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <div id="score">
+      <span id="player1Score">0</span> - <span id="player2Score">0</span>
+    </div>
+    <div id="controls">
+      <p>{gameInstructions}</p>
+      <button id="startBtn">{startGame}</button>
+    </div>
+  </div>
+</section>
+
+<slot name="scripts">
+  <script src="/index.ts?test" async></script>
+  <script type="module" src="./app.ts"></script>
+</slot>
+
+<slot name="styles">
+  <style>
+    #pong-game {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    #gameCanvas {
+      border: 2px solid #333;
+      background: #000;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #score {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    #controls {
+      margin: 10px 0;
+    }
+
+    #controls p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    #startBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #007acc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #startBtn:hover {
+      background: #005999;
+    }
+  </style>
+</slot>

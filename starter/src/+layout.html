@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="{cf:lang}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <slot name="head">
+      <title>{pageName}</title>
+    </slot>
+    <link rel="shortcut icon" href="/logo.svg" />
+    <link rel="stylesheet" href="/style.css" />
+    <slot name="scripts">
+      <script src="/index.ts?test" async></script>
+    </slot>
+    <slot name="styles" />
+  </head>
+  <body
+    class="dark:bg-neutral-800 dark:text-gray-100 flex flex-col min-h-screen"
+  >
+    <header
+      class="sticky top-0 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 p-2 border-b border-zinc-300 dark:border-zinc-70"
+    >
+      <nav class="flex justify-between items-center">
+        <a href="/" class="flex items-center gap-1 text-black dark:text-white">
+          <img src="/logo.svg" alt="Logo" class="dark:invert" />
+          <span>{pageName}</span>
+        </a>
+        <slot name="nav">
+          <div class="flex gap-2">
+            <select id="lang-select">
+              <option name="en" value="en" selected>🇺🇸</option>
+              <option name="de" value="de">🇩🇪</option>
+            </select>
+            <a href="/app">
+              <button
+                class="bg-wine text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                {go_to_app}
+              </button>
+            </a>
+          </div>
+        </slot>
+      </nav>
+    </header>
+    <main class="text-center grow p-2">
+      <slot />
+    </main>
+    <footer
+      class="p-2 border-t border-zinc-300 dark:border-zinc-70 text-center"
+    >
+      <slot name="footer">{footer.copyright, year: {cf:year}}</slot>
+    </footer>
+  </body>
+</html>

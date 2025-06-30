@@ -1,0 +1,9 @@
+en:
+  username: Username
+  password: "Password"
+  password_hint: "Hint: it's `password123`"
+
+de:
+  username: Nutzername
+  password: "Passwort"
+  password_hint: "Tipp: es ist `password123`"

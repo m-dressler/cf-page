@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg
+  viewBox="0 0 256 256"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:bx="https://boxy-svg.com"
+>
+  <defs>
+    <linearGradient id="cfGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0" stop-color="#F38020" />
+      <stop offset="1" stop-color="#FAAE40" />
+    </linearGradient>
+    <filter
+      id="inner-shadow-filter-0"
+      color-interpolation-filters="sRGB"
+      x="-50%"
+      y="-50%"
+      width="200%"
+      height="200%"
+      bx:preset="inner-shadow 1 0 0 4 0.56 #00000042"
+    >
+      <feOffset dx="0" dy="0" />
+      <feGaussianBlur stdDeviation="4" />
+      <feComposite operator="out" in="SourceGraphic" />
+      <feComponentTransfer result="choke">
+        <feFuncA type="linear" slope="1.12" />
+      </feComponentTransfer>
+      <feFlood flood-color="#00000042" result="color" />
+      <feComposite operator="in" in="color" in2="choke" result="shadow" />
+      <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+    </filter>
+    <filter
+      id="outline-filter-0"
+      color-interpolation-filters="sRGB"
+      x="-50%"
+      y="-50%"
+      width="200%"
+      height="200%"
+      bx:preset="outline 1 4 #fff"
+    >
+      <feMorphology
+        in="SourceAlpha"
+        result="dilated"
+        operator="dilate"
+        radius="4"
+      />
+      <feFlood flood-color="#fff" result="flood" />
+      <feComposite in="flood" in2="dilated" operator="in" result="outline" />
+      <feMerge>
+        <feMergeNode in="outline" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <filter
+      id="drop-shadow-filter-0"
+      color-interpolation-filters="sRGB"
+      x="-50%"
+      y="-50%"
+      width="200%"
+      height="200%"
+      bx:preset="drop-shadow 1 1 1 4 1 rgba(0,0,0,0.3)"
+    >
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+      <feOffset dx="1" dy="1" />
+      <feComponentTransfer result="offsetblur">
+        <feFuncA id="spread-ctrl" type="linear" slope="2" />
+      </feComponentTransfer>
+      <feFlood flood-color="rgba(0,0,0,0.3)" />
+      <feComposite in2="offsetblur" operator="in" />
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <path
+    d="M 47.933 31.919 L 168.034 31.919 L 208.067 71.953 L 208.067 224.081 L 47.933 224.081 L 47.933 31.919 Z"
+    style="fill: rgb(255, 255, 255)"
+  />
+  <path
+    d="M 56.373 159.921 C 47.19 128.026 65.243 117.623 78.791 113.127 C 95.834 107.469 114.374 109.721 118.635 124.525 C 129.436 87.787 171.307 87.846 191.369 114.419 C 200.68 126.752 203.792 144.097 199.529 159.921 L 56.373 159.921 Z"
+    fill="url(#cfGradient)"
+    style="filter: url('#inner-shadow-filter-0')"
+  />
+  <path
+    d="M 168.034 31.919 L 208.067 71.953 L 168.034 71.953 L 168.034 31.919 Z"
+    fill="#E0E0E0"
+  />
+  <path
+    d="M 47.933 31.919 L 168.034 31.919 L 208.067 71.953 L 208.067 224.081 L 47.933 224.081 L 47.933 31.919 Z M 168.034 31.919 L 168.034 71.953 L 208.067 71.953"
+    stroke="#2E2E2E"
+    stroke-width="1.5"
+    fill="none"
+  />
+  <polygon
+    points="157.016 58.754 94.208 126.65 136.08 126.65 73.272 194.546 157.016 135.702 115.144 135.702 157.016 58.754"
+    fill="#F38020"
+    style="filter: url('#outline-filter-0') url('#drop-shadow-filter-0'); stroke-linecap: round"
+  />
+</svg>

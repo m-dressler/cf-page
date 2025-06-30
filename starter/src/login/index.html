@@ -1,0 +1,32 @@
+<section>
+  <h1>{login}</h1>
+  <form method="post" class="flex flex-col gap-4 items-center">
+    <p class="hidden text-wine">Invalid username or password</p>
+    <label for="username">
+      {username}:
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Username"
+        autocomplete="username"
+        value="johndoe"
+        required
+      />
+    </label>
+    <label for="password">
+      {password}:
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        value="password123"
+        required
+      />
+      <p class="text-xs text-end">{@md password_hint}</p>
+    </label>
+    <button type="submit">{login}</button>
+  </form>
+</section>
