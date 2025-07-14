@@ -27,7 +27,7 @@ const createTarInputStream = async function* (): AsyncGenerator<
 
       yield {
         type: "file",
-        path,
+        path: f.name === ".env.example" ? ".env" : path,
         size,
         readable,
       };
