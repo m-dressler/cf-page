@@ -1,7 +1,7 @@
 import onDomReady from "jsr:@md/on-dom-ready";
 
 onDomReady(() => {
-  const copyButtons = document.querySelectorAll("button[type=copy]");
+  const copyButtons = document.querySelectorAll(".copy-button");
   const copySuccessClass = "bg-emerald-500";
   copyButtons.forEach((copyButton) => {
     copyButton.addEventListener("click", () => {
