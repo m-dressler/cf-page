@@ -5,7 +5,7 @@ export const importCfFunction = async (
   path: string,
   type: "function" | "middleware",
 ) => {
-  const srcPath = join(
+  const srcPath = 'file://' + join(
     CONFIG.srcDir,
     path,
     (type === "function" ? CONFIG.functionName : CONFIG.middlewareName) +
@@ -14,7 +14,7 @@ export const importCfFunction = async (
   try {
     return await import(srcPath);
   } catch (error) {
-    const baseMessage = `Failed to import ${type} at file://${srcPath}`;
+    const baseMessage = `Failed to import ${type} at ${srcPath}`;
     if (error instanceof Error) {
       error.message = baseMessage + ": " + error.message;
       throw error;

@@ -12,7 +12,7 @@ export default {
       return null;
     }
 
-    const url = new URL(vFile.srcPath, import.meta.url);
+    const url = new URL("file://" + vFile.srcPath);
     if (context.abortController?.signal.aborted) throw new AbortError();
     const transpiled = await transpile(url, { allowRemote: true });
     if (context.abortController?.signal.aborted) throw new AbortError();
@@ -24,7 +24,7 @@ export default {
     const jsCodeBase64 = encodeBase64(jsCode);
     const { code } = await bundle(
       `data:application/javascript;base64,${jsCodeBase64}`,
-      { minify: context.mode === "prod" },
+      { minify: context.mode === "prod" }
     );
     if (context.abortController?.signal.aborted) throw new AbortError();
 
