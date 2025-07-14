@@ -22,7 +22,7 @@ en:
   gettingStarted:
     title: "Getting Started"
     description: "Ensure you have [Deno](//deno.com) installed and then run:"
-    command: "deno run jsr:@md/cf-page -W=. -R=. -N=cf-page.mdressler.dev init"
+    command: "deno run -A jsr:@md/cf-page init"
     whatItDoes: "This will:"
     steps:
       - "Prompt you for a domain name"
@@ -432,7 +432,7 @@ de:
   gettingStarted:
     title: "Erste Schritte"
     description: "Stellen Sie sicher, dass [Deno](//deno.com) installiert ist und führen Sie dann aus:"
-    command: "deno run jsr:@md/cf-page -W=. -R=. -N=cf-page.mdressler.dev init"
+    command: "deno run -A jsr:@md/cf-page init"
     whatItDoes: "Dies wird:"
     steps:
       - "Sie nach einem Domainnamen fragen"
