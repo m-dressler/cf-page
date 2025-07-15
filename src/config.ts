@@ -35,8 +35,7 @@ const CONFIG_SCHEMA = z.object({
 let denoJson: unknown;
 if (await exists("./deno.jsonc")) {
   denoJson = JSONC.parse(await Deno.readTextFile("./deno.jsonc")) ?? {};
-}
-if (await exists("./deno.json")) {
+} else if (await exists("./deno.json")) {
   denoJson = JSON.parse(await Deno.readTextFile("./deno.json")) ?? {};
 } else denoJson = {};
 
