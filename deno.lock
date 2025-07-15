@@ -46,6 +46,7 @@
     "npm:remark-parse@11": "11.0.0",
     "npm:remark-rehype@^11.1.2": "11.1.2",
     "npm:sass@^1.89.1": "1.89.1",
+    "npm:tailwindcss@4": "4.1.8",
     "npm:tailwindcss@^4.1.8": "4.1.8",
     "npm:unified@^11.0.5": "11.0.5",
     "npm:unist-util-visit@5": "5.0.0",
@@ -3110,7 +3111,7 @@
       "npm:remark-parse@11",
       "npm:remark-rehype@^11.1.2",
       "npm:sass@^1.89.1",
-      "npm:tailwindcss@^4.1.8",
+      "npm:tailwindcss@4",
       "npm:unified@^11.0.5",
       "npm:unist-util-visit@5",
       "npm:zod@^3.25.56"

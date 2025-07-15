@@ -7,6 +7,9 @@
     "types": ["npm:@cloudflare/workers-types"],
     "lib": ["esnext", "dom"]
   },
+  "imports": {
+    "tailwindcss": "npm:tailwindcss@^4" // Specify the version of Tailwind CSS
+  },
   "nodeModulesDir": "auto",
   "@md/cf-page": {
     "port": 8081
