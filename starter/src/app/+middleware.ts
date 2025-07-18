@@ -1,4 +1,4 @@
-import { decodeBase64 } from "jsr:@std/encoding/base64";
+import { decodeToken } from "../../lib/server/token.ts";
 
 const parseCookie = (str: string) =>
   str.length
@@ -12,39 +12,6 @@ const parseCookie = (str: string) =>
         return acc;
       }, {})
     : {};
-
-const decodeToken = async ({
-  token,
-  appSecret,
-}: {
-  token: string;
-  appSecret: string;
-}): Promise<{ username: string; ts: number } | null> => {
-  try {
-    const tokenArray = decodeBase64(token);
-    const iv = tokenArray.slice(0, 12);
-    const tokenEncrypted = tokenArray.slice(12);
-
-    const tokenDecryptedRaw = await crypto.subtle.decrypt(
-      { name: "AES-GCM", length: 256, iv },
-      await crypto.subtle.importKey(
-        "raw",
-        decodeBase64(appSecret),
-        { name: "AES-GCM" },
-        false,
-        ["decrypt"],
-      ),
-      tokenEncrypted,
-    );
-
-    const tokenDecrypted = JSON.parse(
-      new TextDecoder().decode(tokenDecryptedRaw),
-    );
-    return tokenDecrypted;
-  } catch {
-    return null;
-  }
-};
 
 /** This middleware checks if the user is authenticated for all routes below it */
 export const onRequest: PagesFunction<ENV> = async (context) => {

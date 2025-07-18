@@ -1,12 +1,11 @@
 // This will be bundled by @md/cf-page
 import onDomReady from "jsr:@md/on-dom-ready";
+import { $ } from "../lib/client/utils.ts";
 
 console.log("Hello World!");
 
 onDomReady(() => {
-  const langSelect = document.querySelector(
-    "#lang-select",
-  ) as unknown as HTMLSelectElement;
+  const langSelect = $<HTMLSelectElement>("#lang-select")!;
   const pathPieces = location.pathname.split("/");
   let currentLang = pathPieces[1];
 
