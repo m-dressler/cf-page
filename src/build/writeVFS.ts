@@ -1,5 +1,4 @@
-import { bundle, transpile } from "@deno/emit";
-import { encodeBase64 } from "@std/encoding/base64";
+import { bundle } from "@deno/emit";
 import { copy } from "@std/fs/copy";
 import { emptyDir } from "@std/fs/empty-dir";
 import { ensureDir } from "@std/fs/ensure-dir";
@@ -9,13 +8,7 @@ import { CONFIG } from "../config.ts";
 
 const writeFunction = async (inPath: string, outPath: string) => {
   const inURL = new URL(inPath, "file://");
-  const transpiled = await transpile(inURL);
-  const jsCode = transpiled.get(inURL.href)!;
-
-  const jsCodeBase64 = encodeBase64(jsCode);
-  const { code } = await bundle(
-    `data:application/javascript;base64,${jsCodeBase64}`,
-  );
+  const { code } = await bundle(inURL);
   await ensureDir(dirname(outPath));
   await Deno.writeTextFile(outPath, code);
 };
@@ -42,11 +35,7 @@ export const writeVFS = async (vfs: VFS): Promise<void> => {
       } else {
         await Deno.writeFile(
           outPath,
-          new Uint8Array(
-            content.buffer,
-            content.byteOffset,
-            content.byteLength,
-          ),
+          new Uint8Array(content.buffer, content.byteOffset, content.byteLength)
         );
       }
     }
@@ -57,7 +46,7 @@ export const writeVFS = async (vfs: VFS): Promise<void> => {
     const inPath = join(
       CONFIG.srcDir,
       functionPath,
-      `${CONFIG.functionName}.ts`,
+      `${CONFIG.functionName}.ts`
     );
     const outPath = join("./functions", functionPath + ".js");
     await writeFunction(inPath, outPath);
@@ -68,7 +57,7 @@ export const writeVFS = async (vfs: VFS): Promise<void> => {
     const inPath = join(
       CONFIG.srcDir,
       middlewarePath,
-      `${CONFIG.middlewareName}.ts`,
+      `${CONFIG.middlewareName}.ts`
     );
     const outPath = join("./functions", middlewarePath, "_middleware.js");
     await writeFunction(inPath, outPath);
