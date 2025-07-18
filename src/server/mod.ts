@@ -10,6 +10,7 @@ import {
   PREVIEW_JS_SCRIPT,
   PREVIEW_LISTEN_PATH,
 } from "./addLiveReloadScript.ts";
+import { loadBindings } from "./bindings/mod.ts";
 import {
   type CompiledHandlers,
   compileHandlers,
@@ -83,6 +84,7 @@ const DEFAULT_INCOMING_REQUEST_CF_PROPERTIES: IncomingRequestCfProperties<
 /** The `env` property expected by a cloudflare function including `ASSETS` */
 const CF_FUNCTION_ENV = {
   ...Deno.env.toObject(),
+  ...loadBindings(),
   ASSETS: {
     fetch: (input, init) => {
       const request = new Request(
