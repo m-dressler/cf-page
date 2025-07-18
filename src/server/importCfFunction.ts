@@ -5,7 +5,7 @@ export const importCfFunction = async (
   path: string,
   type: "function" | "middleware",
 ) => {
-  const srcPath = 'file://' + join(
+  const srcPath = "file://" + join(
     CONFIG.srcDir,
     path,
     (type === "function" ? CONFIG.functionName : CONFIG.middlewareName) +

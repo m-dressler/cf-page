@@ -24,7 +24,7 @@ export default {
     const jsCodeBase64 = encodeBase64(jsCode);
     const { code } = await bundle(
       `data:application/javascript;base64,${jsCodeBase64}`,
-      { minify: context.mode === "prod" }
+      { minify: context.mode === "prod" },
     );
     if (context.abortController?.signal.aborted) throw new AbortError();
 
