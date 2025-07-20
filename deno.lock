@@ -6,6 +6,7 @@
     "jsr:@deno/graph@~0.69.7": "0.69.10",
     "jsr:@md/cli@^0.0.2": "0.0.2",
     "jsr:@md/compare-array-buffers@^0.0.0": "0.0.0",
+    "jsr:@md/ensure-error@^0.0.0": "0.0.0",
     "jsr:@md/file-hash@1": "1.0.0",
     "jsr:@md/resolvable@^0.0.0": "0.0.0",
     "jsr:@std/assert@0.223": "0.223.0",
@@ -78,6 +79,9 @@
     },
     "@md/compare-array-buffers@0.0.0": {
       "integrity": "138d6ebd6dac4eecf6a42246fe58ddb992df27b7a8c95c3e9b0c8b6bec8191e3"
+    },
+    "@md/ensure-error@0.0.0": {
+      "integrity": "661eb78d7cb89a6bb46d4673e169d6df0c89ce783d4ad66465df5ebb7afe791d"
     },
     "@md/file-hash@1.0.0": {
       "integrity": "234c8bb014a0aaa218273d4cc45d46a4950152af974f6376d2e73f8caef4e4d6",
@@ -3089,6 +3093,7 @@
       "jsr:@deno/emit@0.45",
       "jsr:@md/cli@^0.0.2",
       "jsr:@md/compare-array-buffers@^0.0.0",
+      "jsr:@md/ensure-error@^0.0.0",
       "jsr:@md/file-hash@1",
       "jsr:@md/resolvable@^0.0.0",
       "jsr:@std/encoding@^1.0.10",

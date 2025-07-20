@@ -17,6 +17,7 @@
     "@jsdevtools/rehype-inline-svg": "npm:@jsdevtools/rehype-inline-svg@^1.1.4",
     "@md/cli": "jsr:@md/cli@^0.0.2",
     "@md/compare-array-buffers": "jsr:@md/compare-array-buffers@^0.0.0",
+    "@md/ensure-error": "jsr:@md/ensure-error@^0.0.0",
     "@md/file-hash": "jsr:@md/file-hash@^1.0.0",
     "@md/resolvable": "jsr:@md/resolvable@^0.0.0",
     "@std/encoding": "jsr:@std/encoding@^1.0.10",

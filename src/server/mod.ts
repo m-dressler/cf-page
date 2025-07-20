@@ -1,3 +1,4 @@
+import { isError } from "@md/ensure-error/is-error";
 import resolvable from "@md/resolvable";
 import { contentType } from "@std/media-types";
 import { AbortError } from "../build/abortError.ts";
@@ -118,7 +119,7 @@ const create405Response = (req: Request) =>
 const create500Response = (error: unknown) =>
   new Response(
     `Internal Server Error: ${
-      error instanceof Error ? error.message : "Unexpected Error"
+      isError(error) ? error.message : "Unexpected Error"
     }`,
     { status: 500 },
   );

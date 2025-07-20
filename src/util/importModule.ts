@@ -1,3 +1,4 @@
+import { isError } from "@md/ensure-error/is-error";
 import getFileHash from "@md/file-hash";
 import { encodeBase64Url } from "@std/encoding/base64url";
 import { extname } from "@std/path/extname";
@@ -11,7 +12,7 @@ export const importModule = async (
     return await import("file://" + path);
   } catch (error) {
     const baseMessage = `Failed to import module ${path}: `;
-    if (error instanceof Error) {
+    if (isError(error)) {
       error.message = baseMessage + error.message;
       return error;
     } else {

@@ -1,3 +1,4 @@
+import { isError } from "@md/ensure-error/is-error";
 import { type Auth, cloudflareFetch } from "./mod.ts";
 
 class D1PreparedStatementImpl implements D1PreparedStatement {
@@ -109,7 +110,7 @@ export class D1DatabaseImpl implements D1Database {
         body: JSON.stringify({ sql, params }),
       },
     );
-    if (response instanceof Error) throw response;
+    if (isError(response)) throw response;
     else if (!response.success) {
       throw new Error("D1 query error", { cause: response });
     } else return response.result;
