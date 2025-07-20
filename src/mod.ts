@@ -7,6 +7,9 @@ import { writeVFS } from "./build/writeVFS.ts";
 import { devServer } from "./server/mod.ts";
 import { logPerformanceMetrics } from "./util/logPerformance.ts";
 
+export type { BuildContext } from "./build/file/mod.ts";
+export type { LanguageFiles, VFile, VFS };
+
 /** The URL where sample projects are hosted */
 const BASE_URL = "https://cf-page.mdressler.dev";
 
