@@ -1,4 +1,5 @@
 import { AbortError } from "../abortError.ts";
+import type { VFile, VFS } from "../gatherVFS.ts";
 
 import cssBuilder from "./css.ts";
 import htmlBuilder from "./html.ts";

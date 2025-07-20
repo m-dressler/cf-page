@@ -8,7 +8,8 @@ import { devServer } from "./server/mod.ts";
 import { logPerformanceMetrics } from "./util/logPerformance.ts";
 
 export type { BuildContext } from "./build/file/mod.ts";
-export type { LanguageFiles, VFile, VFS };
+export type { VFile, VFS } from "./build/gatherVFS.ts";
+export type { LanguageFiles } from "./build/translations.ts";
 
 /** The URL where sample projects are hosted */
 const BASE_URL = "https://cf-page.mdressler.dev";

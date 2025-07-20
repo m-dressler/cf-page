@@ -3,6 +3,7 @@ import { rehype } from "rehype";
 import rehypePresetMinify from "rehype-preset-minify";
 import rehypeSlug from "rehype-slug";
 import { AbortError } from "../abortError.ts";
+import type { VFile, VFS } from "../gatherVFS.ts";
 import { cacheBustPlugin } from "./html/cacheBustPlugin.ts";
 import { slotPlugin } from "./html/slotPlugin.ts";
 import {

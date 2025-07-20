@@ -2,6 +2,19 @@ import { exists } from "@std/fs/exists";
 import * as YAML from "@std/yaml";
 import { CONFIG } from "../config.ts";
 
+/** A map from translation key to translation value */
+export type TranslationKV = Map<
+  string,
+  string | string[] | boolean | TranslationKV
+>;
+/** Language file structure with language keys and global fallback */
+export type LangFileContent = {
+  global?: TranslationKV;
+  [languageCode: string]: TranslationKV | undefined;
+};
+/** A map from relative project path to the language file content */
+export type LanguageFiles = Map<string, LangFileContent>;
+
 /** Gets the root language file content */
 const getRootLangFile = async (): Promise<Record<string, unknown> | null> => {
   const rootLangPath = `${CONFIG.srcDir}/${CONFIG.langfileName}`;
@@ -31,7 +44,8 @@ export const getSupportedLanguages = async (): Promise<string[]> => {
   // Extract language keys (excluding 'global' and '$defaultLanguage')
   for (const key of Object.keys(rootLangFile)) {
     if (
-      key !== "global" && key !== "$defaultLanguage" &&
+      key !== "global" &&
+      key !== "$defaultLanguage" &&
       typeof rootLangFile[key] === "object"
     ) {
       languages.push(key);

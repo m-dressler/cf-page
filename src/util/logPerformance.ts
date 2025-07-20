@@ -1,3 +1,5 @@
+import type { VFS } from "../build/gatherVFS.ts";
+
 /** Logs performance metrics for all files in the VFS */
 export const logPerformanceMetrics = (vfs: VFS): void => {
   const filesWithTiming = Array.from(vfs.build.values())

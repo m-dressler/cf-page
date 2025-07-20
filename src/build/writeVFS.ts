@@ -5,6 +5,7 @@ import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname } from "@std/path/dirname";
 import { join } from "@std/path/join";
 import { CONFIG } from "../config.ts";
+import type { VFS } from "./gatherVFS.ts";
 
 const writeFunction = async (inPath: string, outPath: string) => {
   const inURL = new URL(inPath, "file://");

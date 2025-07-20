@@ -1,5 +1,7 @@
 import { assertEquals } from "jsr:@std/assert";
 import type { ElementContent } from "npm:@types/hast@3.0.4";
+import type { VFile, VFS } from "../gatherVFS.ts";
+import type { TranslationKV } from "../translations.ts";
 import {
   getTranslationFunction,
   processMixedContent,
