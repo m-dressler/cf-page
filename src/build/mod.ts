@@ -1,6 +1,7 @@
 import { AbortError } from "./abortError.ts";
 import { type BuildContext, buildFile } from "./file/mod.ts";
-import { gatherVFS, type VFS } from "./gatherVFS.ts";
+import { gatherVFS } from "./vfs/gatherVFS.ts";
+import type { VFS } from "./vfs/mod.ts";
 
 /**
  * Builds the project in multiple phases

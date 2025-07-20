@@ -1,7 +1,7 @@
 import { assertEquals } from "jsr:@std/assert";
 import type { ElementContent } from "npm:@types/hast@3.0.4";
-import type { VFile, VFS } from "../gatherVFS.ts";
 import type { TranslationKV } from "../translations.ts";
+import { type VFile, VFS } from "../vfs/mod.ts";
 import {
   getTranslationFunction,
   processMixedContent,
@@ -47,30 +47,24 @@ const createMockVFS = (translations: LanguageFilesSimple): VFS => {
     return map;
   };
 
-  return {
-    source: new Map(),
-    build: new Map(),
-    functions: new Set(),
-    middlewares: new Set(),
-    buildUtils: {
-      layouts: new Set(),
-      langFiles: new Map([
-        [
-          "/",
-          {
-            global: new Map([
-              ["siteName", "Test Site"],
-              ["menuItems", ["home", "about", "contact"]],
-              ["userLoggedIn", false],
-              ["featureEnabled", true],
-            ] as [string, string | string[] | boolean][]),
-            en: createNestedMap(translations.en || {}),
-            de: createNestedMap(translations.de || {}),
-          },
-        ],
-      ]),
-    },
-  };
+  const vfs = new VFS();
+
+  vfs.buildUtils.langFiles = new Map([
+    [
+      "/",
+      {
+        global: new Map([
+          ["siteName", "Test Site"],
+          ["menuItems", ["home", "about", "contact"]],
+          ["userLoggedIn", false],
+          ["featureEnabled", true],
+        ] as [string, string | string[] | boolean][]),
+        en: createNestedMap(translations.en || {}),
+        de: createNestedMap(translations.de || {}),
+      },
+    ],
+  ]);
+  return vfs;
 };
 
 /** Removes the `position` property from a HAST tree to make assertions less verbose */

@@ -3,13 +3,13 @@ import { dirname } from "@std/path/dirname";
 import { normalize } from "@std/path/normalize";
 import { UntarStream } from "@std/tar";
 import { build } from "./build/mod.ts";
-import { writeVFS } from "./build/writeVFS.ts";
+import { writeVFS } from "./build/vfs/writeVFS.ts";
 import { devServer } from "./server/mod.ts";
 import { logPerformanceMetrics } from "./util/logPerformance.ts";
 
 export type { BuildContext } from "./build/file/mod.ts";
-export type { VFile, VFS } from "./build/gatherVFS.ts";
 export type { LanguageFiles } from "./build/translations.ts";
+export { VFile, VFS } from "./build/vfs/mod.ts";
 
 /** The URL where sample projects are hosted */
 const BASE_URL = "https://cf-page.mdressler.dev";

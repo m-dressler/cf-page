@@ -2,7 +2,7 @@ import type { Transformer } from "npm:unified@^11.0.5";
 import { rehype } from "rehype";
 import { CONFIG } from "../../../config.ts";
 import { AbortError } from "../../abortError.ts";
-import type { VFile } from "../../gatherVFS.ts";
+import type { VFile } from "../../vfs/mod.ts";
 import type { BuildContext } from "../mod.ts";
 
 /** Extract slot content from HTML string using regex */

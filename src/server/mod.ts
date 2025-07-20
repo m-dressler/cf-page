@@ -2,8 +2,8 @@ import { isError } from "@md/ensure-error/is-error";
 import resolvable from "@md/resolvable";
 import { contentType } from "@std/media-types";
 import { AbortError } from "../build/abortError.ts";
-import type { VFS } from "../build/gatherVFS.ts";
 import { build } from "../build/mod.ts";
+import type { VFS } from "../build/vfs/mod.ts";
 import { CONFIG } from "../config.ts";
 import { logPerformanceMetrics } from "../util/logPerformance.ts";
 import {
@@ -25,7 +25,7 @@ const host = `http://localhost:${CONFIG.port}`;
 
 let refreshPromise = resolvable<string>();
 
-export type PreviewVFS = Omit<VFS, "buildUtils"> & {
+export type PreviewVFS = Omit<VFS, "buildUtils" | "addVFile"> & {
   compiled: CompiledHandlers;
 };
 

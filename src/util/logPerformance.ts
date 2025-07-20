@@ -1,4 +1,4 @@
-import type { VFS } from "../build/gatherVFS.ts";
+import type { VFS } from "../build/vfs/mod.ts";
 
 /** Logs performance metrics for all files in the VFS */
 export const logPerformanceMetrics = (vfs: VFS): void => {

@@ -3,8 +3,8 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { type Transformer, unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { VFile, VFS } from "../../gatherVFS.ts";
 import type { TranslationKV } from "../../translations.ts";
+import type { VFile, VFS } from "../../vfs/mod.ts";
 import type { BuildContext } from "../mod.ts";
 
 /** Gets translation lookup function for current context */
