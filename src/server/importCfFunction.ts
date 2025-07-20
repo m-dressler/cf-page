@@ -1,27 +1,17 @@
 import { join } from "@std/path/join";
 import { CONFIG } from "../config.ts";
+import { importModule } from "../util/importModule.ts";
 
 export const importCfFunction = async (
   path: string,
   type: "function" | "middleware",
 ) => {
-  const srcPath = "file://" + join(
+  const srcPath = join(
     CONFIG.srcDir,
     path,
-    (type === "function" ? CONFIG.functionName : CONFIG.middlewareName) +
-      `.ts?v=${Date.now()}.ts`,
+    (type === "function" ? CONFIG.functionName : CONFIG.middlewareName) + `.ts`,
   );
-  try {
-    return await import(srcPath);
-  } catch (error) {
-    const baseMessage = `Failed to import ${type} at ${srcPath}`;
-    if (error instanceof Error) {
-      error.message = baseMessage + ": " + error.message;
-      throw error;
-    } else {
-      throw new Error(`Failed to import ${type} at ${srcPath}: ${error}`, {
-        cause: error,
-      });
-    }
-  }
+  const module = await importModule(srcPath);
+  if (module instanceof Error) throw module;
+  else return module;
 };

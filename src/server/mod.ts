@@ -201,7 +201,7 @@ const requestHandler = async (req: Request): Promise<Response> => {
       const match = findBestMatch(vfs.compiled.middlewares, middlewarePath);
 
       if (match) {
-        functionChain.push(...match.handler.handlers);
+        functionChain.push(...match.handler);
         routeParams = { ...routeParams, ...match.params };
       }
     }
@@ -210,7 +210,7 @@ const requestHandler = async (req: Request): Promise<Response> => {
   // Find matching function handler
   const functionMatch = findBestMatch(vfs.compiled.functions, path);
   if (functionMatch) {
-    functionChain.push(functionMatch.handler.handler);
+    functionChain.push(functionMatch.handler);
     routeParams = { ...routeParams, ...functionMatch.params };
   }
 

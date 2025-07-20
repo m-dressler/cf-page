@@ -1,7 +1,3 @@
-import compareArrayBuffers from "@md/compare-array-buffers";
-import getFileHash from "@md/file-hash";
-import { join } from "@std/path/join";
-import { CONFIG } from "../config.ts";
 import { importCfFunction } from "./importCfFunction.ts";
 import type { PreviewVFS } from "./mod.ts";
 
@@ -12,8 +8,8 @@ export type FunctionHandler = (
 
 /** Cached compiled function and middleware handlers */
 export type CompiledHandlers = {
-  functions: Map<string, { handler: FunctionHandler; hash: ArrayBuffer }>;
-  middlewares: Map<string, { handlers: FunctionHandler[]; hash: ArrayBuffer }>;
+  functions: Map<string, FunctionHandler>;
+  middlewares: Map<string, FunctionHandler[]>;
 };
 
 /** Gets the appropriate handler from a function module based on HTTP method */
@@ -49,16 +45,6 @@ export const compileHandlers = async (
 
   // Compile all functions
   const functionPromises = Array.from(vfs.functions).map(async (path) => {
-    const prev = vfs.compiled.functions.get(path);
-
-    const hash = await getFileHash(
-      join(CONFIG.srcDir, path, CONFIG.functionName + `.ts`),
-    );
-    if (prev && compareArrayBuffers(prev.hash, hash)) {
-      compiled.functions.set(path, prev);
-      return; // Skip import if hash matches
-    }
-
     const module = await importCfFunction(path, "function");
 
     // Create a method-aware wrapper function
@@ -68,21 +54,11 @@ export const compileHandlers = async (
       return handler ? handler(context) : context.next();
     };
 
-    compiled.functions.set(path, { handler: wrappedHandler, hash });
+    compiled.functions.set(path, wrappedHandler);
   });
 
   // Compile all middlewares
   const middlewarePromises = Array.from(vfs.middlewares).map(async (path) => {
-    const prev = vfs.compiled.middlewares.get(path);
-
-    const hash = await getFileHash(
-      join(CONFIG.srcDir, path, CONFIG.middlewareName + `.ts`),
-    );
-    if (prev && compareArrayBuffers(prev.hash, hash)) {
-      compiled.middlewares.set(path, prev);
-      return; // Skip import if hash matches
-    }
-
     const { onRequest } = await importCfFunction(path, "middleware");
 
     const isArray = Array.isArray(onRequest);
@@ -97,10 +73,7 @@ export const compileHandlers = async (
       );
     }
 
-    compiled.middlewares.set(path, {
-      handlers: isArray ? onRequest : [onRequest],
-      hash,
-    });
+    compiled.middlewares.set(path, isArray ? onRequest : [onRequest]);
   });
 
   await Promise.all([...functionPromises, ...middlewarePromises]);
