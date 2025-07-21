@@ -13,7 +13,7 @@
   "exports": "./src/mod.ts",
   "imports": {
     "@cloudflare/workers-types": "npm:@cloudflare/workers-types@^4.20250607.0",
-    "@deno/emit": "jsr:@deno/emit@^0.45.0",
+    "@deno/emit": "jsr:@deno/emit@^0.46.0",
     "@jsdevtools/rehype-inline-svg": "npm:@jsdevtools/rehype-inline-svg@^1.1.4",
     "@md/cli": "jsr:@md/cli@^0.0.2",
     "@md/compare-array-buffers": "jsr:@md/compare-array-buffers@^0.0.0",

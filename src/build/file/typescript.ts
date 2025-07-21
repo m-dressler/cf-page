@@ -18,7 +18,10 @@ export default {
       if (context.abortController?.signal.aborted) throw new AbortError();
       return transpiled.get(url.href)!;
     } else {
-      const { code } = await bundle(url, { minify: context.mode === "prod" });
+      const { code } = await bundle(url, {
+        minify: context.mode === "prod",
+        allowRemote: true,
+      });
       if (context.abortController?.signal.aborted) throw new AbortError();
       return code;
     }
