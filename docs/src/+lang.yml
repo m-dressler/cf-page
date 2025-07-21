@@ -393,6 +393,21 @@ en:
         type: "string"
         default: '"+lang.yml"'
         description: "File name for YAML language/translation files."
+      pluginName:
+        title: "pluginName"
+        type: "string"
+        default: '"+plugin.ts"'
+        description: "File name for YAML language/translation files."
+      bindings:
+        title: "bindings"
+        type: '{ [envVarName: string]: { type: "D1"; id: string }}'
+        default: "[]"
+        description: "Any [bindings](https://developers.cloudflare.com/pages/functions/bindings/) that should be provided."
+      ignore:
+        title: "ignore"
+        type: "Array<string>"
+        default: '["**/.DS_Store"]'
+        description: "Glob patterns to match files that should NOT be part of the final output."
 
   # API Reference Section
   apiReference:
@@ -803,6 +818,21 @@ de:
         type: "string"
         default: '"+lang.yml"'
         description: "Dateiname für YAML-Sprach-/Übersetzungsdateien."
+      pluginName:
+        title: "pluginName"
+        type: "string"
+        default: '"+plugin.ts"'
+        description: "File name for YAML language/translation files."
+      bindings:
+        title: "bindings"
+        type: '{ [envVarName: string]: { type: "D1"; id: string }}'
+        default: "[]"
+        description: "Any [bindings](https://developers.cloudflare.com/pages/functions/bindings/) that should be provided."
+      ignore:
+        title: "ignore"
+        type: "Array<string>"
+        default: '["**/.DS_Store"]'
+        description: "Glob patterns to match files that should NOT be part of the final output."
 
   # API Reference Section
   apiReference:

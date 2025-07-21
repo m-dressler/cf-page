@@ -681,6 +681,45 @@
             {configuration.options.langfileName.description}
           </p>
         </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.pluginName.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.pluginName.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.pluginName.default}</code>
+          </p>
+          <p class="text-sm">
+            {configuration.options.pluginName.description}
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.bindings.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.bindings.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.bindings.default}</code>
+          </p>
+          <p class="text-sm">
+            {@md configuration.options.bindings.description}
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <h4><code>{configuration.options.ignore.title}</code></h4>
+          <p class="text-sm mb-2 text-secondary">
+            <strong>Type:</strong>
+            <code>{configuration.options.ignore.type}</code> |
+            <strong>Default:</strong>
+            <code>{configuration.options.ignore.default}</code>
+          </p>
+          <p class="text-sm">
+            {configuration.options.ignore.description}
+          </p>
+        </div>
       </div>
     </div>
   </section>
