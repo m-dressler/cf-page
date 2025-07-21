@@ -1,4 +1,5 @@
 import { decodeBase64, encodeBase64 } from "jsr:@std/encoding/base64";
+import { decrypt, encrypt } from "./crypto.ts";
 
 export const createToken = async ({
   username,
@@ -8,23 +9,8 @@ export const createToken = async ({
   appSecret: string;
 }): Promise<string> => {
   const rawToken = JSON.stringify({ username, ts: Date.now() });
-  const iv = crypto.getRandomValues(new Uint8Array(12));
-  const token = await crypto.subtle.encrypt(
-    { name: "AES-GCM", length: 256, iv },
-    await crypto.subtle.importKey(
-      "raw",
-      decodeBase64(appSecret),
-      { name: "AES-GCM" },
-      false,
-      ["encrypt"],
-    ),
-    new TextEncoder().encode(rawToken),
-  );
-  // Create a joint buffer with the IV and token
-  const jointBuffer = new Uint8Array(iv.length + token.byteLength);
-  jointBuffer.set(iv, 0);
-  jointBuffer.set(new Uint8Array(token), iv.length);
-  return encodeBase64(jointBuffer);
+  const encrypted = await encrypt({ value: rawToken, secret: appSecret });
+  return encodeBase64(encrypted);
 };
 
 export const decodeToken = async ({
@@ -35,22 +21,10 @@ export const decodeToken = async ({
   appSecret: string;
 }): Promise<{ username: string; ts: number } | null> => {
   try {
-    const tokenArray = decodeBase64(token);
-    const iv = tokenArray.slice(0, 12);
-    const tokenEncrypted = tokenArray.slice(12);
-
-    const tokenDecryptedRaw = await crypto.subtle.decrypt(
-      { name: "AES-GCM", length: 256, iv },
-      await crypto.subtle.importKey(
-        "raw",
-        decodeBase64(appSecret),
-        { name: "AES-GCM" },
-        false,
-        ["decrypt"],
-      ),
-      tokenEncrypted,
-    );
-
+    const tokenDecryptedRaw = await decrypt({
+      value: decodeBase64(token),
+      secret: appSecret,
+    });
     const tokenDecrypted = JSON.parse(
       new TextDecoder().decode(tokenDecryptedRaw),
     );
