@@ -2,6 +2,15 @@ import { decodeBase64 } from "jsr:@std/encoding/base64";
 
 const ALGORITHM = "AES-GCM";
 
+const getKey = (secret: string, keyUsage: KeyUsage) =>
+  crypto.subtle.importKey(
+    "raw",
+    decodeBase64(secret),
+    { name: ALGORITHM },
+    false,
+    [keyUsage],
+  );
+
 /**
  * @param params
  * @param params.value The value to encrypt
@@ -21,13 +30,7 @@ export const encrypt = async ({
 
   const iv = crypto.getRandomValues(new Uint8Array(12));
 
-  const key = await crypto.subtle.importKey(
-    "raw",
-    decodeBase64(secret),
-    ALGORITHM,
-    false,
-    ["encrypt"],
-  );
+  const key = await getKey(secret, "encrypt");
   const encrypted = await crypto.subtle.encrypt(
     { name: ALGORITHM, length: 256, iv },
     key,
@@ -56,19 +59,8 @@ export const decrypt = async ({
   secret: string;
 }) => {
   const iv = value.slice(0, 12);
-  const tokenEncrypted = value.slice(12);
+  const data = value.slice(12);
 
-  const decrypted = await crypto.subtle.decrypt(
-    { name: "AES-GCM", length: 256, iv },
-    await crypto.subtle.importKey(
-      "raw",
-      decodeBase64(secret),
-      { name: "AES-GCM" },
-      false,
-      ["decrypt"],
-    ),
-    tokenEncrypted,
-  );
-
-  return decrypted;
+  const key = await getKey(secret, "decrypt");
+  return crypto.subtle.decrypt({ name: ALGORITHM, length: 256, iv }, key, data);
 };
