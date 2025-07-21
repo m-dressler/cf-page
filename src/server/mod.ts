@@ -165,8 +165,8 @@ const loadAssets = (path: string, method: "GET" | "HEAD"): Response => {
   let content = vfile.buildContents!;
 
   // Add live reload script for HTML and SVG files
-  const isSvg = vfile.srcExtension === "svg";
-  const needsRefreshScript = vfile.srcExtension === "html" || isSvg;
+  const isSvg = vfile.outExtension === "svg";
+  const needsRefreshScript = vfile.outExtension === "html" || isSvg;
 
   if (needsRefreshScript) content = addLiveReloadScript(content, isSvg);
 
