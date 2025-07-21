@@ -1,6 +1,5 @@
 /// <reference lib="deno.ns" />
-// import type { BuildContext } from "jsr:@md/cf-page";
-import type { PluginFunction } from "../src/mod.ts";
+import type { PluginFunction } from "jsr:@md/cf-page";
 import { encrypt } from "./lib/server/crypto.ts";
 
 const BLOG_REGEX = /^\/blogs\/([^\/]+).json$/;
