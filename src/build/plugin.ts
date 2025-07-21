@@ -9,6 +9,24 @@ export type PluginFunction = (ctx: BuildContext) => void | Promise<void>;
 
 type Plugin = { before?: PluginFunction; after?: PluginFunction };
 
+const validatePlugin = (module: Record<string, unknown>): Error | null => {
+  const baseError = `Invalid plugin ${CONFIG.pluginName}: `;
+  // Must have either before or after
+  if (!("before" in module || "after" in module)) {
+    return new Error(baseError + "export at least one of `before` or `after`");
+  }
+
+  for (const key of ["before", "after"] as const) {
+    const type = typeof module[key];
+    if (key in module && type !== "function") {
+      return new Error(
+        `${baseError}\`${key}\` must be a function, got \`${type}\``,
+      );
+    }
+  }
+  return null;
+};
+
 export const loadPlugin = async (): Promise<{
   plugin: Plugin;
   error?: Error;
@@ -22,22 +40,9 @@ export const loadPlugin = async (): Promise<{
     return { plugin: {}, error: result };
   }
 
-  const { before, after } = result;
-  if (!(before || after)) {
-    return {
-      plugin: {},
-      error: new Error("Invalid plugin: please export `before` or `after`"),
-    };
+  const validateError = validatePlugin(result);
+  if (validateError) return { plugin: {}, error: validateError };
+  else {
+    return { plugin: { before: result.before, after: result.after } as Plugin };
   }
-
-  // Ensure `before` and `after` are functions
-  if (typeof before !== "function" || typeof after !== "function") {
-    const invalid = typeof before !== "function" ? "`before`" : "`after`";
-    return {
-      plugin: {},
-      error: new Error(`Invalid plugin: ${invalid} must be a function`),
-    };
-  }
-
-  return { plugin: { before, after } as Plugin };
 };
