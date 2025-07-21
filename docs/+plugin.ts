@@ -1,4 +1,5 @@
 /// <reference lib="deno.ns" />
+import type { PluginFunction } from "../src/mod.ts";
 /**
  * @module docs/zip-starter.ts
  * @description This module provides a task to zip the starter files into `./src`.
@@ -7,7 +8,6 @@ import { walk } from "jsr:@std/fs/walk";
 import { TarStream, type TarStreamInput } from "jsr:@std/tar/tar-stream";
 
 const STARTER_DIR = "../starter";
-const ZIP_PATH = "./src/starter.tar.gz";
 
 /** Creates a readable stream of TarStreamInput from walking the starter directory */
 const createTarInputStream = async function* (): AsyncGenerator<
@@ -35,7 +35,22 @@ const createTarInputStream = async function* (): AsyncGenerator<
   }
 };
 
-await ReadableStream.from(createTarInputStream())
-  .pipeThrough(new TarStream())
-  .pipeThrough(new CompressionStream("gzip"))
-  .pipeTo((await Deno.create(ZIP_PATH)).writable);
+export const after: PluginFunction = async ({ vfs, mode }) => {
+  if (mode === "dev") return; // No need to create zip for preview
+
+  const stream = ReadableStream.from(createTarInputStream())
+    .pipeThrough(new TarStream())
+    .pipeThrough(new CompressionStream("gzip"));
+  const buildContents = await new Response(stream).arrayBuffer();
+
+  vfs.addVFile(
+    {
+      srcPath: "/starter.tar.gz",
+      outPath: "/starter.tar.gz",
+      srcExtension: "tar.gz",
+      srcHash: new ArrayBuffer(),
+      buildContents,
+      status: "built",
+    } as const,
+  );
+};

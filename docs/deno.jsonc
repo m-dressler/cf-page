@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "build": "deno -RW zip-starter.ts && deno run -A ../src/mod.ts build"
+    "build": "deno run -A ../src/mod.ts build"
   },
   "compilerOptions": {
     "lib": ["esnext", "dom"]
