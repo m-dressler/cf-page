@@ -8,6 +8,7 @@ import { devServer } from "./server/mod.ts";
 import { logPerformanceMetrics } from "./util/logPerformance.ts";
 
 export type { BuildContext } from "./build/file/mod.ts";
+export type { PluginFunction } from "./build/plugin.ts";
 export type { LanguageFiles } from "./build/translations.ts";
 export { VFile, VFS } from "./build/vfs/mod.ts";
 

@@ -89,7 +89,7 @@ export default {
   inputExtensions: ["html"],
   outputExtension: "html",
   build: async (vFile, context) => {
-    let rawHTML = await Deno.readTextFile(vFile.srcPath);
+    let rawHTML = vFile.srcContents ?? (await Deno.readTextFile(vFile.srcPath));
     if (context.abortController?.signal.aborted) throw new AbortError();
 
     // Process Svelte-style blocks before AST processing (they span multiple elements)

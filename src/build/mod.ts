@@ -1,5 +1,7 @@
+import { ensureError } from "@md/ensure-error/ensure-error";
 import { AbortError } from "./abortError.ts";
 import { type BuildContext, buildFile } from "./file/mod.ts";
+import { loadPlugin } from "./plugin.ts";
 import { gatherVFS } from "./vfs/gatherVFS.ts";
 import type { VFS } from "./vfs/mod.ts";
 
@@ -25,8 +27,12 @@ export const build = async (
   const warnings: string[] = [];
   const errors: Error[] = [];
 
-  /** A list of all files in the source directory with their meta info */
-  if (options.abortController?.signal.aborted) throw new AbortError();
+  const { plugin, error: pluginLoadError } = await loadPlugin();
+  if (pluginLoadError) errors.push(pluginLoadError);
+
+  if (options.abortController?.signal.aborted) {
+    throw new AbortError();
+  }
 
   /** The buildContext object passed to each `buildFile` call */
   const buildContext: BuildContext = {
@@ -37,10 +43,26 @@ export const build = async (
     errors,
   };
 
+  if (plugin.before) {
+    try {
+      await plugin.before(buildContext);
+    } catch (error) {
+      errors.push(ensureError(error));
+    }
+  }
+
   // Process all source files
   await Promise.all(
     vfs.source.values().map((vFile) => buildFile(vFile, buildContext)),
   );
+
+  if (plugin.after) {
+    try {
+      await plugin.after(buildContext);
+    } catch (error) {
+      errors.push(ensureError(error));
+    }
+  }
 
   return { vfs, warnings, errors };
 };

@@ -30,6 +30,8 @@ const CONFIG_SCHEMA = z.object({
   layoutName: z.string().default("+layout.html"),
   /** The file name for language files (must be YAML) */
   langfileName: z.string().default("+lang.yml"),
+  /** The file name for the custom plugin loader */
+  pluginName: z.string().default("+plugin.ts"),
   /** Any bindings that should be provided {@see https://developers.cloudflare.com/pages/functions/bindings/} */
   bindings: z
     .record(z.string(), z.object({ type: z.enum(["D1"]), id: z.uuid() }))

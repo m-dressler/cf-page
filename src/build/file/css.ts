@@ -10,7 +10,7 @@ export default {
   inputExtensions: ["css"],
   outputExtension: "css",
   build: async (vFile, context) => {
-    const css = await Deno.readTextFile(vFile.srcPath);
+    const css = vFile.srcContents ?? (await Deno.readTextFile(vFile.srcPath));
     if (context.abortController?.signal.aborted) throw new AbortError();
 
     const processor = postcss([

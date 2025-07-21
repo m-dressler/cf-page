@@ -387,7 +387,7 @@ export const devServer = async (
     Deno.exit(1);
   }
 
-  const watcher = Deno.watchFs(CONFIG.srcDir);
+  const watcher = Deno.watchFs([CONFIG.srcDir, CONFIG.pluginName]);
   /** The latest abort controller to cancel interlacing builds */
   let abortController: AbortController | null = null;
   // Listen to changes and rebuild using VFS when changes come in
