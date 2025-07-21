@@ -25,7 +25,7 @@ export class VFile {
   /** Time taken to process this file in milliseconds */
   public processingTime?: number;
   /** The contents to use if this file never existed on the filesystem (such as when using +plugin.ts) */
-  public srcContents?: string;
+  public srcContents?: string | BufferSource;
 
   constructor(params: {
     srcPath: string;
@@ -34,7 +34,7 @@ export class VFile {
     srcHash: ArrayBuffer;
     outPath: string;
     language?: string;
-    srcContents?: string;
+    srcContents?: string | BufferSource;
   }) {
     this.srcPath = params.srcPath;
     this.srcExtension = params.srcExtension;

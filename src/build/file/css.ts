@@ -2,6 +2,7 @@ import tailwindPlugin from "@tailwindcss/postcss";
 import autoprefixer from "autoprefixer";
 import cssnanoPlugin from "cssnano";
 import postcss from "postcss";
+import { bufferAsString } from "../../util/buffer.ts";
 import { AbortError } from "../abortError.ts";
 import type { FileBuilder } from "./mod.ts";
 
@@ -10,7 +11,9 @@ export default {
   inputExtensions: ["css"],
   outputExtension: "css",
   build: async (vFile, context) => {
-    const css = vFile.srcContents ?? (await Deno.readTextFile(vFile.srcPath));
+    const css = vFile.srcContents != null
+      ? bufferAsString(vFile.srcContents)
+      : await Deno.readTextFile(vFile.srcPath);
     if (context.abortController?.signal.aborted) throw new AbortError();
 
     const processor = postcss([
