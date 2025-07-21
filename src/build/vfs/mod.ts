@@ -34,7 +34,9 @@ export class VFile {
     srcHash: ArrayBuffer;
     outPath: string;
     language?: string;
+    buildContents?: string | BufferSource;
     srcContents?: string | BufferSource;
+    status?: "pending" | "skipped" | "processing" | "built" | "deleted";
   }) {
     this.srcPath = params.srcPath;
     this.srcExtension = params.srcExtension;
@@ -45,7 +47,9 @@ export class VFile {
     this.needsTranslation = params.needsTranslation ?? false;
     this.srcHash = params.srcHash;
     this.language = params.language;
+    this.buildContents = params.buildContents;
     this.srcContents = params.srcContents;
+    if (params.status) this.status = params.status;
   }
 }
 
