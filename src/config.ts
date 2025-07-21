@@ -36,6 +36,8 @@ const CONFIG_SCHEMA = z.object({
   bindings: z
     .record(z.string(), z.object({ type: z.enum(["D1"]), id: z.uuid() }))
     .default({}),
+  /** Glob patterns to match files that should NOT be part of the final output */
+  ignore: z.array(z.string()).default(["**/.DS_Store"]),
 });
 
 let denoJson: unknown;

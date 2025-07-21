@@ -1,6 +1,7 @@
 import getFileHash from "@md/file-hash";
 import { walk } from "@std/fs/walk";
 import { SEPARATOR } from "@std/path/constants";
+import { globToRegExp } from "@std/path/glob-to-regexp";
 import { parse } from "@std/path/parse";
 import { parse as parseYaml } from "@std/yaml";
 import { CONFIG } from "../../config.ts";
@@ -15,6 +16,19 @@ import {
 import type { VFile } from "./mod.ts";
 import { VFS } from "./mod.ts";
 
+/** Converts an array of glob strings to a single RegExp to test paths against */
+const globsToRegExp = (globs: string[]): RegExp | null => {
+  if (!globs.length) return null;
+
+  // Convert each glob to a RegExp and get its source string.
+  const regexParts = globs.map(
+    (glob) => globToRegExp(glob).source.slice(1, -1), // Remove the `^` from the start and `$` from the end of each source string for
+  );
+  // 3. Join the parts with `|` (OR) and wrap them in a non-capturing group `(?:...)`.
+  // 4. Add `^` and `$` to ensure the new RegExp matches the entire path.
+  return new RegExp(`^(?:${regexParts.join("|")})$`);
+};
+
 /** Loads all files from the source directory with their computed hash */
 export const gatherVFS = async (): Promise<VFS> => {
   const vfs = new VFS();
@@ -25,13 +39,15 @@ export const gatherVFS = async (): Promise<VFS> => {
     : [];
   const defaultLanguage = await getDefaultLanguage();
 
+  const ignoreRegex = globsToRegExp(CONFIG.ignore);
+
   try {
     const SRC_DIR_PATH_LEN = CONFIG.srcDir.length;
     for await (const file of walk(CONFIG.srcDir, { includeDirs: false })) {
-      if (!file.isFile) continue;
-
       /** The relative path */
       const relPath = file.path.substring(SRC_DIR_PATH_LEN);
+      if (!file.isFile || ignoreRegex?.test(relPath)) continue;
+
       const pathMeta = parse(relPath);
 
       if (pathMeta.name === CONFIG.functionName) {
