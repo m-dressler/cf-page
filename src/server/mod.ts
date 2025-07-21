@@ -1,6 +1,7 @@
 import { isError } from "@md/ensure-error/is-error";
 import resolvable from "@md/resolvable";
 import { contentType } from "@std/media-types";
+import { dirname } from "@std/path/dirname";
 import { AbortError } from "../build/abortError.ts";
 import { build } from "../build/mod.ts";
 import type { VFS } from "../build/vfs/mod.ts";
@@ -387,11 +388,20 @@ export const devServer = async (
     Deno.exit(1);
   }
 
-  const watcher = Deno.watchFs([CONFIG.srcDir, CONFIG.pluginName]);
+  const watcher = Deno.watchFs([CONFIG.srcDir, dirname(CONFIG.pluginName)]);
   /** The latest abort controller to cancel interlacing builds */
   let abortController: AbortController | null = null;
   // Listen to changes and rebuild using VFS when changes come in
   for await (const event of watcher) {
+    // Check if the change affects +plugin.ts or something inside srcDir
+    if (
+      !event.paths.some(
+        (p) => p.endsWith(CONFIG.pluginName) || p.startsWith(CONFIG.srcDir),
+      )
+    ) {
+      continue;
+    }
+
     // If there is a current build process, tell it to abort
     if (abortController) abortController.abort();
     // Create an abort controller for this event
