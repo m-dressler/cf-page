@@ -13,8 +13,7 @@ import {
   type LangFileContent,
   type TranslationKV,
 } from "../translations.ts";
-import type { VFile } from "./mod.ts";
-import { VFS } from "./mod.ts";
+import { VFile, VFS } from "./mod.ts";
 
 /** Converts an array of glob strings to a single RegExp to test paths against */
 const globsToRegExp = (globs: string[]): RegExp | null => {
@@ -127,11 +126,13 @@ export const gatherVFS = async (): Promise<VFS> => {
           vFileParams.language = defaultLanguage ?? undefined;
 
           for (const language of supportedLanguages) {
-            vfs.addVFile({
+            const vFile = new VFile({
               ...vFileParams,
               outPath: `/${language}` + vFileParams.outPath,
               language,
             });
+            vfs.source.set(`${vFile.srcPath}:${language}`, vFile);
+            vfs.build.set(vFile.outPath, vFile);
           }
         }
 
