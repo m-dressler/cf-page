@@ -9,7 +9,7 @@ import type { VFS } from "../vfs/mod.ts";
 
 const writeFunction = async (inPath: string, outPath: string) => {
   const inURL = new URL(inPath, "file://");
-  const { code } = await bundle(inURL);
+  const { code } = await bundle(inURL, { allowRemote: true });
   await ensureDir(dirname(outPath));
   await Deno.writeTextFile(outPath, code);
 };
@@ -36,11 +36,7 @@ export const writeVFS = async (vfs: VFS): Promise<void> => {
       } else {
         await Deno.writeFile(
           outPath,
-          new Uint8Array(
-            content.buffer,
-            content.byteOffset,
-            content.byteLength,
-          ),
+          new Uint8Array(content.buffer, content.byteOffset, content.byteLength)
         );
       }
     }
@@ -51,7 +47,7 @@ export const writeVFS = async (vfs: VFS): Promise<void> => {
     const inPath = join(
       CONFIG.srcDir,
       functionPath,
-      `${CONFIG.functionName}.ts`,
+      `${CONFIG.functionName}.ts`
     );
     const outPath = join("./functions", functionPath + ".js");
     await writeFunction(inPath, outPath);
@@ -62,7 +58,7 @@ export const writeVFS = async (vfs: VFS): Promise<void> => {
     const inPath = join(
       CONFIG.srcDir,
       middlewarePath,
-      `${CONFIG.middlewareName}.ts`,
+      `${CONFIG.middlewareName}.ts`
     );
     const outPath = join("./functions", middlewarePath, "_middleware.js");
     await writeFunction(inPath, outPath);
