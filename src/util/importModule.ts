@@ -7,9 +7,9 @@ export const importModule = async (
   path: string,
 ): Promise<Record<string, unknown> | Error> => {
   const hash = await getFileHash(path);
-  path += `?v=${encodeBase64Url(hash)}${extname(path)}`;
+  path = `file://${path}?v=${encodeBase64Url(hash)}${extname(path)}`;
   try {
-    return await import("file://" + path);
+    return await import(path);
   } catch (error) {
     const baseMessage = `Failed to import module ${path}: `;
     if (isError(error)) {
