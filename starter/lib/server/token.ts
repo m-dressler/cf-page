@@ -1,5 +1,5 @@
 import { decodeBase64, encodeBase64 } from "jsr:@std/encoding/base64";
-import { decrypt, encrypt } from "./crypto.ts";
+import { decrypt, encrypt } from "../common/crypto.ts";
 
 export const createToken = async ({
   username,
