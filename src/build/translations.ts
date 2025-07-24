@@ -2,7 +2,7 @@ import { exists } from "@std/fs/exists";
 import * as YAML from "@std/yaml";
 import { CONFIG } from "../config.ts";
 
-export type TranslationValue = string | string[] | boolean;
+export type TranslationValue = string | (string | TranslationKV)[] | boolean;
 
 /** A map from translation key to translation value */
 export type TranslationKV = { [key: string]: TranslationValue | TranslationKV };

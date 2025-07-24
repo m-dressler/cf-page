@@ -4,6 +4,7 @@ import rehypePresetMinify from "rehype-preset-minify";
 import rehypeSlug from "rehype-slug";
 import { bufferAsString } from "../../util/buffer.ts";
 import { AbortError } from "../abortError.ts";
+import type { TranslationKV } from "../translations.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
 import { cacheBustPlugin } from "./html/cacheBustPlugin.ts";
 import { slotPlugin } from "./html/slotPlugin.ts";
@@ -50,11 +51,12 @@ export const processSvelteBlocks = (
 
       if (Array.isArray(result)) {
         return result
-          .map((item: string) => {
+          .map((item) => {
+            const variables: TranslationKV = { [itemVar]: item };
             // Use the markdown-aware processing for the template with item substitution
             const hastNodes = processMixedContent(
               template,
-              (key) => key === itemVar ? item : translate(key),
+              (key) => translate(key, variables),
             );
             return hastToHtml(hastNodes);
           })

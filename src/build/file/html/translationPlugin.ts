@@ -7,7 +7,10 @@ import type { TranslationKV, TranslationValue } from "../../translations.ts";
 import type { VFile, VFS } from "../../vfs/mod.ts";
 import type { BuildContext } from "../mod.ts";
 
-type TranslateFunction = (key: string) => TranslationValue | null;
+type TranslateFunction = (
+  key: string,
+  localVariables?: TranslationKV,
+) => TranslationValue | null;
 
 /** Gets translation lookup function for current context */
 export const getTranslationFunction = (
@@ -46,9 +49,14 @@ export const getTranslationFunction = (
     "cf:year": new Date().getFullYear() + "",
   });
 
-  return (key) => {
+  return (key, localVariables) => {
+    /** Add any local variables if applicable */
+    const translationsLocal = localVariables
+      ? [localVariables, ...translations]
+      : translations;
+
     const keyParts = key.split(".");
-    for (let translation of translations) {
+    for (let translation of translationsLocal) {
       for (let i = 0; i < keyParts.length; ++i) {
         const val = translation[keyParts[i]];
         if (!val) break;
@@ -110,7 +118,7 @@ const processTextTranslations = (
   content: string,
   translate: TranslateFunction,
   preserveArrays = false,
-): { result: string | string[] | TranslationKV[]; hasMarkdown: boolean } => {
+): { result: string | (string | TranslationKV)[]; hasMarkdown: boolean } => {
   // Check if this is a simple array lookup that should be preserved
   const simpleArrayMatch = content.match(/^\{([^}]+)\}$/);
   if (simpleArrayMatch && preserveArrays) {

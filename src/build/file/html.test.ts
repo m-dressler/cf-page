@@ -472,6 +472,55 @@ Deno.test("Svelte blocks - {#each} with markdown in template", () => {
   );
 });
 
+Deno.test("Svelte blocks - {#each} with nested keys", () => {
+  const vFile = createMockVFile("en", "/index.html");
+  const vfs = createMockVFS({
+    en: {
+      nested: Array(3)
+        .fill(0)
+        .map(
+          (_, i) => ({
+            title: "Title " + (i + 1),
+            description: "Description " + (i + 1),
+          } as const),
+        ),
+    },
+  });
+
+  const html = `
+    <ul>
+      {#each nested as item}
+        <li>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
+        </li>
+      {/each}
+    </ul>
+  `;
+
+  const result = processSvelteBlocks(html, vfs, vFile);
+
+  assertEquals(
+    result.replace(/\n +\n/g, "\n"),
+    `
+    <ul>
+        <li>
+          <h3>Title 1</h3>
+          <p>Description 1</p>
+        </li>
+        <li>
+          <h3>Title 2</h3>
+          <p>Description 2</p>
+        </li>
+        <li>
+          <h3>Title 3</h3>
+          <p>Description 3</p>
+        </li>
+    </ul>
+  `,
+  );
+});
+
 Deno.test("Svelte blocks - {#if} with truthy condition", () => {
   const vFile = createMockVFile("en", "/index.html");
   const vfs = createMockVFS({});
