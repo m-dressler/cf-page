@@ -3,15 +3,17 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { type Transformer, unified } from "unified";
 import { visit } from "unist-util-visit";
-import type { TranslationKV } from "../../translations.ts";
+import type { TranslationKV, TranslationValue } from "../../translations.ts";
 import type { VFile, VFS } from "../../vfs/mod.ts";
 import type { BuildContext } from "../mod.ts";
+
+type TranslateFunction = (key: string) => TranslationValue | null;
 
 /** Gets translation lookup function for current context */
 export const getTranslationFunction = (
   vFile: VFile,
   vfs: VFS,
-): (key: string) => string | string[] | boolean | null => {
+): TranslateFunction => {
   const translations: TranslationKV[] = [];
 
   const pathParts = vFile.outPath.split("/");
@@ -46,7 +48,7 @@ export const getTranslationFunction = (
     ]),
   );
 
-  return (key: string): string | string[] | boolean | null => {
+  return (key) => {
     const keyParts = key.split(".");
     for (let translation of translations) {
       for (let i = 0; i < keyParts.length; ++i) {
@@ -108,9 +110,9 @@ const parseMarkdownToHast = (text: string): (Element | Text)[] => {
 /** Process translation variables in text content with markdown detection */
 const processTextTranslations = (
   content: string,
-  translate: (key: string) => string | string[] | boolean | null,
+  translate: TranslateFunction,
   preserveArrays = false,
-): { result: string | string[]; hasMarkdown: boolean } => {
+): { result: string | string[] | TranslationKV[]; hasMarkdown: boolean } => {
   // Check if this is a simple array lookup that should be preserved
   const simpleArrayMatch = content.match(/^\{([^}]+)\}$/);
   if (simpleArrayMatch && preserveArrays) {
@@ -225,7 +227,7 @@ const processTextTranslations = (
 /** Process mixed content with selective markdown parsing */
 export const processMixedContent = (
   content: string,
-  translate: (key: string) => string | string[] | boolean | null,
+  translate: TranslateFunction,
 ): (Element | Text)[] => {
   const elements: (Element | Text)[] = [];
   let currentText = "";

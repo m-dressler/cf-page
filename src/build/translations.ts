@@ -2,11 +2,10 @@ import { exists } from "@std/fs/exists";
 import * as YAML from "@std/yaml";
 import { CONFIG } from "../config.ts";
 
+export type TranslationValue = string | string[] | boolean;
+
 /** A map from translation key to translation value */
-export type TranslationKV = Map<
-  string,
-  string | string[] | boolean | TranslationKV
->;
+export type TranslationKV = Map<string, TranslationValue | TranslationKV>;
 /** Language file structure with language keys and global fallback */
 export type LangFileContent = {
   global?: TranslationKV;
