@@ -34,7 +34,11 @@ const hastToHtml = (nodes: ElementContent[]): string => {
 };
 
 /** Process Svelte-style template blocks in HTML strings */
-const processSvelteBlocks = (html: string, vfs: VFS, vFile: VFile): string => {
+export const processSvelteBlocks = (
+  html: string,
+  vfs: VFS,
+  vFile: VFile,
+): string => {
   const translate = getTranslationFunction(vFile, vfs);
   let processed = html;
 

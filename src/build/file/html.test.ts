@@ -2,6 +2,7 @@ import { assertEquals } from "jsr:@std/assert";
 import type { ElementContent } from "npm:@types/hast@3.0.4";
 import type { TranslationKV } from "../translations.ts";
 import { type VFile, VFS } from "../vfs/mod.ts";
+import { processSvelteBlocks } from "./html.ts";
 import {
   getTranslationFunction,
   processMixedContent,
@@ -21,7 +22,12 @@ const createMockVFile = (language: string, outPath: string): VFile => ({
 
 /** A version of {@link TranslationKV} that doesn't require the Map constructor */
 type TranslationKVSimple = {
-  [K: string]: string | string[] | boolean | TranslationKVSimple;
+  [K: string]:
+    | string
+    | string[]
+    | boolean
+    | TranslationKVSimple
+    | TranslationKVSimple[];
 };
 /** A version of {@link LanguageFiles} that doesn't require the Map constructor */
 type LanguageFilesSimple = {
@@ -453,90 +459,6 @@ Deno.test("processMixedContent - array translation values", () => {
   ]);
 });
 
-// Now let's add tests for the processSvelteBlocks function
-// We need to import it or test it indirectly through the html processor
-
-// Test helper to simulate Svelte block processing
-const mockProcessSvelteBlocks = (
-  html: string,
-  vfs: VFS,
-  vFile: VFile,
-): string => {
-  const translate = getTranslationFunction(vFile, vfs);
-  let processed = html;
-
-  // Process {#each} blocks (simplified version for testing)
-  processed = processed.replace(
-    /\{#each\s+([^}]+)\s+as\s+(\w+)\}([\s\S]*?)\{\/each\}/g,
-    (match, arrayExpr, itemVar, template) => {
-      const result = translate(arrayExpr.trim());
-
-      if (Array.isArray(result)) {
-        return result
-          .map((item: string) => {
-            // Replace item variable in template with actual value
-            const processedTemplate = template.replace(
-              new RegExp(`\\{${itemVar}\\}`, "g"),
-              item,
-            );
-
-            // For testing, we'll use a simple markdown check
-            if (
-              processedTemplate.includes("**") ||
-              processedTemplate.includes("[") ||
-              processedTemplate.includes("`")
-            ) {
-              // Simulate markdown processing
-              return processedTemplate
-                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-                .replace(/`([^`]+)`/g, "<code>$1</code>");
-            }
-
-            return processedTemplate;
-          })
-          .join("");
-      }
-
-      return match;
-    },
-  );
-
-  // Process {#if} blocks
-  processed = processed.replace(
-    /\{#if\s+([^}]+)\}([\s\S]*?)(?:\{:else\}([\s\S]*?))?\{\/if\}/g,
-    (_, condition, ifContent, elseContent = "") => {
-      const result = translate(condition.trim());
-
-      const isTruthy = result !== null &&
-        result !== false &&
-        ((typeof result === "string" &&
-          result.length > 0 &&
-          result !== "false") ||
-          (Array.isArray(result) && result.length > 0) ||
-          result === true);
-
-      const selectedContent = isTruthy ? ifContent : elseContent;
-
-      // Simple markdown processing for testing
-      if (
-        selectedContent.includes("**") ||
-        selectedContent.includes("[") ||
-        selectedContent.includes("`")
-      ) {
-        return selectedContent
-          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-          .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-          .replace(/`([^`]+)`/g, "<code>$1</code>");
-      }
-
-      return selectedContent;
-    },
-  );
-
-  return processed;
-};
-
 Deno.test("Svelte blocks - {#each} with simple array", () => {
   const vFile = createMockVFile("en", "/index.html");
   const vfs = createMockVFS({});
@@ -549,7 +471,7 @@ Deno.test("Svelte blocks - {#each} with simple array", () => {
     </ul>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("<li>home</li>"), true);
   assertEquals(result.includes("<li>about</li>"), true);
@@ -571,12 +493,12 @@ Deno.test("Svelte blocks - {#each} with markdown in template", () => {
   const html = `
     <div>
       {#each features as feature}
-        <p>{feature}</p>
+        <p>{@md feature}</p>
       {/each}
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("<strong>Feature 1</strong>"), true);
   assertEquals(result.includes("<code>Feature 2</code>"), true);
@@ -600,7 +522,7 @@ Deno.test("Svelte blocks - {#if} with truthy condition", () => {
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("Feature is enabled!"), true);
   assertEquals(result.includes("Feature is disabled."), false);
@@ -620,7 +542,7 @@ Deno.test("Svelte blocks - {#if} with falsy condition", () => {
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("Welcome back!"), false);
   assertEquals(result.includes("Please log in."), true);
@@ -642,13 +564,10 @@ Deno.test("Svelte blocks - {#if} with markdown in content", () => {
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
-  assertEquals(result.includes("<strong>bold</strong>"), true);
-  assertEquals(
-    result.includes('<a href="https://example.com">linked</a>'),
-    true,
-  );
+  assertEquals(result.includes("**bold**"), true);
+  assertEquals(result.includes("[linked](https://example.com)"), true);
 });
 
 Deno.test("Svelte blocks - nested {#each} with complex content", () => {
@@ -667,14 +586,14 @@ Deno.test("Svelte blocks - nested {#each} with complex content", () => {
     <div class="content">
       {#each sections as section}
         <div class="section">
-          <h3>{section}</h3>
+          <h3>{@md section}</h3>
           <p>Section content here</p>
         </div>
       {/each}
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("<strong>Introduction</strong>"), true);
   assertEquals(result.includes("<code>Code Examples</code>"), true);
@@ -698,10 +617,10 @@ Deno.test("Svelte blocks - {#if} without else clause", () => {
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("Always visible"), true);
-  assertEquals(result.includes("<strong>Conditionally visible</strong>"), true);
+  assertEquals(result.includes("**Conditionally visible**"), true);
 });
 
 Deno.test("Svelte blocks - mixed {#if} and {#each} blocks", () => {
@@ -723,12 +642,12 @@ Deno.test("Svelte blocks - mixed {#if} and {#each} blocks", () => {
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("Available Features:"), true);
-  assertEquals(result.includes("<strong>home</strong>"), true);
-  assertEquals(result.includes("<strong>about</strong>"), true);
-  assertEquals(result.includes("<strong>contact</strong>"), true);
+  assertEquals(result.includes("**home**"), true);
+  assertEquals(result.includes("**about**"), true);
+  assertEquals(result.includes("**contact**"), true);
   assertEquals(result.includes("No features available"), false);
 });
 
@@ -750,7 +669,7 @@ Deno.test("Edge cases - empty array in {#each}", () => {
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   // Should have no loop content, just the after text
   assertEquals(result.includes("After loop"), true);
@@ -771,7 +690,7 @@ Deno.test("Edge cases - non-existent variable in {#if}", () => {
     </div>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("Should not appear"), false);
   assertEquals(result.includes("Fallback content"), true);
@@ -831,12 +750,12 @@ Deno.test("Edge cases - nested markdown in {#each}", () => {
   const html = `
     <ul>
       {#each markdownItems as item}
-        <li>{item}</li>
+        <li>{@md item}</li>
       {/each}
     </ul>
   `;
 
-  const result = mockProcessSvelteBlocks(html, vfs, vFile);
+  const result = processSvelteBlocks(html, vfs, vFile);
 
   assertEquals(result.includes("<strong>Bold item</strong>"), true);
   assertEquals(result.includes("<code>code</code>"), true);
