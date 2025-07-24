@@ -577,149 +577,18 @@
     <div class="mb-8">
       <h3>{configuration.optionsTitle}</h3>
       <div class="config-grid">
+        {#each configuration.options as config}
         <div class="feature-card">
-          <h4><code>{configuration.options.port.title}</code></h4>
+          <h4><code>{config.title}</code></h4>
           <p class="text-sm mb-2 text-secondary">
             <strong>Type:</strong>
-            <code>{configuration.options.port.type}</code> |
+            <code>{config.type}</code> |
             <strong>Default:</strong>
-            <code>{configuration.options.port.default}</code>
+            <code>{config.default}</code>
           </p>
-          <p class="text-sm">{configuration.options.port.description}</p>
+          <p class="text-sm">{@md config.description}</p>
         </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.srcDir.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.srcDir.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.srcDir.default}</code>
-          </p>
-          <p class="text-sm">{configuration.options.srcDir.description}</p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.outDir.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.outDir.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.outDir.default}</code>
-          </p>
-          <p class="text-sm">{configuration.options.outDir.description}</p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.bundle.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.bundle.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.bundle.default}</code>
-          </p>
-          <p class="text-sm">{configuration.options.bundle.description}</p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.index.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.index.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.index.default}</code>
-          </p>
-          <p class="text-sm">{configuration.options.index.description}</p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.functionName.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.functionName.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.functionName.default}</code>
-          </p>
-          <p class="text-sm">
-            {configuration.options.functionName.description}
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.middlewareName.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.middlewareName.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.middlewareName.default}</code>
-          </p>
-          <p class="text-sm">
-            {configuration.options.middlewareName.description}
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.layoutName.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.layoutName.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.layoutName.default}</code>
-          </p>
-          <p class="text-sm">{configuration.options.layoutName.description}</p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.langfileName.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.langfileName.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.langfileName.default}</code>
-          </p>
-          <p class="text-sm">
-            {configuration.options.langfileName.description}
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.pluginName.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.pluginName.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.pluginName.default}</code>
-          </p>
-          <p class="text-sm">
-            {configuration.options.pluginName.description}
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.bindings.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.bindings.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.bindings.default}</code>
-          </p>
-          <p class="text-sm">
-            {@md configuration.options.bindings.description}
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <h4><code>{configuration.options.ignore.title}</code></h4>
-          <p class="text-sm mb-2 text-secondary">
-            <strong>Type:</strong>
-            <code>{configuration.options.ignore.type}</code> |
-            <strong>Default:</strong>
-            <code>{configuration.options.ignore.default}</code>
-          </p>
-          <p class="text-sm">
-            {configuration.options.ignore.description}
-          </p>
-        </div>
+        {/each}
       </div>
     </div>
   </section>

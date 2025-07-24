@@ -348,63 +348,51 @@ en:
       }
     optionsTitle: "Configuration Options"
     options:
-      port:
-        title: "port"
+      - title: "port"
         type: "number"
         default: "3000"
         description: "Port for the development server."
-      srcDir:
-        title: "srcDir"
+      - title: "srcDir"
         type: "string"
         default: '"./src"'
         description: "Directory containing your source files (converted to absolute path)."
-      outDir:
-        title: "outDir"
+      - title: "outDir"
         type: "string"
         default: '"./dist"'
         description: "Directory where built files are output (converted to absolute path)."
-      bundle:
-        title: "bundle"
+      - title: "bundle"
         type: "boolean"
         default: "true"
         description: "Whether to bundle TypeScript/JavaScript files."
-      index:
-        title: "index"
+      - title: "index"
         type: "string"
         default: '"index.html"'
         description: "Default index file name for directories."
-      functionName:
-        title: "functionName"
+      - title: "functionName"
         type: "string"
         default: '"+fn"'
         description: "File name for Cloudflare Functions (without extension)."
-      middlewareName:
-        title: "middlewareName"
+      - title: "middlewareName"
         type: "string"
         default: '"+middleware"'
         description: "File name for Cloudflare Middleware (without extension)."
-      layoutName:
-        title: "layoutName"
+      - title: "layoutName"
         type: "string"
         default: '"+layout.html"'
         description: "File name for HTML layout templates."
-      langfileName:
-        title: "langfileName"
+      - title: "langfileName"
         type: "string"
         default: '"+lang.yml"'
         description: "File name for YAML language/translation files."
-      pluginName:
-        title: "pluginName"
+      - title: "pluginName"
         type: "string"
         default: '"+plugin.ts"'
         description: "File name for YAML language/translation files."
-      bindings:
-        title: "bindings"
+      - title: "bindings"
         type: '{ [envVarName: string]: { type: "D1"; id: string }}'
         default: "[]"
         description: "Any [bindings](https://developers.cloudflare.com/pages/functions/bindings/) that should be provided."
-      ignore:
-        title: "ignore"
+      - title: "ignore"
         type: "Array<string>"
         default: '["**/.DS_Store"]'
         description: "Glob patterns to match files that should NOT be part of the final output."
@@ -773,63 +761,51 @@ de:
       }
     optionsTitle: "Konfigurationsoptionen"
     options:
-      port:
-        title: "port"
+      - title: "port"
         type: "number"
         default: "3000"
         description: "Port für den Entwicklungsserver."
-      srcDir:
-        title: "srcDir"
+      - title: "srcDir"
         type: "string"
         default: '"./src"'
         description: "Verzeichnis mit Ihren Quelldateien (wird zu absolutem Pfad konvertiert)."
-      outDir:
-        title: "outDir"
+      - title: "outDir"
         type: "string"
         default: '"./dist"'
         description: "Verzeichnis, in das gebaute Dateien ausgegeben werden (wird zu absolutem Pfad konvertiert)."
-      bundle:
-        title: "bundle"
+      - title: "bundle"
         type: "boolean"
         default: "true"
         description: "Ob TypeScript/JavaScript-Dateien gebündelt werden sollen."
-      index:
-        title: "index"
+      - title: "index"
         type: "string"
         default: '"index.html"'
         description: "Standard-Index-Dateiname für Verzeichnisse."
-      functionName:
-        title: "functionName"
+      - title: "functionName"
         type: "string"
         default: '"+fn"'
         description: "Dateiname für Cloudflare Functions (ohne Erweiterung)."
-      middlewareName:
-        title: "middlewareName"
+      - title: "middlewareName"
         type: "string"
         default: '"+middleware"'
         description: "Dateiname für Cloudflare Middleware (ohne Erweiterung)."
-      layoutName:
-        title: "layoutName"
+      - title: "layoutName"
         type: "string"
         default: '"+layout.html"'
         description: "Dateiname für HTML-Layout-Templates."
-      langfileName:
-        title: "langfileName"
+      - title: "langfileName"
         type: "string"
         default: '"+lang.yml"'
         description: "Dateiname für YAML-Sprach-/Übersetzungsdateien."
-      pluginName:
-        title: "pluginName"
+      - title: "pluginName"
         type: "string"
         default: '"+plugin.ts"'
         description: "File name for YAML language/translation files."
-      bindings:
-        title: "bindings"
+      - title: "bindings"
         type: '{ [envVarName: string]: { type: "D1"; id: string }}'
         default: "[]"
         description: "Any [bindings](https://developers.cloudflare.com/pages/functions/bindings/) that should be provided."
-      ignore:
-        title: "ignore"
+      - title: "ignore"
         type: "Array<string>"
         default: '["**/.DS_Store"]'
         description: "Glob patterns to match files that should NOT be part of the final output."
