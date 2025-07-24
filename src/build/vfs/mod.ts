@@ -68,7 +68,7 @@ export class VFS {
     /** A set of all relative layout paths */
     layouts: new Set<string>(),
     /** A map from relative path to the language file content */
-    langFiles: new Map(),
+    langFiles: {},
   };
 
   public addVFile(arg: VFile | ConstructorParameters<typeof VFile>[0]) {

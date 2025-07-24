@@ -1,6 +1,6 @@
 import { assertEquals } from "jsr:@std/assert";
 import type { ElementContent } from "npm:@types/hast@3.0.4";
-import type { TranslationKV } from "../translations.ts";
+import type { LangFileContent } from "../translations.ts";
 import { type VFile, VFS } from "../vfs/mod.ts";
 import { processSvelteBlocks } from "./html.ts";
 import {
@@ -20,56 +20,20 @@ const createMockVFile = (language: string, outPath: string): VFile => ({
   needsTranslation: true,
 });
 
-/** A version of {@link TranslationKV} that doesn't require the Map constructor */
-type TranslationKVSimple = {
-  [K: string]:
-    | string
-    | string[]
-    | boolean
-    | TranslationKVSimple
-    | TranslationKVSimple[];
-};
-/** A version of {@link LanguageFiles} that doesn't require the Map constructor */
-type LanguageFilesSimple = {
-  global?: TranslationKVSimple;
-  [languageCode: string]: TranslationKVSimple | undefined;
-};
-
-const createMockVFS = (translations: LanguageFilesSimple): VFS => {
-  // Helper to convert nested objects to Maps recursively
-  const createNestedMap = (obj: TranslationKVSimple): TranslationKV => {
-    const map = new Map();
-    for (const [key, value] of Object.entries(obj)) {
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        map.set(key, createNestedMap(value));
-      } else {
-        map.set(key, value);
-      }
-    }
-    return map;
-  };
-
+const createMockVFS = (translations: LangFileContent): VFS => {
   const vfs = new VFS();
 
-  vfs.buildUtils.langFiles = new Map([
-    [
-      "/",
-      {
-        global: new Map([
-          ["siteName", "Test Site"],
-          ["menuItems", ["home", "about", "contact"]],
-          ["userLoggedIn", false],
-          ["featureEnabled", true],
-        ] as [string, string | string[] | boolean][]),
-        en: createNestedMap(translations.en || {}),
-        de: createNestedMap(translations.de || {}),
+  vfs.buildUtils.langFiles = {
+    "/": {
+      global: {
+        siteName: "Test Site",
+        menuItems: ["home", "about", "contact"],
+        userLoggedIn: false,
+        featureEnabled: true,
       },
-    ],
-  ]);
+      ...translations,
+    },
+  };
   return vfs;
 };
 

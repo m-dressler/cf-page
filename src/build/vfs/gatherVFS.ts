@@ -11,7 +11,6 @@ import {
   getSupportedLanguages,
   isMultiLanguageEnabled,
   type LangFileContent,
-  type TranslationKV,
 } from "../translations.ts";
 import { VFile, VFS } from "./mod.ts";
 
@@ -63,43 +62,13 @@ export const gatherVFS = async (): Promise<VFS> => {
         }
 
         const langFileData: LangFileContent = {};
-
-        // Recursive function to parse nested YAML objects into nested Maps
-        const parseNestedTranslations = (
-          obj: Record<string, unknown>,
-        ): TranslationKV => {
-          const translationMap = new Map<
-            string,
-            string | string[] | TranslationKV
-          >();
-
-          for (const [key, value] of Object.entries(obj)) {
-            if (typeof value === "string") {
-              translationMap.set(key, value);
-            } else if (Array.isArray(value)) {
-              // Preserve arrays as arrays instead of joining them
-              translationMap.set(key, value);
-            } else if (typeof value === "object" && value !== null) {
-              // Recursively parse nested objects
-              translationMap.set(
-                key,
-                parseNestedTranslations(value as Record<string, unknown>),
-              );
-            }
-          }
-
-          return translationMap;
-        };
-
         for (const [key, value] of Object.entries(parsed)) {
           if (typeof value === "object" && value !== null) {
-            langFileData[key] = parseNestedTranslations(
-              value as Record<string, unknown>,
-            );
+            langFileData[key] = value;
           }
         }
 
-        vfs.buildUtils.langFiles.set(pathMeta.dir, langFileData);
+        vfs.buildUtils.langFiles[pathMeta.dir] = langFileData;
       } else {
         const extension = pathMeta.ext.substring(1);
         const outputExtension = FILE_BUILDERS.get(extension)?.outputExtension ??

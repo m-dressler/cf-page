@@ -5,14 +5,14 @@ import { CONFIG } from "../config.ts";
 export type TranslationValue = string | string[] | boolean;
 
 /** A map from translation key to translation value */
-export type TranslationKV = Map<string, TranslationValue | TranslationKV>;
+export type TranslationKV = { [key: string]: TranslationValue | TranslationKV };
 /** Language file structure with language keys and global fallback */
 export type LangFileContent = {
   global?: TranslationKV;
   [languageCode: string]: TranslationKV | undefined;
 };
 /** A map from relative project path to the language file content */
-export type LanguageFiles = Map<string, LangFileContent>;
+export type LanguageFiles = { [relativePath: string]: LangFileContent };
 
 /** Gets the root language file content */
 const getRootLangFile = async (): Promise<Record<string, unknown> | null> => {

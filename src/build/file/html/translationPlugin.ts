@@ -22,7 +22,7 @@ export const getTranslationFunction = (
   // Walk up the directory tree to collect translations
   for (let i = pathParts.length - 1; i >= 0; i--) {
     const path = pathParts.slice(0, i).join("/") || "/";
-    const langFileContent = vfs.buildUtils.langFiles.get(path);
+    const langFileContent = vfs.buildUtils.langFiles[path];
 
     if (langFileContent) {
       // Add language-specific translations
@@ -40,19 +40,17 @@ export const getTranslationFunction = (
   }
 
   // Add built-in variables
-  translations.push(
-    new Map([
-      ["cf:lang", vFile.language!],
-      ["cf:path", vFile.outPath],
-      ["cf:year", new Date().getFullYear() + ""],
-    ]),
-  );
+  translations.push({
+    "cf:lang": vFile.language!,
+    "cf:path": vFile.outPath,
+    "cf:year": new Date().getFullYear() + "",
+  });
 
   return (key) => {
     const keyParts = key.split(".");
     for (let translation of translations) {
       for (let i = 0; i < keyParts.length; ++i) {
-        const val = translation.get(keyParts[i]);
+        const val = translation[keyParts[i]];
         if (!val) break;
 
         if (i === keyParts.length - 1) {
