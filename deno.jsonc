@@ -44,7 +44,8 @@
   },
   "nodeModulesDir": "auto", // Required by tailwind to work
   "publish": {
-    "include": ["src/", "deno.json", "deno.lock", "README.md"]
+    "include": ["src/", "deno.json", "deno.lock", "README.md"],
+    "exclude": ["**/*.test.ts"]
   },
   "compilerOptions": {
     "types": ["./src/types.d.ts", "npm:@cloudflare/workers-types"]
