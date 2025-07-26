@@ -16,6 +16,9 @@ const cacheBustTags = {
   track: "src",
 } as const;
 
+/** Checks if a url is a URL in the project, ignoring same scheme paths (https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/URI_syntax_diagram.svg/2136px-URI_syntax_diagram.svg.png) */
+const isLocalPathRegex = /^(\.{1,2}\/|\/[^\/])/;
+
 export const cacheBustPlugin =
   (context: BuildContext): Transformer => (tree, file) => {
     if (!tree) return;
@@ -34,41 +37,33 @@ export const cacheBustPlugin =
         if (!attr || !node.properties?.[attr]) return;
 
         const src = node.properties[attr];
+        if (!isLocalPathRegex.test(src)) return;
 
-        if (
-          // Handle root path but not same scheme path (https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/URI_syntax_diagram.svg/2136px-URI_syntax_diagram.svg.png)
-          (src.startsWith("/") && !src.startsWith("//")) ||
-          src.startsWith("./") ||
-          src.startsWith("../")
-        ) {
-          let url: URL;
-          try {
-            url = new URL(src, "http://example.com" + htmlVFile.outPath);
-          } catch {
-            context.warnings.push(
-              `Cache Bust (${htmlFilePath}): Invalid ${tagName} ${attr} URL (${src})`,
-            );
-            return;
-          }
-
-          // TODO for incremental rebuilds, get as dependent
-          const buildVFile = context.vfs.build.get(url.pathname);
-          if (buildVFile) {
-            url.searchParams.set("v", encodeBase64Url(buildVFile.srcHash));
-          } else {
-            const sourceVFile = context.vfs.source.get(
-              CONFIG.srcDir + url.pathname,
-            );
-            if (sourceVFile) {
-              url.searchParams.set("v", encodeBase64Url(sourceVFile.srcHash));
-              // We also need to update the correct output path
-              url.pathname = sourceVFile.outPath;
-            } else {
-              url.searchParams.set("v", "NaN");
-            }
-          }
-          node.properties[attr] = url.pathname + url.search;
+        const url = URL.parse(src, "http://example.com" + htmlVFile.outPath);
+        if (!url) {
+          context.warnings.push(
+            `Cache Bust (${htmlFilePath}): Invalid ${tagName} ${attr} URL (${src})`,
+          );
+          return;
         }
+
+        // TODO for incremental rebuilds, get as dependent
+        const buildVFile = context.vfs.build.get(url.pathname);
+        if (buildVFile) {
+          url.searchParams.set("v", encodeBase64Url(buildVFile.srcHash));
+        } else {
+          const sourceVFile = context.vfs.source.get(
+            CONFIG.srcDir + url.pathname,
+          );
+          if (sourceVFile) {
+            url.searchParams.set("v", encodeBase64Url(sourceVFile.srcHash));
+            // We also need to update the correct output path
+            url.pathname = sourceVFile.outPath;
+          } else {
+            url.searchParams.set("v", "NaN");
+          }
+        }
+        node.properties[attr] = url.pathname + url.search;
       },
     );
   };
