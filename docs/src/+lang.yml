@@ -388,6 +388,10 @@ en:
         type: "string"
         default: '"+plugin.ts"'
         description: "File name for YAML language/translation files."
+      - title: "watchDirs"
+        type: "string[]"
+        default: "[]"
+        description: "Other directories for which changes should rebuild the dev server."
       - title: "bindings"
         type: '{ [envVarName: string]: { type: "D1"; id: string }}'
         default: "[]"
@@ -801,6 +805,10 @@ de:
         type: "string"
         default: '"+plugin.ts"'
         description: "File name for YAML language/translation files."
+      - title: "watchDirs"
+        type: "string[]"
+        default: "[]"
+        description: "Weiter Ordner in welchen Änderungen den Entwicklungsserver rebuildet."
       - title: "bindings"
         type: '{ [envVarName: string]: { type: "D1"; id: string }}'
         default: "[]"

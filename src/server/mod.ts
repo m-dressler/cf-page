@@ -388,7 +388,11 @@ export const devServer = async (
     Deno.exit(1);
   }
 
-  const watcher = Deno.watchFs([CONFIG.srcDir, dirname(CONFIG.pluginName)]);
+  const watcher = Deno.watchFs([
+    CONFIG.srcDir,
+    dirname(CONFIG.pluginName),
+    ...CONFIG.watchDirs,
+  ]);
   /** The latest abort controller to cancel interlacing builds */
   let abortController: AbortController | null = null;
   // Listen to changes and rebuild using VFS when changes come in
@@ -396,7 +400,10 @@ export const devServer = async (
     // Check if the change affects +plugin.ts or something inside srcDir
     if (
       !event.paths.some(
-        (p) => p.endsWith(CONFIG.pluginName) || p.startsWith(CONFIG.srcDir),
+        (p) =>
+          p.endsWith(CONFIG.pluginName) ||
+          p.startsWith(CONFIG.srcDir) ||
+          CONFIG.watchDirs.find((dir) => p.startsWith(dir)),
       )
     ) {
       continue;

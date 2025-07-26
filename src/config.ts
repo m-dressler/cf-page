@@ -32,6 +32,11 @@ const CONFIG_SCHEMA = z.object({
   langfileName: z.string().default("+lang.yml"),
   /** The file name for the custom plugin loader */
   pluginName: z.string().default("+plugin.ts"),
+  /** Other directories for which changes should rebuild the dev server */
+  watchDirs: z
+    .array(z.string())
+    .transform((dirs) => dirs.map((dir) => resolve(dir)))
+    .default([]),
   /** Any bindings that should be provided {@see https://developers.cloudflare.com/pages/functions/bindings/} */
   bindings: z
     .record(z.string(), z.object({ type: z.enum(["D1"]), id: z.uuid() }))
