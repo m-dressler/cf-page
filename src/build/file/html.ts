@@ -2,10 +2,12 @@ import type { ElementContent } from "npm:hast@1.0.0";
 import { rehype } from "rehype";
 import rehypePresetMinify from "rehype-preset-minify";
 import rehypeSlug from "rehype-slug";
+import { CONFIG } from "../../config.ts";
 import { throwIfAborted } from "../../util/abortError.ts";
 import { bufferAsString } from "../../util/buffer.ts";
 import type { TranslationKV } from "../translations.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
+import { absoluteLinksPlugin } from "./html/absoluteLinksPlugin.ts";
 import { cacheBustPlugin } from "./html/cacheBustPlugin.ts";
 import { slotPlugin } from "./html/slotPlugin.ts";
 import {
@@ -113,6 +115,7 @@ export default {
       .use(translationPlugin, context, vFile)
       .use(cacheBustPlugin, context)
       .use(rehypeSlug);
+    if (CONFIG.absoluteLinks) processor.use(absoluteLinksPlugin, context);
     // Minify only on prod
     if (context.mode === "prod") processor.use(rehypePresetMinify);
 

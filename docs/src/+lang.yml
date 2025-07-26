@@ -400,6 +400,10 @@ en:
         type: "Array<string>"
         default: '["**/.DS_Store"]'
         description: "Glob patterns to match files that should NOT be part of the final output."
+      - title: "absoluteLinks"
+        type: "boolean"
+        default: "true"
+        description: "Convert relative local links (e.g. href, src) to absolute ones."
 
   # API Reference Section
   apiReference:
@@ -817,6 +821,10 @@ de:
         type: "Array<string>"
         default: '["**/.DS_Store"]'
         description: "Glob patterns to match files that should NOT be part of the final output."
+      - title: "absoluteLinks"
+        type: "boolean"
+        default: "true"
+        description: "Konvertiere relative locale Links (e.g. href, src) zu absoluten."
 
   # API Reference Section
   apiReference:
