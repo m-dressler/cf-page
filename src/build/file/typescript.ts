@@ -1,6 +1,6 @@
 import { bundle, transpile } from "@deno/emit";
 import { CONFIG } from "../../config.ts";
-import { AbortError } from "../abortError.ts";
+import { throwIfAborted } from "../../util/abortError.ts";
 import type { FileBuilder } from "./mod.ts";
 
 export default {
@@ -15,14 +15,14 @@ export default {
     if (!CONFIG.bundle) {
       // TODO Sort out how to minify without bundling
       const transpiled = await transpile(url, { allowRemote: true });
-      if (context.abortController?.signal.aborted) throw new AbortError();
+      throwIfAborted(context.abortController);
       return transpiled.get(url.href)!;
     } else {
       const { code } = await bundle(url, {
         minify: context.mode === "prod",
         allowRemote: true,
       });
-      if (context.abortController?.signal.aborted) throw new AbortError();
+      throwIfAborted(context.abortController);
       return code;
     }
   },

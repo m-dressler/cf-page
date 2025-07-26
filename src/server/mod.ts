@@ -2,10 +2,10 @@ import { isError } from "@md/ensure-error/is-error";
 import resolvable from "@md/resolvable";
 import { contentType } from "@std/media-types";
 import { dirname } from "@std/path/dirname";
-import { AbortError } from "../build/abortError.ts";
 import { build } from "../build/mod.ts";
 import type { VFS } from "../build/vfs/mod.ts";
 import { CONFIG } from "../config.ts";
+import { AbortError } from "../util/abortError.ts";
 import { logPerformanceMetrics } from "../util/logPerformance.ts";
 import {
   addLiveReloadScript,

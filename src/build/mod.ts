@@ -1,5 +1,5 @@
 import { ensureError } from "@md/ensure-error/ensure-error";
-import { AbortError } from "./abortError.ts";
+import { throwIfAborted } from "../util/abortError.ts";
 import { type BuildContext, buildFile } from "./file/mod.ts";
 import { loadPlugin } from "./plugin.ts";
 import { gatherVFS } from "./vfs/gatherVFS.ts";
@@ -30,9 +30,7 @@ export const build = async (
   const { plugin, error: pluginLoadError } = await loadPlugin();
   if (pluginLoadError) errors.push(pluginLoadError);
 
-  if (options.abortController?.signal.aborted) {
-    throw new AbortError();
-  }
+  throwIfAborted(options.abortController);
 
   /** The buildContext object passed to each `buildFile` call */
   const buildContext: BuildContext = {

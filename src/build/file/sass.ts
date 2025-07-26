@@ -2,7 +2,7 @@ import autoprefixer from "autoprefixer";
 import cssnanoPlugin from "cssnano";
 import postcss from "postcss";
 import { compile } from "sass";
-import { AbortError } from "../abortError.ts";
+import { throwIfAborted } from "../../util/abortError.ts";
 import type { FileBuilder } from "./mod.ts";
 
 export default {
@@ -10,7 +10,7 @@ export default {
   outputExtension: "css",
   build: async (vFile, context) => {
     const sassResult = compile(vFile.srcPath);
-    if (context.abortController?.signal.aborted) throw new AbortError();
+    throwIfAborted(context.abortController);
 
     const processor = postcss([
       autoprefixer(),
@@ -20,7 +20,7 @@ export default {
     const postCssResult = await processor.process(sassResult.css, {
       from: vFile.srcPath,
     });
-    if (context.abortController?.signal.aborted) throw new AbortError();
+    throwIfAborted(context.abortController);
 
     for (const warning of postCssResult.warnings()) {
       context.warnings.push(warning.toString());

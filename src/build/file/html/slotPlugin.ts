@@ -1,7 +1,7 @@
 import type { Transformer } from "npm:unified@^11.0.5";
 import { rehype } from "rehype";
 import { CONFIG } from "../../../config.ts";
-import { AbortError } from "../../abortError.ts";
+import { throwIfAborted } from "../../../util/abortError.ts";
 import type { VFile } from "../../vfs/mod.ts";
 import type { BuildContext } from "../mod.ts";
 
@@ -73,19 +73,15 @@ const processSlots = (
 export const slotPlugin =
   (context: BuildContext, vFile: VFile): Transformer => async (tree, file) => {
     const layout = await findLayout(vFile, context);
-    if (!layout) {
-      return tree;
-    }
-
-    if (context.abortController?.signal.aborted) throw new AbortError();
+    if (!layout) return tree;
+    throwIfAborted(context.abortController);
 
     // Get original content HTML string
     const contentHtml = String(file.value);
 
     // Extract slot content from the page
     const contentSlots = extractSlotContent(contentHtml);
-
-    if (context.abortController?.signal.aborted) throw new AbortError();
+    throwIfAborted(context.abortController);
 
     // Process slots at string level to preserve structure
     const processedHtml = processSlots(layout, contentSlots);

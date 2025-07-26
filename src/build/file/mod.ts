@@ -1,4 +1,4 @@
-import { AbortError } from "../abortError.ts";
+import { throwIfAborted } from "../../util/abortError.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
 
 import cssBuilder from "./css.ts";
@@ -36,7 +36,7 @@ export const FILE_BUILDERS = new Map<string, FileBuilder>(
 export const buildFile: (
   ...params: Parameters<FileBuilder["build"]>
 ) => Promise<void> = async (vFile, context) => {
-  if (context.abortController?.signal.aborted) throw new AbortError();
+  throwIfAborted(context.abortController);
 
   vFile.status = "processing";
   const startTime = performance.now();

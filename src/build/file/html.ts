@@ -2,8 +2,8 @@ import type { ElementContent } from "npm:hast@1.0.0";
 import { rehype } from "rehype";
 import rehypePresetMinify from "rehype-preset-minify";
 import rehypeSlug from "rehype-slug";
+import { throwIfAborted } from "../../util/abortError.ts";
 import { bufferAsString } from "../../util/buffer.ts";
-import { AbortError } from "../abortError.ts";
 import type { TranslationKV } from "../translations.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
 import { cacheBustPlugin } from "./html/cacheBustPlugin.ts";
@@ -99,7 +99,7 @@ export default {
     let rawHTML = vFile.srcContents != null
       ? bufferAsString(vFile.srcContents)
       : await Deno.readTextFile(vFile.srcPath);
-    if (context.abortController?.signal.aborted) throw new AbortError();
+    throwIfAborted(context.abortController);
 
     // Process Svelte-style blocks before AST processing (they span multiple elements)
     if (vFile.needsTranslation && vFile.language) {
@@ -120,7 +120,7 @@ export default {
       path: vFile.srcPath,
       value: rawHTML,
     });
-    if (context.abortController?.signal.aborted) throw new AbortError();
+    throwIfAborted(context.abortController);
 
     return value;
   },
