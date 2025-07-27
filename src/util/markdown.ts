@@ -1,4 +1,5 @@
 import type { Element, Root, Text } from "npm:@types/hast@3.0.4";
+import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
@@ -114,4 +115,11 @@ export const parseMarkdownToHast = (text: string): (Element | Text)[] => {
     // Fallback to simple markdown parsing
     return parseSimpleMarkdown(text);
   }
+};
+
+export const parseMarkdownToHtml = (text: string): string => {
+  const hastNodes = parseMarkdownToHast(text);
+  return unified()
+    .use(rehypeStringify)
+    .stringify({ type: "root", children: hastNodes } as const satisfies Root);
 };

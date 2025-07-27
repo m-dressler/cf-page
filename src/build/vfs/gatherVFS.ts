@@ -75,7 +75,9 @@ export const gatherVFS = async (): Promise<VFS> => {
           extension;
 
         // Determine if this file needs translation
-        const needsTranslation = multiLanguageEnabled && extension === "html";
+        const needsTranslation = multiLanguageEnabled &&
+          (extension === "html" ||
+            (extension === "md" && CONFIG.markdownToHTML));
 
         // Add the default language version under the default path
         const vFileParams: ConstructorParameters<typeof VFile>[0] = {

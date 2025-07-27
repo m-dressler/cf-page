@@ -5,6 +5,7 @@ import rehypeSlug from "rehype-slug";
 import { CONFIG } from "../../config.ts";
 import { throwIfAborted } from "../../util/abortError.ts";
 import { bufferAsString } from "../../util/buffer.ts";
+import { parseMarkdownToHtml } from "../../util/markdown.ts";
 import type { TranslationKV } from "../translations.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
 import { absoluteLinksPlugin } from "./html/absoluteLinksPlugin.ts";
@@ -95,13 +96,15 @@ export const processSvelteBlocks = (
 };
 
 export default {
-  inputExtensions: ["html"],
+  inputExtensions: ["html", ...(CONFIG.markdownToHTML ? ["md"] : [])],
   outputExtension: "html",
   build: async (vFile, context) => {
     let rawHTML = vFile.srcContents != null
       ? bufferAsString(vFile.srcContents)
       : await Deno.readTextFile(vFile.srcPath);
     throwIfAborted(context.abortController);
+
+    if (vFile.srcExtension === "md") rawHTML = parseMarkdownToHtml(rawHTML);
 
     // Process Svelte-style blocks before AST processing (they span multiple elements)
     if (vFile.needsTranslation && vFile.language) {
@@ -110,7 +113,9 @@ export default {
 
     // Create a fresh processor for processing
     // Note: translationPlugin now handles remaining translations and markdown processing
-    const processor = rehype()
+    const processor = rehype();
+
+    processor
       .use(slotPlugin, context, vFile)
       .use(translationPlugin, context, vFile)
       .use(cacheBustPlugin, context)

@@ -41,6 +41,8 @@ const CONFIG_SCHEMA = z.object({
   bindings: z
     .record(z.string(), z.object({ type: z.enum(["D1"]), id: z.uuid() }))
     .default({}),
+  /** If markdown should be converted to HTML */
+  markdownToHTML: z.boolean().default(true),
   /** Convert relative local links (e.g. href, src) to absolute ones */
   absoluteLinks: z.boolean().default(true),
   /** Glob patterns to match files that should NOT be part of the final output */

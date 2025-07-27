@@ -404,6 +404,10 @@ en:
         type: "boolean"
         default: "true"
         description: "Convert relative local links (e.g. href, src) to absolute ones."
+      - title: "markdownToHTML"
+        type: "boolean"
+        default: "true"
+        description: "Convert `.md` files to `.html`."
 
   # API Reference Section
   apiReference:
@@ -825,6 +829,10 @@ de:
         type: "boolean"
         default: "true"
         description: "Konvertiere relative locale Links (e.g. href, src) zu absoluten."
+      - title: "markdownToHTML"
+        type: "boolean"
+        default: "true"
+        description: "Konvertiere `.md` Dateien zu `.html`."
 
   # API Reference Section
   apiReference:
