@@ -364,10 +364,6 @@ en:
         type: "boolean"
         default: "true"
         description: "Whether to bundle TypeScript/JavaScript files."
-      - title: "index"
-        type: "string"
-        default: '"index.html"'
-        description: "Default index file name for directories."
       - title: "functionName"
         type: "string"
         default: '"+fn"'
@@ -789,10 +785,6 @@ de:
         type: "boolean"
         default: "true"
         description: "Ob TypeScript/JavaScript-Dateien gebündelt werden sollen."
-      - title: "index"
-        type: "string"
-        default: '"index.html"'
-        description: "Standard-Index-Dateiname für Verzeichnisse."
       - title: "functionName"
         type: "string"
         default: '"+fn"'

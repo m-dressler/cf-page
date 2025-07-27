@@ -21,7 +21,6 @@ const CONFIG_SCHEMA = z.object({
     .prefault("./dist"),
   /** Whether to bundle the final TypeScript/JavaScript scripts */
   bundle: z.boolean().default(true),
-  index: z.string().default("index.html"),
   /** The file name for CloudFlare functions */
   functionName: z.string().default("+fn"),
   /** The file name for CloudFlare middlewares */

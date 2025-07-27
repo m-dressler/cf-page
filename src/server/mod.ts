@@ -128,7 +128,7 @@ const create500Response = (error: unknown) =>
 
 const loadAssets = (path: string, method: "GET" | "HEAD"): Response => {
   // Normalize path
-  if (path === "/") path += CONFIG.index;
+  if (path === "/") path += "index.html";
   if (path.endsWith("/")) path = path.substring(0, path.length - 1);
 
   // Try to find the file in the VFS
