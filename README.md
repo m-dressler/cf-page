@@ -4,6 +4,10 @@ An opinionated, HTML-close web-framework for creating Cloudflare Pages.
 
 ## [Documentation](https://cf-page.mdressler.dev)
 
+```sh
+deno run -A jsr:@md/cf-page init
+```
+
 ## Why not any of the big frameworks?
 
 I love the simplicity of creating websites using HTML, CSS, and JavaScript and
