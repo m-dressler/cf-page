@@ -15,6 +15,7 @@
     "port": 8081,
     "watchDirs": ["./lib"] // Ensure changes in lib also refresh server
     // , "bindings": {
+    //   "$mode": "REMOTE", // Can also use "LOCAL" for offline development
     //   // You can add D1 database bindings https://developers.cloudflare.com/pages/functions/bindings/
     //   "DB": { "type": "D1", "id": "00000000-0000-0000-0000-000000000000" }
     // }

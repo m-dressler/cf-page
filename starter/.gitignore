@@ -10,3 +10,6 @@ node_modules/
 
 # For MacOS, no need to include directory information
 .DS_Store
+
+# This directory will contain local bindings
+.bindings.local/

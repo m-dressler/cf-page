@@ -1,7 +1,12 @@
+import { ensureDirSync } from "@std/fs/ensure-dir";
+import { dirname } from "@std/path/dirname";
+import { DatabaseSync } from "node:sqlite";
 import { CONFIG } from "../../config.ts";
 import { D1DatabaseImpl } from "./d1.ts";
 
 export type Auth = { accountId: string; apiToken: string };
+
+const LOCAL_BINDINGS_DIR = ".bindings.local/";
 
 class MissingEnvError extends Error {
   constructor(public variableName: string, link: `/${string}`) {
@@ -25,13 +30,16 @@ export const cloudflareFetch = async <T>(
     init,
   );
   if (response.ok) return response.json();
-  else {return new Error("Cloudflare API Request error", {
+  else {
+    return new Error("Cloudflare API Request error", {
       cause: await response.json(),
-    });}
+    });
+  }
 };
 
 export const loadBindings = (): Record<string, unknown> => {
-  const bindingEntries = Object.entries(CONFIG.bindings);
+  const { $mode: bindingMode, ...configBindings } = CONFIG.bindings;
+  const bindingEntries = Object.entries(configBindings);
   if (!bindingEntries.length) return {};
 
   const accountId = Deno.env.get("CLOUDFLARE_ACCOUNT_ID");
@@ -52,7 +60,13 @@ export const loadBindings = (): Record<string, unknown> => {
     bindings[binding] = id;
     switch (type) {
       case "D1":
-        bindings[binding] = new D1DatabaseImpl(id, auth);
+        if (bindingMode === "REMOTE") {
+          bindings[binding] = new D1DatabaseImpl(id, auth);
+        } else {
+          const path = `${LOCAL_BINDINGS_DIR}/d1/${id}.sqlite`;
+          ensureDirSync(dirname(path));
+          bindings[binding] = new DatabaseSync(path);
+        }
         break;
       default:
         throw new Error(`Unknown binding type "${type}"`);
