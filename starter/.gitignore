@@ -1,5 +1,12 @@
+# You'll have to define your environment variables in the cloudflare console
 .env
+
+# These directories by default contain the build output
 dist/
 functions/
+
+# We have node_modules enables since we use some NPM packages which require the directory to be present 
 node_modules/
+
+# For MacOS, no need to include directory information
 .DS_Store
