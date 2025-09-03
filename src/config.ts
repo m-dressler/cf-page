@@ -21,6 +21,8 @@ const CONFIG_SCHEMA = z.object({
     .prefault("./dist"),
   /** Whether to bundle the final TypeScript/JavaScript scripts */
   bundle: z.boolean().default(true),
+  /** Convert npm: specifiers to esm.sh CDN URLs for browser compatibility */
+  npmToEsm: z.boolean().default(true),
   /** The file name for CloudFlare functions */
   functionName: z.string().default("+fn"),
   /** The file name for CloudFlare middlewares */

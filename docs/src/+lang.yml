@@ -364,6 +364,10 @@ en:
         type: "boolean"
         default: "true"
         description: "Whether to bundle TypeScript/JavaScript files."
+      - title: "npmToEsm"
+        type: "boolean"
+        default: "true"
+        description: "Convert npm: specifiers to esm.sh CDN URLs for browser compatibility."
       - title: "functionName"
         type: "string"
         default: '"+fn"'
@@ -785,6 +789,10 @@ de:
         type: "boolean"
         default: "true"
         description: "Ob TypeScript/JavaScript-Dateien gebündelt werden sollen."
+      - title: "npmToEsm"
+        type: "boolean"
+        default: "true"
+        description: "Konvertiere npm: Spezifizierer zu esm.sh CDN URLs für Browser-Kompatibilität."
       - title: "functionName"
         type: "string"
         default: '"+fn"'

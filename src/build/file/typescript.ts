@@ -18,11 +18,20 @@ export default {
       throwIfAborted(context.abortController);
       return transpiled.get(url.href)!;
     } else {
-      const { code } = await bundle(url, {
+      let { code } = await bundle(url, {
         minify: context.mode === "prod",
         allowRemote: true,
       });
       throwIfAborted(context.abortController);
+
+      // Post-process to replace npm: specifiers with CDN URLs for browser compatibility
+      if (CONFIG.npmToEsm) {
+        code = code.replace(
+          /(\s+)from(\s*)"npm:([^"]+)"/g,
+          '$1from$2"https://esm.sh/$3"',
+        );
+      }
+
       return code;
     }
   },
