@@ -6,6 +6,16 @@ import { z } from "zod/v4";
 /** The key in `deno.json` used to configure @md/cf-page */
 const CONFIG_KEY = "@md/cf-page";
 
+/** Converts UUID without `-`es into UUID with `-`es and leaves any other string untouched */
+const formatUUID = (str: string): string => {
+  if (str.length !== 32) return str;
+
+  return str.replace(
+    /^(.{8})(.{4})(.{4})(.{4})(.{12})$/,
+    "$1-$2-$3-$4-$5",
+  );
+};
+
 /** The type for the configuration which gets loaded from `deno.json` */
 const CONFIG_SCHEMA = z.object({
   port: z.number().int().positive().default(3000),
@@ -43,7 +53,17 @@ const CONFIG_SCHEMA = z.object({
     .object({
       $mode: z.enum(["LOCAL", "REMOTE"]).default("REMOTE"),
     })
-    .catchall(z.object({ type: z.enum(["D1"]), id: z.uuid() }))
+    .catchall(
+      z.object({
+        type: z.enum(["D1", "KV"]),
+        id: z
+          .string()
+          .transform(formatUUID)
+          .refine((val) => z.uuid().safeParse(val).success, {
+            message: "Invalid UUID format",
+          }),
+      }),
+    )
     // @ts-ignore We know this is valid for the above
     .default({ $mode: "REMOTE" }),
   /** If markdown should be converted to HTML */

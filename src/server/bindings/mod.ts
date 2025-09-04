@@ -3,6 +3,8 @@ import { dirname } from "@std/path/dirname";
 import { DatabaseSync } from "node:sqlite";
 import { CONFIG } from "../../config.ts";
 import { D1DatabaseImpl } from "./d1.ts";
+import { KVNamespaceLocal } from "./kv-local.ts";
+import { KVNamespaceImpl } from "./kv.ts";
 
 export type Auth = { accountId: string; apiToken: string };
 
@@ -29,12 +31,15 @@ export const cloudflareFetch = async <T>(
     `https://api.cloudflare.com/client/v4${path}`,
     init,
   );
-  if (response.ok) return response.json();
-  else {
+  if (!response.ok) {
     return new Error("Cloudflare API Request error", {
       cause: await response.json(),
     });
-  }
+  } else if (
+    response.headers.get("Content-Type")?.includes("application/json")
+  ) {
+    return response.json();
+  } else return response as T;
 };
 
 export const loadBindings = (): Record<string, unknown> => {
@@ -66,6 +71,15 @@ export const loadBindings = (): Record<string, unknown> => {
           const path = `${LOCAL_BINDINGS_DIR}/d1/${id}.sqlite`;
           ensureDirSync(dirname(path));
           bindings[binding] = new DatabaseSync(path);
+        }
+        break;
+      case "KV":
+        if (bindingMode === "REMOTE") {
+          bindings[binding] = new KVNamespaceImpl(id, auth);
+        } else {
+          const path = `${LOCAL_BINDINGS_DIR}/kv/${id}/`;
+          ensureDirSync(path);
+          bindings[binding] = new KVNamespaceLocal(path);
         }
         break;
       default:

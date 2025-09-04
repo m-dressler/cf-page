@@ -5,6 +5,7 @@ declare global {
     PASSWORD: string;
     // See deno.jsonc for details on enabling bindings
     // DB: D1Database;
+    // KV: KVNamespace;
   };
 }
 
