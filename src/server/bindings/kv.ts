@@ -16,6 +16,9 @@ type KVResult<T> = {
   messages: unknown[];
 };
 
+/** The Cloudflare KV error code for when a key doesn't exist */
+const KEY_NOT_FOUND_CODE = 10009;
+
 /** Converts a {@link Response} to the expected {@link TypeOrOptions} requested  */
 export const kvResponseToType = async (
   response: Response,
@@ -168,13 +171,26 @@ export class KVNamespaceImpl implements KVNamespace {
   ): Promise<any> {
     if (Array.isArray(key)) return this.bulkGet(key, optionsOrType, false);
 
-    const response = await this.request<Response>(
-      `/values/${encodeURIComponent(key)}`,
-    );
-
-    if (response.status === 404) return null;
-    else if (response.ok) return kvResponseToType(response, optionsOrType);
-    else throw new Error("Cloudflare KV get failed", { cause: response });
+    try {
+      const response = await this.request<Response>(
+        `/values/${encodeURIComponent(key)}`,
+      );
+      return kvResponseToType(response, optionsOrType);
+    } catch (e) {
+      if (
+        !(
+          isError(e) &&
+          e.cause &&
+          typeof e.cause === "object" &&
+          "errors" in e.cause &&
+          Array.isArray(e.cause.errors) &&
+          e.cause.errors.length === 1
+        )
+      ) throw e;
+      const [error] = e.cause.errors;
+      if (error.code === KEY_NOT_FOUND_CODE) return null;
+      else throw e;
+    }
   }
 
   public async getWithMetadata(
