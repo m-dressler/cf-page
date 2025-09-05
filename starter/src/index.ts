@@ -5,7 +5,7 @@ import onDomReady from "jsr:@md/on-dom-ready";
 console.log("Hello World!");
 
 onDomReady(() => {
-  const langSelect = $<HTMLSelectElement>("#lang-select")!;
+  const langSelect = $<HTMLSelectElement>("#lang-select");
   const pathPieces = location.pathname.split("/");
   let currentLang = pathPieces[1];
 
