@@ -1,15 +1,15 @@
-import { bundle } from "@deno/emit";
 import { copy } from "@std/fs/copy";
 import { emptyDir } from "@std/fs/empty-dir";
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname } from "@std/path/dirname";
 import { join } from "@std/path/join";
 import { CONFIG } from "../../config.ts";
+import { bundle } from "../../util/bundle.ts";
 import type { VFS } from "../vfs/mod.ts";
 
+/**  Bundle function using native deno bundle with config resolution */
 const writeFunction = async (inPath: string, outPath: string) => {
-  const inURL = new URL(inPath, "file://");
-  const { code } = await bundle(inURL, { allowRemote: true });
+  const code = await bundle(inPath, true);
   await ensureDir(dirname(outPath));
   await Deno.writeTextFile(outPath, code);
 };

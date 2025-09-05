@@ -1,12 +1,13 @@
-import { transpile } from "@deno/emit";
+import { bundle } from "../util/bundle.ts";
 
 const PREVIEW_PREFIX = "/-/cf-page/";
 export const PREVIEW_LISTEN_PATH = PREVIEW_PREFIX + "listen";
 export const PREVIEW_JS_PATH = PREVIEW_PREFIX + "refresh.js";
 
-export const PREVIEW_JS_SCRIPT = await transpile(
-  new URL("./clientScript.ts", import.meta.url),
-).then((r) => r.values().next().value!);
+export const PREVIEW_JS_SCRIPT = await bundle(
+  new URL("./clientScript.ts", import.meta.url).pathname,
+  true,
+);
 
 /** Adds the live reload script to HTML content */
 export const addLiveReloadScript = (

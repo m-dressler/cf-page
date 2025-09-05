@@ -37,7 +37,7 @@ en:
     # TypeScript & Bundling
     typescript:
       title: "⚡ TypeScript Transpilation & Bundling"
-      description: "Automatic [TypeScript](https://www.typescriptlang.org/) compilation with full bundling support using [Deno's native transpiler and bundler](https://docs.deno.com/runtime/reference/deno_namespace_apis/#denoemit) via the `@deno/emit` package."
+      description: "Automatic [TypeScript](https://www.typescriptlang.org/) compilation with full bundling support using [Deno's native bundler](https://docs.deno.com/runtime/reference/bundling/)."
       featuresTitle: "Features:"
       features:
         - "Automatic TypeScript to JavaScript transpilation"
@@ -462,7 +462,7 @@ de:
     # TypeScript & Bundling
     typescript:
       title: "⚡ TypeScript-Transpilation & Bundling"
-      description: "Automatische [TypeScript](https://www.typescriptlang.org/)-Kompilierung mit vollständiger Bundling-Unterstützung unter Verwendung von [Denos nativem Transpiler und Bundler](https://docs.deno.com/runtime/reference/deno_namespace_apis/#denoemit) über das `@deno/emit`-Paket."
+      description: "Automatische [TypeScript](https://www.typescriptlang.org/)-Kompilierung mit vollständiger Bundling-Unterstützung unter Verwendung von [Denos nativem Bundler](https://docs.deno.com/runtime/reference/bundling/)."
       featuresTitle: "Funktionen:"
       features:
         - "Automatische TypeScript zu JavaScript Transpilation"

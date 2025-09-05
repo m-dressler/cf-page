@@ -1,6 +1,6 @@
-import { bundle, transpile } from "@deno/emit";
 import { CONFIG } from "../../config.ts";
 import { throwIfAborted } from "../../util/abortError.ts";
+import { bundle } from "../../util/bundle.ts";
 import type { FileBuilder } from "./mod.ts";
 
 export default {
@@ -11,17 +11,12 @@ export default {
       return null;
     }
 
-    const url = new URL("file://" + vFile.srcPath);
     if (!CONFIG.bundle) {
-      // TODO Sort out how to minify without bundling
-      const transpiled = await transpile(url, { allowRemote: true });
+      const code = await bundle(vFile.srcPath, false);
       throwIfAborted(context.abortController);
-      return transpiled.get(url.href)!;
+      return code;
     } else {
-      let { code } = await bundle(url, {
-        minify: context.mode === "prod",
-        allowRemote: true,
-      });
+      let code = await bundle(vFile.srcPath, context.mode === "prod");
       throwIfAborted(context.abortController);
 
       // Post-process to replace npm: specifiers with CDN URLs for browser compatibility

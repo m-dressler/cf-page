@@ -75,17 +75,22 @@ const CONFIG_SCHEMA = z.object({
 });
 
 let denoJson: unknown;
+let denoJsonFilePath: string | null = null;
 if (await exists("./deno.jsonc")) {
   denoJson = JSONC.parse(await Deno.readTextFile("./deno.jsonc")) ?? {};
+  denoJsonFilePath = "./deno.jsonc";
 } else if (await exists("./deno.json")) {
   denoJson = JSON.parse(await Deno.readTextFile("./deno.json")) ?? {};
+  denoJsonFilePath = "./deno.json";
 } else denoJson = {};
 
 if (typeof denoJson !== "object" || !denoJson) {
-  throw new Error("deno.json(c) must be an object");
+  throw new Error(denoJsonFilePath + " must be an object");
 }
 
 const loadedConfig = CONFIG_KEY in denoJson ? denoJson[CONFIG_KEY] : {};
 
 /** The global configuration for this package */
-export const CONFIG = CONFIG_SCHEMA.parse(loadedConfig);
+export const CONFIG = Object.assign(CONFIG_SCHEMA.parse(loadedConfig), {
+  denoJsonFilePath,
+});
