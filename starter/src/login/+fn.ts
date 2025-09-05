@@ -1,4 +1,4 @@
-import { createToken } from "../../lib/server/token.ts";
+import { createToken } from "@lib/server/token.ts";
 
 export const onRequestPost: PagesFunction<ENV> = async (context) => {
   const data = await context.request.formData();

@@ -1,4 +1,4 @@
-import { decodeToken } from "../../lib/server/token.ts";
+import { decodeToken } from "@lib/server/token.ts";
 
 const parseCookie = (str: string) =>
   str.length

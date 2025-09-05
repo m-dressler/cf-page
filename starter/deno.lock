@@ -1,10 +1,21 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@md/on-dom-ready@*": "0.0.1",
+    "jsr:@std/encoding@*": "1.0.10",
     "npm:@cloudflare/workers-types@*": "4.20250523.0",
     "npm:@types/js-cookie@*": "3.0.6",
     "npm:cookie-parser@*": "1.4.7",
-    "npm:js-cookie@*": "3.0.5"
+    "npm:js-cookie@*": "3.0.5",
+    "npm:tailwindcss@4": "4.1.12"
+  },
+  "jsr": {
+    "@md/on-dom-ready@0.0.1": {
+      "integrity": "5888a16e5cbab7e855a3ac9f9fe4a42d1b0dfc98f417e0d82ce8b3ae4411150f"
+    },
+    "@std/encoding@1.0.10": {
+      "integrity": "8783c6384a2d13abd5e9e87a7ae0520a30e9f56aeeaa3bdf910a3eaaf5c811a1"
+    }
   },
   "npm": {
     "@cloudflare/workers-types@4.20250523.0": {
@@ -28,6 +39,9 @@
     },
     "js-cookie@3.0.5": {
       "integrity": "sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw=="
+    },
+    "tailwindcss@4.1.12": {
+      "integrity": "sha512-DzFtxOi+7NsFf7DBtI3BJsynR+0Yp6etH+nRPTbpWnS2pZBaSksv/JGctNwSWzbFjp0vxSqknaUylseZqMDGrA=="
     }
   },
   "redirects": {
@@ -64,7 +78,8 @@
   },
   "workspace": {
     "dependencies": [
-      "npm:@cloudflare/workers-types@*"
+      "npm:@cloudflare/workers-types@*",
+      "npm:tailwindcss@4"
     ]
   }
 }

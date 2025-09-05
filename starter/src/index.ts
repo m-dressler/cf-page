@@ -1,6 +1,6 @@
 // This will be bundled by @md/cf-page
+import { $ } from "@lib/client/utils.ts";
 import onDomReady from "jsr:@md/on-dom-ready";
-import { $ } from "../lib/client/utils.ts";
 
 console.log("Hello World!");
 

@@ -8,6 +8,8 @@
     "lib": ["esnext", "dom"]
   },
   "imports": {
+    "@src/": "./src/",
+    "@lib/": "./lib/",
     "tailwindcss": "npm:tailwindcss@^4" // Specify the version of Tailwind CSS
   },
   "nodeModulesDir": "auto",
