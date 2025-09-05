@@ -5,7 +5,7 @@ export const bundle = async (
   filePath: string,
   minify: boolean,
 ): Promise<string> => {
-  const cmd = new Deno.Command("deno", {
+  const cmd = new Deno.Command(Deno.execPath(), {
     args: [
       "bundle",
       "--unstable-raw-imports",
