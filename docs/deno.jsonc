@@ -3,6 +3,6 @@
     "build": "deno run -A ../src/mod.ts build"
   },
   "compilerOptions": {
-    "lib": ["esnext", "dom"]
+    "lib": ["es2024", "dom"]
   }
 }

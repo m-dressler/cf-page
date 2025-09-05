@@ -5,7 +5,7 @@
   },
   "compilerOptions": {
     "types": ["npm:@cloudflare/workers-types"],
-    "lib": ["esnext", "dom"]
+    "lib": ["es2024", "dom"]
   },
   "imports": {
     "@src/": "./src/",
