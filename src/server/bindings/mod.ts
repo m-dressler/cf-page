@@ -43,8 +43,8 @@ export const cloudflareFetch = async <T>(
 };
 
 export const loadBindings = (): Record<string, unknown> => {
-  const { $mode: bindingMode, ...configBindings } = CONFIG.bindings;
-  const bindingEntries = Object.entries(configBindings);
+  const localBindings = Deno.env.get("CLOUDFLARE_LOCAL") === "true";
+  const bindingEntries = Object.entries(CONFIG.bindings);
   if (!bindingEntries.length) return {};
 
   const accountId = Deno.env.get("CLOUDFLARE_ACCOUNT_ID");
@@ -65,7 +65,7 @@ export const loadBindings = (): Record<string, unknown> => {
     bindings[binding] = id;
     switch (type) {
       case "D1":
-        if (bindingMode === "REMOTE") {
+        if (!localBindings) {
           bindings[binding] = new D1DatabaseImpl(id, auth);
         } else {
           const path = `${LOCAL_BINDINGS_DIR}/d1/${id}.sqlite`;
@@ -74,7 +74,7 @@ export const loadBindings = (): Record<string, unknown> => {
         }
         break;
       case "KV":
-        if (bindingMode === "REMOTE") {
+        if (!localBindings) {
           bindings[binding] = new KVNamespaceImpl(id, auth);
         } else {
           const path = `${LOCAL_BINDINGS_DIR}/kv/${id}/`;

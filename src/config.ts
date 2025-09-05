@@ -50,10 +50,8 @@ const CONFIG_SCHEMA = z.object({
     .default([]),
   /** Any bindings that should be provided {@see https://developers.cloudflare.com/pages/functions/bindings/} */
   bindings: z
-    .object({
-      $mode: z.enum(["LOCAL", "REMOTE"]).default("REMOTE"),
-    })
-    .catchall(
+    .record(
+      z.string(),
       z.object({
         type: z.enum(["D1", "KV"]),
         id: z
@@ -63,9 +61,7 @@ const CONFIG_SCHEMA = z.object({
             message: "Invalid UUID format",
           }),
       }),
-    )
-    // @ts-ignore We know this is valid for the above
-    .default({ $mode: "REMOTE" }),
+    ).default({}),
   /** If markdown should be converted to HTML */
   markdownToHTML: z.boolean().default(true),
   /** Convert relative local links (e.g. href, src) to absolute ones */

@@ -393,7 +393,7 @@ en:
         default: "[]"
         description: "Other directories for which changes should rebuild the dev server."
       - title: "bindings"
-        type: '{ $mode?: "REMOTE" | "LOCAL"; [envVarName: string]: { type: "D1" | "KV"; id: string }}'
+        type: '{[envVarName: string]: { type: "D1" | "KV"; id: string }}'
         default: '{ $mode: "REMOTE" }'
         description: "Any [bindings](https://developers.cloudflare.com/pages/functions/bindings/) that should be provided."
       - title: "ignore"
@@ -818,7 +818,7 @@ de:
         default: "[]"
         description: "Weiter Ordner in welchen Änderungen den Entwicklungsserver rebuildet."
       - title: "bindings"
-        type: '{ $mode?: "REMOTE" | "LOCAL"; [envVarName: string]: { type: "D1" | "KV"; id: string }}'
+        type: '{[envVarName: string]: { type: "D1" | "KV"; id: string }}'
         default: '{ $mode: "REMOTE" }'
         description: "Jegliche [Bindings](https://developers.cloudflare.com/pages/functions/bindings/) welche verfügbar gemacht werden sollen."
       - title: "ignore"
