@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run --env-file -A --allow-scripts jsr:@md/cf-page serve",
+    "dev": "deno run --env-file -A --allow-scripts --watch='.env,deno.jsonc' jsr:@md/cf-page serve",
     "build": "deno run -A --allow-scripts jsr:@md/cf-page build"
   },
   "compilerOptions": {
