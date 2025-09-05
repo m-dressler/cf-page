@@ -2,7 +2,7 @@ import { CONFIG } from "../config.ts";
 
 /** Uses `deno bundle` since there's no runtime API available yet (https://docs.deno.com/runtime/reference/bundling/) */
 export const bundle = async (
-  filePath: string,
+  filePath: string | URL,
   minify: boolean,
 ): Promise<string> => {
   const cmd = new Deno.Command(Deno.execPath(), {
@@ -12,7 +12,7 @@ export const bundle = async (
       CONFIG.denoJsonFilePath && "--config",
       CONFIG.denoJsonFilePath, // Auto-discovers project config with import maps
       minify && "--minify",
-      filePath,
+      filePath.toString(),
     ].filter((arg) => arg !== false && arg != null),
     stdout: "piped",
     stderr: "piped",

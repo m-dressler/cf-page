@@ -5,7 +5,7 @@ export const PREVIEW_LISTEN_PATH = PREVIEW_PREFIX + "listen";
 export const PREVIEW_JS_PATH = PREVIEW_PREFIX + "refresh.js";
 
 export const PREVIEW_JS_SCRIPT = await bundle(
-  new URL("./clientScript.ts", import.meta.url).pathname,
+  new URL("./clientScript.ts", import.meta.url),
   true,
 );
 
