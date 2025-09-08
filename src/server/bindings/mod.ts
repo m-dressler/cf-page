@@ -1,7 +1,7 @@
 import { ensureDirSync } from "@std/fs/ensure-dir";
 import { dirname } from "@std/path/dirname";
-import { DatabaseSync } from "node:sqlite";
 import { CONFIG } from "../../config.ts";
+import { D1DatabaseLocal } from "./d1-local.ts";
 import { D1DatabaseImpl } from "./d1.ts";
 import { KVNamespaceLocal } from "./kv-local.ts";
 import { KVNamespaceImpl } from "./kv.ts";
@@ -116,7 +116,7 @@ export const loadBindings = (): Record<string, unknown> => {
         } else {
           const path = `${LOCAL_BINDINGS_DIR}/d1/${id}.sqlite`;
           ensureDirSync(dirname(path));
-          bindings[binding] = new DatabaseSync(path);
+          bindings[binding] = new D1DatabaseLocal(path);
         }
         break;
       case "KV":

@@ -1,6 +1,11 @@
 import { isError } from "@md/ensure-error/is-error";
 import { type Auth, cloudflareFetch } from "./mod.ts";
 
+/** Splits a list of queries into individual queries */
+const parseQueries = (query: string): string[] =>
+  query.trim().split(";").map((q) => q.trim()).filter((q) => q.length > 0);
+
+/** Base D1PreparedStatement implementation with shared functionality */
 class D1PreparedStatementImpl implements D1PreparedStatement {
   constructor(
     private db: D1DatabaseImpl,
@@ -8,7 +13,7 @@ class D1PreparedStatementImpl implements D1PreparedStatement {
     public params?: unknown[],
   ) {}
 
-  bind(...values: unknown[]) {
+  public bind(...values: unknown[]) {
     for (const key in values) {
       const value = values[key];
       switch (typeof value) {
@@ -84,6 +89,7 @@ class D1PreparedStatementImpl implements D1PreparedStatement {
   }
 }
 
+/** Remote D1Database fetching via API */
 export class D1DatabaseImpl implements D1Database {
   constructor(public id: string, public auth: Auth) {}
 
@@ -119,24 +125,27 @@ export class D1DatabaseImpl implements D1Database {
   prepare(query: string) {
     return new D1PreparedStatementImpl(this, query);
   }
-  batch<T>(statements: D1PreparedStatementImpl[]) {
-    if (statements.some((s) => s.params?.length)) {
-      throw new Error(
-        "D1.batch(): Prepared statements with bound parameters are not yet supported in batch operations",
-      ); // TODO
-    }
 
-    return this.query<T>(statements.map((s) => s.statement).join(";"));
+  async batch<T>(
+    statements: D1PreparedStatementImpl[],
+  ): Promise<D1Result<T>[]> {
+    const promises = statements.map((s) => this.query<T>(s.statement));
+    const results = await Promise.all(promises);
+    return results.flat(1);
   }
+
   async exec(query: string) {
-    const queries = query.trim().split("\n");
-    const result = await this.query<unknown>(queries.join(";"));
-    return { count: queries.length, duration: result[0].meta.duration };
+    const queries = parseQueries(query);
+    const start = Date.now();
+    for (const sql of queries) await this.query(sql);
+    return { count: queries.length, duration: Date.now() - start };
   }
-  withSession(constraintOrBookmark?: string): D1DatabaseSession {
-    throw new Error("D1.withSession() is not yet supported"); // TODO
+
+  withSession(_constraintOrBookmark?: string): D1DatabaseSession {
+    throw new Error("D1.withSession() is not yet supported");
   }
+
   dump(): Promise<ArrayBuffer> {
-    throw new Error("`dump()` not implemented as deprecated");
+    return Promise.reject(new Error("`dump()` not implemented as deprecated"));
   }
 }
