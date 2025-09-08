@@ -18,6 +18,55 @@ class MissingEnvError extends Error {
   }
 }
 
+/** An fetch error while trying to request a Cloudflare resource (see {@link cloudflareFetch}) */
+class CloudflareFetchError extends Error {
+  /**
+   * @param path The URL path that was requested
+   * @param init The request payload
+   * @param status The response HTTP status
+   * @param body The response body (either parsed JSON or plaintext)
+   */
+  private constructor(
+    public path: string,
+    public init: RequestInit,
+    public status: number,
+    public body: unknown,
+  ) {
+    super(`Cloudflare API Request error`, {
+      cause: {
+        path,
+        init,
+        status,
+        body,
+      },
+    });
+    this.name = "CloudflareFetchError";
+  }
+
+  /**
+   * Converts a failed response into a {@link CloudflareFetchError}
+   *
+   * @param path The URL path that was requested
+   * @param init The request payload
+   * @param response The failed response
+   */
+  static async create(
+    path: string,
+    init: RequestInit,
+    response: Response,
+  ): Promise<CloudflareFetchError> {
+    const isJsonResponse = response.headers.get("content-type")?.includes(
+      "application/json",
+    );
+    const body = await (isJsonResponse ? response.json() : response.text());
+    init = structuredClone(init);
+    const headers = new Headers(init.headers ?? {});
+    headers.delete("authorization");
+    init.headers = Object.fromEntries(headers.entries());
+    return new CloudflareFetchError(path, init, response.status, body);
+  }
+}
+
 export const cloudflareFetch = async <T>(
   path: `/${string}`,
   apiToken: string,
@@ -31,11 +80,8 @@ export const cloudflareFetch = async <T>(
     `https://api.cloudflare.com/client/v4${path}`,
     init,
   );
-  if (!response.ok) {
-    return new Error("Cloudflare API Request error", {
-      cause: await response.json(),
-    });
-  } else if (
+  if (!response.ok) return CloudflareFetchError.create(path, init, response);
+  else if (
     response.headers.get("Content-Type")?.includes("application/json")
   ) {
     return response.json();
