@@ -47,18 +47,18 @@ const DEFAULT_INCOMING_REQUEST_CF_PROPERTIES: IncomingRequestCfProperties<
   unknown
 > = {
   asn: 0,
-  asOrganization: "",
-  colo: "",
+  asOrganization: "LOCAL",
+  colo: "XXX", // XXX doesn't exist, can be used to detect local dev
   edgeRequestKeepAliveStatus: 1,
-  httpProtocol: "",
+  httpProtocol: "HTTP/2",
   requestPriority: "",
   tlsVersion: "",
   tlsCipher: "",
   botManagement: {
-    score: 1,
+    score: 99,
     verifiedBot: false,
     corporateProxy: false,
-    staticResource: false,
+    staticResource: true,
     detectionIds: [],
     ja3Hash: "",
   },
@@ -66,8 +66,8 @@ const DEFAULT_INCOMING_REQUEST_CF_PROPERTIES: IncomingRequestCfProperties<
   hostMetadata: {},
   tlsClientAuth: {
     certFingerprintSHA1: "",
-    certPresented: "1",
-    certVerified: "SUCCESS",
+    certPresented: "0",
+    certVerified: "NONE",
     certRevoked: "0",
     certIssuerDN: "",
     certSubjectDN: "",
@@ -82,7 +82,7 @@ const DEFAULT_INCOMING_REQUEST_CF_PROPERTIES: IncomingRequestCfProperties<
     certFingerprintSHA256: "",
     certNotBefore: "",
     certNotAfter: "",
-  },
+  } satisfies IncomingRequestCfPropertiesTLSClientAuthPlaceholder,
   country: undefined,
   region: undefined,
   regionCode: undefined,
