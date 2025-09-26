@@ -42,6 +42,7 @@ const vfs: PreviewVFS = {
   },
 };
 
+// TODO: More useful defaults and make configurable
 const DEFAULT_INCOMING_REQUEST_CF_PROPERTIES: IncomingRequestCfProperties<
   unknown
 > = {
@@ -82,6 +83,18 @@ const DEFAULT_INCOMING_REQUEST_CF_PROPERTIES: IncomingRequestCfProperties<
     certNotBefore: "",
     certNotAfter: "",
   },
+  country: undefined,
+  region: undefined,
+  regionCode: undefined,
+  city: undefined,
+  latitude: undefined,
+  longitude: undefined,
+  postalCode: undefined,
+  metroCode: undefined,
+  timezone: undefined,
+  continent: undefined,
+  clientTcpRtt: undefined,
+  clientAcceptEncoding: undefined,
 };
 
 /** The `env` property expected by a cloudflare function including `ASSETS` */
