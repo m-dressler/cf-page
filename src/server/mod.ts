@@ -22,7 +22,8 @@ import {
 import { print, printBuildInfo } from "./print.ts";
 import { findBestMatch, type RouteParams } from "./routeMatching.ts";
 
-const host = `http://localhost:${CONFIG.port}`;
+const PORT = Number(Deno.env.get("PORT")) || CONFIG.port;
+const host = `http://localhost:${PORT}`;
 
 let refreshPromise = resolvable<string>();
 
@@ -389,7 +390,7 @@ export const devServer = async (
 
   try {
     Deno.serve({
-      port: CONFIG.port,
+      port: PORT,
       handler: requestHandler,
       onListen: () => print(`Listening on ${host}\n`),
     });
