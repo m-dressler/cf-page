@@ -211,7 +211,8 @@ const requestHandler = async (req: Request): Promise<Response> => {
 
   // Collect middleware handlers for nested paths
   if (vfs.compiled.middlewares.size > 0) {
-    const parts = path.split("/");
+    /** Each path segment with trailing slashes being ignored (e.g. `['', 'app', 'account']`)*/
+    const parts = path.replace(/\/$/, "").split("/");
     for (let i = 1; i <= parts.length; ++i) {
       const middlewarePath = parts.slice(0, i).join("/") || "/";
       const match = findBestMatch(vfs.compiled.middlewares, middlewarePath);
