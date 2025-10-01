@@ -403,16 +403,15 @@ export const translationPlugin =
 
     // Process element attributes for translation variables
     visit(tree, "element", (node: Element) => {
-      if (node.properties) {
-        for (const [key, value] of Object.entries(node.properties)) {
-          if (typeof value === "string" && value.includes("{")) {
-            const { result } = processTextTranslations(value, translate);
-            if (typeof result === "string") {
-              node.properties[key] = result;
-            } else if (Array.isArray(result)) {
-              node.properties[key] = result.join("\n");
-            }
-          }
+      if (!node.properties) return;
+
+      for (const [key, value] of Object.entries(node.properties)) {
+        if (typeof value !== "string" || !value.includes("{")) continue;
+
+        const { result } = processTextTranslations(value, translate);
+        if (typeof result === "string") node.properties[key] = result;
+        else if (Array.isArray(result)) {
+          node.properties[key] = result.join("\n");
         }
       }
     });
