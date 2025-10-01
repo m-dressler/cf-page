@@ -370,34 +370,37 @@ export const translationPlugin =
 
     const translate = getTranslationFunction(vFile, context.vfs);
 
+    /** Process text nodes for translation variables */
+    const processTextNode = (
+      node: Node & { value?: string },
+      index?: number,
+      parent?: Parent,
+    ) => {
+      // No real content
+      if (!(node.value && parent && index != null)) return;
+      // Translation is not needed since no mustache
+      if (!node.value.includes("{")) return;
+
+      const mixedNodes = processMixedContent(node.value, translate);
+
+      if (
+        mixedNodes.length !== 1 ||
+        mixedNodes[0].type !== "text" ||
+        mixedNodes[0].value !== node.value
+      ) {
+        parent.children.splice(index, 1, ...mixedNodes);
+        return index + mixedNodes.length;
+      }
+    };
+
     // Process all text nodes for translation variables with selective markdown parsing
+    visit(tree, "text", processTextNode);
+    // Templates have their own root so also query those
     visit(
       tree,
-      "text",
-      (node: Node & { value?: string }, index: unknown, parent?: Parent) => {
-        if (
-          !node.value ||
-          !parent ||
-          !Array.isArray(parent.children) ||
-          typeof index !== "number"
-        ) {
-          return;
-        }
-
-        // Process translation variables with mixed content support
-        if (node.value.includes("{")) {
-          const mixedNodes = processMixedContent(node.value, translate);
-
-          // If we got back multiple nodes or the content changed, replace the text node
-          if (
-            mixedNodes.length !== 1 ||
-            mixedNodes[0].type !== "text" ||
-            mixedNodes[0].value !== node.value
-          ) {
-            parent.children.splice(index, 1, ...mixedNodes);
-            return index + mixedNodes.length;
-          }
-        }
+      { tagName: "template" },
+      (node: Element) => {
+        if (node.content) visit(node.content, "text", processTextNode);
       },
     );
 
