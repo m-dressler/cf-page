@@ -10,6 +10,7 @@ import type { TranslationKV } from "../translations.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
 import { absoluteLinksPlugin } from "./html/absoluteLinksPlugin.ts";
 import { cacheBustPlugin } from "./html/cacheBustPlugin.ts";
+import { inlinePlugin } from "./html/inlinePlugin.ts";
 import { slotPlugin } from "./html/slotPlugin.ts";
 import {
   getTranslationFunction,
@@ -117,6 +118,7 @@ export default {
 
     processor
       .use(slotPlugin, context, vFile)
+      .use(inlinePlugin, context, vFile)
       .use(translationPlugin, context, vFile)
       .use(cacheBustPlugin, context)
       .use(rehypeSlug);

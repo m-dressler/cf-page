@@ -86,7 +86,13 @@ if (typeof denoJson !== "object" || !denoJson) {
 
 const loadedConfig = CONFIG_KEY in denoJson ? denoJson[CONFIG_KEY] : {};
 
+const importMapSchema = z.object({
+  "imports": z.record(z.string(), z.string()).optional(),
+});
+
 /** The global configuration for this package */
 export const CONFIG = Object.assign(CONFIG_SCHEMA.parse(loadedConfig), {
   denoJsonFilePath,
+  /** The deno.json(c) import map */
+  importMap: importMapSchema.safeParse(denoJson).data?.imports ?? {},
 });

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <ellipse rx="20" ry="20" cx="70" cy="10" fill="#ff0040">
+    <animateMotion
+      dur="20s"
+      repeatCount="indefinite"
+      path="m-15,0 a15,15 0 1,1 30,0 a15,15 0 1,1 -30,0"
+    />
+  </ellipse>
+  <ellipse rx="30" ry="30" cx="30" cy="50" fill="lime">
+    <animateMotion
+      dur="25s"
+      repeatCount="indefinite"
+      path="m -20,0 a20,20 0 1,1 40,0 a20,20 0 1,1 -40,0"
+    />
+  </ellipse>
+  <ellipse rx="20" ry="20" cx="60" cy="70" fill="#1100ff">
+    <animateMotion
+      dur="30s"
+      repeatCount="indefinite"
+      path="m-18,0 a18,18 0 1,1 36,0 a18,18 0 1,1 -36,0"
+    />
+  </ellipse>
+</svg>
