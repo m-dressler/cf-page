@@ -1,3 +1,4 @@
+import { bufferAsString } from "@util/buffer.ts";
 import { dirname, resolve } from "jsr:@std/path@1.0.8";
 import type { Element, Parent } from "npm:@types/hast@3.0.4";
 import { fromHtml } from "npm:hast-util-from-html@2.0.3";
@@ -13,24 +14,35 @@ export const inlinePlugin =
     const promises: Promise<void>[] = [];
     const inlineDir = dirname(vFile.srcPath);
 
-    const loadInlineFile = (srcProp: string): Promise<string> => {
-      let fsPath: string = "";
+    const loadInlineFile = async (srcProp: string): Promise<string> => {
+      let srcPath: string = "";
 
       // Check import map first (highest precedence)
       for (const [from, to] of Object.entries(CONFIG.importMap)) {
         if (srcProp.startsWith(from)) {
-          fsPath = to + srcProp.substring(from.length);
+          srcPath = to + srcProp.substring(from.length);
           break;
         }
       }
 
       // Fall back to absolute or relative path resolution
-      if (!fsPath) {
-        if (srcProp.startsWith("/")) fsPath = CONFIG.srcDir + srcProp;
-        else fsPath = resolve(inlineDir, srcProp);
+      if (!srcPath) {
+        if (srcProp.startsWith("/")) srcPath = CONFIG.srcDir + srcProp;
+        else srcPath = resolve(inlineDir, srcProp);
       }
 
-      return Deno.readTextFile(fsPath);
+      // Try loading from VFS build output first (for transpiled files)
+      const vFileInVfs = context.vfs.source.get(srcPath) || context.vfs.build.get(srcPath);
+      if (vFileInVfs && !["skipped", "deleted"].includes(vFileInVfs.status)) {
+        // Ensure build is complete
+        await vFileInVfs.buildPromise;
+        if (vFileInVfs.buildContents != null) {
+          return bufferAsString(vFileInVfs.buildContents);
+        }
+      }
+
+      // Fall back to reading from filesystem
+      return Deno.readTextFile(srcPath);
     };
 
     // Inline <img inline src="*.svg" />
