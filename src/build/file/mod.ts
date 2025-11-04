@@ -54,6 +54,7 @@ export const buildFile: (
     // For binary or unhandled files, just mark them as unmodified
     vFile.status = "skipped";
   }
+  vFile.buildPromise.resolve();
 
   vFile.processingTime = performance.now() - startTime;
 };

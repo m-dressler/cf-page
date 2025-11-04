@@ -5,7 +5,7 @@
     "jsr:@md/compare-array-buffers@^0.0.0": "0.0.0",
     "jsr:@md/ensure-error@^0.0.0": "0.0.0",
     "jsr:@md/file-hash@1": "1.0.0",
-    "jsr:@md/resolvable@^0.0.0": "0.0.0",
+    "jsr:@md/resolvable@1": "1.0.0",
     "jsr:@std/crypto@^1.0.3": "1.0.5",
     "jsr:@std/encoding@*": "1.0.10",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
@@ -59,8 +59,8 @@
         "jsr:@std/crypto"
       ]
     },
-    "@md/resolvable@0.0.0": {
-      "integrity": "89c304f63c7e69af906cffd6e04e3f60c099a2388a5205f1d8b37df1767937a5"
+    "@md/resolvable@1.0.0": {
+      "integrity": "dd9405d4ae7bca0c30eef7cdae9c081d20603875157165b99185e249956fac8a"
     },
     "@std/crypto@1.0.5": {
       "integrity": "0dcfbb319fe0bba1bd3af904ceb4f948cde1b92979ec1614528380ed308a3b40"
@@ -3030,7 +3030,7 @@
       "jsr:@md/compare-array-buffers@^0.0.0",
       "jsr:@md/ensure-error@^0.0.0",
       "jsr:@md/file-hash@1",
-      "jsr:@md/resolvable@^0.0.0",
+      "jsr:@md/resolvable@1",
       "jsr:@std/encoding@^1.0.10",
       "jsr:@std/fs@^1.0.18",
       "jsr:@std/jsonc@^1.0.2",

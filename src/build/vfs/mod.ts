@@ -1,3 +1,4 @@
+import resolvable, { type Resolvable } from "@md/resolvable";
 import { FILE_BUILDERS } from "../file/mod.ts";
 import type { LanguageFiles } from "../translations.ts";
 
@@ -26,6 +27,8 @@ export class VFile {
   public processingTime?: number;
   /** The contents to use if this file never existed on the filesystem (such as when using +plugin.ts) */
   public srcContents?: string | BufferSource;
+  /** Promise that resolves when the file build is complete. Used to await dependent file builds without polling. */
+  public readonly buildPromise: Resolvable<void> = resolvable<void>();
 
   constructor(params: {
     srcPath: string;
