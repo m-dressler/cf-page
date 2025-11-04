@@ -1,4 +1,4 @@
-import { throwIfAborted } from "../../util/abortError.ts";
+import { throwIfAborted } from "@util/abortError.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
 
 import cssBuilder from "./css.ts";

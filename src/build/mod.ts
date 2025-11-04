@@ -1,5 +1,5 @@
 import { ensureError } from "@md/ensure-error/ensure-error";
-import { throwIfAborted } from "../util/abortError.ts";
+import { throwIfAborted } from "@util/abortError.ts";
 import { type BuildContext, buildFile } from "./file/mod.ts";
 import { loadPlugin } from "./plugin.ts";
 import { gatherVFS } from "./vfs/gatherVFS.ts";

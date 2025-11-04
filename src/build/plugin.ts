@@ -1,7 +1,7 @@
 import { exists } from "@std/fs/exists";
 import { resolve } from "@std/path/resolve";
+import { importModule } from "@util/importModule.ts";
 import { CONFIG } from "../config.ts";
-import { importModule } from "../util/importModule.ts";
 import type { BuildContext } from "./file/mod.ts";
 
 /** Allows modifications of the vfs (virtual file system) before or after the build */

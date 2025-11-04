@@ -3,9 +3,9 @@ import { emptyDir } from "@std/fs/empty-dir";
 import { ensureDir } from "@std/fs/ensure-dir";
 import { dirname } from "@std/path/dirname";
 import { join } from "@std/path/join";
+import { bundle } from "@util/bundle.ts";
 import { CONFIG } from "../../config.ts";
-import { bundle } from "../../util/bundle.ts";
-import type { VFS } from "../vfs/mod.ts";
+import type { VFS } from "./mod.ts";
 
 /**  Bundle function using native deno bundle with config resolution */
 const writeFunction = async (inPath: string, outPath: string) => {

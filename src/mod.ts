@@ -2,10 +2,10 @@ import * as CLI from "@md/cli";
 import { dirname } from "@std/path/dirname";
 import { normalize } from "@std/path/normalize";
 import { UntarStream } from "@std/tar";
+import { logPerformanceMetrics } from "@util/logPerformance.ts";
 import { build } from "./build/mod.ts";
 import { writeVFS } from "./build/vfs/writeVFS.ts";
 import { devServer } from "./server/mod.ts";
-import { logPerformanceMetrics } from "./util/logPerformance.ts";
 
 export type { BuildContext } from "./build/file/mod.ts";
 export type { PluginFunction } from "./build/plugin.ts";

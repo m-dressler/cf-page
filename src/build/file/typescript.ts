@@ -1,6 +1,6 @@
+import { throwIfAborted } from "@util/abortError.ts";
+import { bundle } from "@util/bundle.ts";
 import { CONFIG } from "../../config.ts";
-import { throwIfAborted } from "../../util/abortError.ts";
-import { bundle } from "../../util/bundle.ts";
 import type { FileBuilder } from "./mod.ts";
 
 export default {

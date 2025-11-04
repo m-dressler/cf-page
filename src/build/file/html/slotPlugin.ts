@@ -1,7 +1,7 @@
+import { throwIfAborted } from "@util/abortError.ts";
 import type { Transformer } from "npm:unified@^11.0.5";
 import { rehype } from "rehype";
 import { CONFIG } from "../../../config.ts";
-import { throwIfAborted } from "../../../util/abortError.ts";
 import type { VFile } from "../../vfs/mod.ts";
 import type { BuildContext } from "../mod.ts";
 

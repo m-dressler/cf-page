@@ -1,11 +1,11 @@
+import { throwIfAborted } from "@util/abortError.ts";
+import { bufferAsString } from "@util/buffer.ts";
+import { parseMarkdownToHtml } from "@util/markdown.ts";
 import type { ElementContent } from "npm:hast@1.0.0";
 import { rehype } from "rehype";
 import rehypePresetMinify from "rehype-preset-minify";
 import rehypeSlug from "rehype-slug";
 import { CONFIG } from "../../config.ts";
-import { throwIfAborted } from "../../util/abortError.ts";
-import { bufferAsString } from "../../util/buffer.ts";
-import { parseMarkdownToHtml } from "../../util/markdown.ts";
 import type { TranslationKV } from "../translations.ts";
 import type { VFile, VFS } from "../vfs/mod.ts";
 import { absoluteLinksPlugin } from "./html/absoluteLinksPlugin.ts";

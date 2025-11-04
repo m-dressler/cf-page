@@ -1,9 +1,9 @@
 import tailwindPlugin from "@tailwindcss/postcss";
+import { throwIfAborted } from "@util/abortError.ts";
+import { bufferAsString } from "@util/buffer.ts";
 import autoprefixer from "autoprefixer";
 import cssnanoPlugin from "cssnano";
 import postcss from "postcss";
-import { throwIfAborted } from "../../util/abortError.ts";
-import { bufferAsString } from "../../util/buffer.ts";
 import type { FileBuilder } from "./mod.ts";
 
 /** postCSS for tailwind, vendor prefixes, as well as minifying on prod */

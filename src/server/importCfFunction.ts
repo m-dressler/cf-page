@@ -1,7 +1,7 @@
 import { isError } from "@md/ensure-error/is-error";
 import { join } from "@std/path/join";
+import { importModule } from "@util/importModule.ts";
 import { CONFIG } from "../config.ts";
-import { importModule } from "../util/importModule.ts";
 
 export const importCfFunction = async (
   path: string,

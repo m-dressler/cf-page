@@ -1,7 +1,7 @@
+import { parseMarkdownToHast } from "@util/markdown.ts";
 import type { Element, Node, Parent, Text } from "npm:@types/hast@3.0.4";
 import type { Transformer } from "unified";
 import { visit } from "unist-util-visit";
-import { parseMarkdownToHast } from "../../../util/markdown.ts";
 import type { TranslationKV, TranslationValue } from "../../translations.ts";
 import type { VFile, VFS } from "../../vfs/mod.ts";
 import type { BuildContext } from "../mod.ts";

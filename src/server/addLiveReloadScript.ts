@@ -1,4 +1,4 @@
-import { bundle } from "../util/bundle.ts";
+import { bundle } from "@util/bundle.ts";
 
 const PREVIEW_PREFIX = "/-/cf-page/";
 export const PREVIEW_LISTEN_PATH = PREVIEW_PREFIX + "listen";

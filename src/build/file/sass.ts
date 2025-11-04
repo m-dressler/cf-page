@@ -1,8 +1,8 @@
+import { throwIfAborted } from "@util/abortError.ts";
 import autoprefixer from "autoprefixer";
 import cssnanoPlugin from "cssnano";
 import postcss from "postcss";
 import { compile } from "sass";
-import { throwIfAborted } from "../../util/abortError.ts";
 import type { FileBuilder } from "./mod.ts";
 
 export default {
