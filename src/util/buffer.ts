@@ -21,3 +21,7 @@ export const toUint8Array = (
   copy.set(new Uint8Array(array.buffer, array.byteOffset, array.byteLength));
   return copy as Uint8Array<ArrayBuffer>;
 };
+
+/** Uses `TextEncoder` to convert a string to a `Uint8Array` */
+export const encodeString = (str: string): Uint8Array<ArrayBuffer> =>
+  new TextEncoder().encode(str) as Uint8Array<ArrayBuffer>;

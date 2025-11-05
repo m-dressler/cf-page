@@ -1,3 +1,4 @@
+import { encodeString } from "@util/buffer.ts";
 import { bundle } from "@util/bundle.ts";
 
 const PREVIEW_PREFIX = "/-/cf-page/";
@@ -26,15 +27,14 @@ export const addLiveReloadScript = (
   } else {
     // Handle binary content
     const decoder = new TextDecoder();
-    const encoder = new TextEncoder();
     const strContent = decoder.decode(content);
 
     if (isSvg) {
-      return encoder.encode(
+      return encodeString(
         strContent.replace("</svg>", `${refreshScript}</svg>`),
       );
     } else {
-      const scriptBytes = encoder.encode(refreshScript);
+      const scriptBytes = encodeString(refreshScript);
       const newContent = new Uint8Array(
         content.byteLength + scriptBytes.length,
       );

@@ -1,5 +1,5 @@
 import { decodeBase64Url, encodeBase64Url } from "@std/encoding/base64url";
-import { toUint8Array } from "@util/buffer.ts";
+import { encodeString, toUint8Array } from "@util/buffer.ts";
 import { kvResponseToType, type TypeOrOptions } from "./kv.ts";
 
 /** The format of the KV .json files stored to disk */
@@ -68,7 +68,7 @@ export class KVNamespaceLocal implements KVNamespace {
       const arrayBuffer = await response.arrayBuffer();
       data = new Uint8Array(arrayBuffer);
     } else if (typeof value === "string") {
-      data = new TextEncoder().encode(value);
+      data = encodeString(value);
     } else if (value instanceof ArrayBuffer) {
       data = new Uint8Array(value);
     } else {
