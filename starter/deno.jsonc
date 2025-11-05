@@ -1,7 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --env-file -A --allow-scripts --watch='.env,deno.jsonc' @md/cf-page serve",
-    "build": "deno run -A --allow-scripts @md/cf-page build"
+    "dev": "deno run --env-file -A --allow-scripts --watch='.env,deno.jsonc' jsr:@md/cf-page serve",
+    "build": "deno run -A --allow-scripts jsr:@md/cf-page build"
   },
   "compilerOptions": {
     "types": ["npm:@cloudflare/workers-types"],

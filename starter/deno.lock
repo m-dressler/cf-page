@@ -14,6 +14,7 @@
     "jsr:@std/fs@^1.0.18": "1.0.19",
     "jsr:@std/internal@^1.0.10": "1.0.12",
     "jsr:@std/internal@^1.0.9": "1.0.12",
+    "jsr:@std/json@^1.0.2": "1.0.2",
     "jsr:@std/jsonc@^1.0.2": "1.0.2",
     "jsr:@std/media-types@^1.1.0": "1.1.0",
     "jsr:@std/path@1.0.8": "1.0.8",
@@ -24,11 +25,15 @@
     "jsr:@std/yaml@^1.0.7": "1.0.10",
     "npm:@cloudflare/workers-types@*": "4.20250523.0",
     "npm:@tailwindcss/postcss@^4.1.8": "4.1.13",
+    "npm:@types/hast@3.0.4": "3.0.4",
     "npm:@types/js-cookie@*": "3.0.6",
+    "npm:@types/node@*": "24.2.0",
+    "npm:@types/unist@3.0.3": "3.0.3",
     "npm:autoprefixer@^10.4.21": "10.4.21_postcss@8.5.6",
     "npm:cookie-parser@*": "1.4.7",
     "npm:cssnano@^7.0.7": "7.1.1_postcss@8.5.6",
     "npm:hast-util-from-html@2.0.3": "2.0.3",
+    "npm:hast@1.0.0": "1.0.0",
     "npm:js-cookie@*": "3.0.5",
     "npm:postcss@^8.5.4": "8.5.6",
     "npm:rehype-preset-minify@^7.0.1": "7.0.1",
@@ -60,8 +65,11 @@
         "jsr:@std/tar",
         "jsr:@std/yaml",
         "npm:@tailwindcss/postcss",
+        "npm:@types/hast",
+        "npm:@types/unist",
         "npm:autoprefixer",
         "npm:cssnano",
+        "npm:hast",
         "npm:hast-util-from-html",
         "npm:postcss",
         "npm:rehype",
@@ -110,8 +118,14 @@
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
+    "@std/json@1.0.2": {
+      "integrity": "d9e5497801c15fb679f55a2c01c7794ad7a5dfda4dd1bebab5e409cb5e0d34d4"
+    },
     "@std/jsonc@1.0.2": {
-      "integrity": "909605dae3af22bd75b1cbda8d64a32cf1fd2cf6efa3f9e224aba6d22c0f44c7"
+      "integrity": "909605dae3af22bd75b1cbda8d64a32cf1fd2cf6efa3f9e224aba6d22c0f44c7",
+      "dependencies": [
+        "jsr:@std/json"
+      ]
     },
     "@std/media-types@1.1.0": {
       "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
@@ -435,6 +449,12 @@
     },
     "@types/ms@2.1.0": {
       "integrity": "sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA=="
+    },
+    "@types/node@24.2.0": {
+      "integrity": "sha512-3xyG3pMCq3oYCNg7/ZP+E1ooTaGB4cG8JWRsqqOYQdbWNY4zbaV0Ennrd7stjiJEFZCaybcIgpTjJWHRfBSIDw==",
+      "dependencies": [
+        "undici-types"
+      ]
     },
     "@types/unist@3.0.3": {
       "integrity": "sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q=="
@@ -897,6 +917,10 @@
       "dependencies": [
         "@types/hast"
       ]
+    },
+    "hast@1.0.0": {
+      "integrity": "sha512-vFUqlRV5C+xqP76Wwq2SrM0kipnmpxJm7OfvVXpB35Fp+Fn4MV+ozr+JZr5qFvyR1q/U+Foim2x+3P+x9S1PLA==",
+      "deprecated": true
     },
     "hastscript@9.0.1": {
       "integrity": "sha512-g7df9rMFX/SPi34tyGCyUBREQoKkapwdY/T04Qn9TDWfHhAYt4/I0gMVirzK5wEzeUqIjEB+LXC/ypb7Aqno5w==",
@@ -1900,6 +1924,9 @@
     "uglify-js@3.19.3": {
       "integrity": "sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ==",
       "bin": true
+    },
+    "undici-types@7.10.0": {
+      "integrity": "sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag=="
     },
     "unified@11.0.5": {
       "integrity": "sha512-xKvGhPWw3k84Qjh8bI3ZeJjqnyadK+GEFtazSfZv/rKeTkTjOJho6mFqh2SM96iIcZokxiOpg78GazTSg8+KHA==",
