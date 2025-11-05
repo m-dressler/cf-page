@@ -1,5 +1,5 @@
-import type { Node } from "npm:@types/unist@3.0.3";
-import type { Transformer } from "npm:unified@^11.0.5";
+import type { Transformer } from "unified";
+import type { Node } from "unist";
 import { visit } from "unist-util-visit";
 import type { BuildContext } from "../mod.ts";
 

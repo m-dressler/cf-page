@@ -1,4 +1,4 @@
-import type { Element, Root, Text } from "npm:@types/hast@3.0.4";
+import type { Element, Root, Text } from "hast";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";

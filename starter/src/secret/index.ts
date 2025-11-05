@@ -1,6 +1,6 @@
 import { $ } from "@lib/client/utils.ts";
 import { decrypt } from "@lib/common/crypto.ts";
-import onDomReady from "jsr:@md/on-dom-ready";
+import onDomReady from "@md/on-dom-ready";
 
 const encryptedPromise = fetch("/secret/index.json").then((res) => {
   if (!res.ok) throw new Error("Failed to fetch secret json", { cause: res });

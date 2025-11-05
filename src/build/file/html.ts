@@ -1,7 +1,7 @@
 import { throwIfAborted } from "@util/abortError.ts";
 import { bufferAsString } from "@util/buffer.ts";
 import { parseMarkdownToHtml } from "@util/markdown.ts";
-import type { ElementContent } from "npm:hast@1.0.0";
+import type { ElementContent } from "hast";
 import { rehype } from "rehype";
 import rehypePresetMinify from "rehype-preset-minify";
 import rehypeSlug from "rehype-slug";

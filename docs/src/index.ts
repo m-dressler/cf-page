@@ -1,4 +1,4 @@
-import onDomReady from "jsr:@md/on-dom-ready";
+import onDomReady from "@md/on-dom-ready";
 
 onDomReady(() => {
   const copyButtons = document.querySelectorAll(".copy-button");

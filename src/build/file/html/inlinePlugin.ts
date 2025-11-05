@@ -1,8 +1,8 @@
+import { dirname, resolve } from "@std/path";
 import { bufferAsString } from "@util/buffer.ts";
-import { dirname, resolve } from "jsr:@std/path@1.0.8";
-import type { Element, Parent } from "npm:@types/hast@3.0.4";
-import { fromHtml } from "npm:hast-util-from-html@2.0.3";
-import type { Transformer } from "npm:unified@^11.0.5";
+import type { Element, Parent } from "hast";
+import { fromHtml } from "hast-util-from-html";
+import type { Transformer } from "unified";
 import { visit } from "unist-util-visit";
 import { CONFIG } from "../../../config.ts";
 import type { VFile } from "../../vfs/mod.ts";

@@ -6,16 +6,20 @@
     "jsr:@md/ensure-error@^0.0.0": "0.0.0",
     "jsr:@md/file-hash@1": "1.0.0",
     "jsr:@md/resolvable@1": "1.0.0",
+    "jsr:@std/assert@^1.0.15": "1.0.15",
     "jsr:@std/crypto@^1.0.3": "1.0.5",
     "jsr:@std/encoding@*": "1.0.10",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
-    "jsr:@std/fs@^1.0.18": "1.0.19",
-    "jsr:@std/internal@^1.0.9": "1.0.9",
+    "jsr:@std/fs@^1.0.19": "1.0.19",
+    "jsr:@std/internal@^1.0.10": "1.0.12",
+    "jsr:@std/internal@^1.0.12": "1.0.12",
+    "jsr:@std/internal@^1.0.9": "1.0.12",
     "jsr:@std/json@^1.0.2": "1.0.2",
     "jsr:@std/jsonc@^1.0.2": "1.0.2",
     "jsr:@std/media-types@^1.1.0": "1.1.0",
-    "jsr:@std/path@^1.1.0": "1.1.1",
-    "jsr:@std/path@^1.1.1": "1.1.1",
+    "jsr:@std/path@1.0.8": "1.0.8",
+    "jsr:@std/path@^1.1.1": "1.1.2",
+    "jsr:@std/path@^1.1.2": "1.1.2",
     "jsr:@std/streams@^1.0.8": "1.0.9",
     "jsr:@std/streams@^1.0.9": "1.0.10",
     "jsr:@std/tar@*": "0.1.4",
@@ -25,9 +29,16 @@
     "npm:@cloudflare/workers-types@^4.20250607.0": "4.20250607.0",
     "npm:@jsdevtools/rehype-inline-svg@^1.1.4": "1.1.4",
     "npm:@tailwindcss/postcss@^4.1.8": "4.1.8",
+    "npm:@types/hast@3.0.4": "3.0.4",
+    "npm:@types/hast@^3.0.4": "3.0.4",
     "npm:@types/node@*": "22.10.5",
+    "npm:@types/unist@3.0.3": "3.0.3",
+    "npm:@types/unist@^3.0.3": "3.0.3",
     "npm:autoprefixer@^10.4.21": "10.4.21_postcss@8.5.4",
     "npm:cssnano@^7.0.7": "7.0.7_postcss@8.5.4",
+    "npm:hast-util-from-html@2.0.3": "2.0.3",
+    "npm:hast-util-from-html@^2.0.3": "2.0.3",
+    "npm:hast@1.0.0": "1.0.0",
     "npm:postcss@^8.5.4": "8.5.4",
     "npm:rehype-preset-minify@^7.0.1": "7.0.1",
     "npm:rehype-slug@6": "6.0.0",
@@ -62,27 +73,30 @@
     "@md/resolvable@1.0.0": {
       "integrity": "dd9405d4ae7bca0c30eef7cdae9c081d20603875157165b99185e249956fac8a"
     },
+    "@std/assert@1.0.15": {
+      "integrity": "d64018e951dbdfab9777335ecdb000c0b4e3df036984083be219ce5941e4703b",
+      "dependencies": [
+        "jsr:@std/internal@^1.0.12"
+      ]
+    },
     "@std/crypto@1.0.5": {
       "integrity": "0dcfbb319fe0bba1bd3af904ceb4f948cde1b92979ec1614528380ed308a3b40"
     },
     "@std/encoding@1.0.10": {
       "integrity": "8783c6384a2d13abd5e9e87a7ae0520a30e9f56aeeaa3bdf910a3eaaf5c811a1"
     },
-    "@std/fs@1.0.18": {
-      "integrity": "24bcad99eab1af4fde75e05da6e9ed0e0dce5edb71b7e34baacf86ffe3969f3a",
-      "dependencies": [
-        "jsr:@std/path@^1.1.0"
-      ]
-    },
     "@std/fs@1.0.19": {
       "integrity": "051968c2b1eae4d2ea9f79a08a3845740ef6af10356aff43d3e2ef11ed09fb06",
       "dependencies": [
-        "jsr:@std/internal",
+        "jsr:@std/internal@^1.0.9",
         "jsr:@std/path@^1.1.1"
       ]
     },
     "@std/internal@1.0.9": {
       "integrity": "bdfb97f83e4db7a13e8faab26fb1958d1b80cc64366501af78a0aee151696eb8"
+    },
+    "@std/internal@1.0.12": {
+      "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
     },
     "@std/json@1.0.2": {
       "integrity": "d9e5497801c15fb679f55a2c01c7794ad7a5dfda4dd1bebab5e409cb5e0d34d4"
@@ -96,13 +110,16 @@
     "@std/media-types@1.1.0": {
       "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
     },
+    "@std/path@1.0.8": {
+      "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
+    },
     "@std/path@1.1.0": {
       "integrity": "ddc94f8e3c275627281cbc23341df6b8bcc874d70374f75fec2533521e3d6886"
     },
-    "@std/path@1.1.1": {
-      "integrity": "fe00026bd3a7e6a27f73709b83c607798be40e20c81dde655ce34052fd82ec76",
+    "@std/path@1.1.2": {
+      "integrity": "c0b13b97dfe06546d5e16bf3966b1cadf92e1cc83e56ba5476ad8b498d9e3038",
       "dependencies": [
-        "jsr:@std/internal"
+        "jsr:@std/internal@^1.0.10"
       ]
     },
     "@std/streams@1.0.9": {
@@ -1327,6 +1344,10 @@
       "dependencies": [
         "@types/hast@3.0.4"
       ]
+    },
+    "hast@1.0.0": {
+      "integrity": "sha512-vFUqlRV5C+xqP76Wwq2SrM0kipnmpxJm7OfvVXpB35Fp+Fn4MV+ozr+JZr5qFvyR1q/U+Foim2x+3P+x9S1PLA==",
+      "deprecated": true
     },
     "hastscript@6.0.0": {
       "integrity": "sha512-nDM6bvd7lIqDUiYEiu5Sl/+6ReP0BMk/2f4U/Rooccxkj0P5nm+acM5PrGJ/t5I8qPGiqZSE6hVAwZEdZIvP4w==",
@@ -3031,19 +3052,23 @@
       "jsr:@md/ensure-error@^0.0.0",
       "jsr:@md/file-hash@1",
       "jsr:@md/resolvable@1",
+      "jsr:@std/assert@^1.0.15",
       "jsr:@std/encoding@^1.0.10",
-      "jsr:@std/fs@^1.0.18",
+      "jsr:@std/fs@^1.0.19",
       "jsr:@std/jsonc@^1.0.2",
       "jsr:@std/media-types@^1.1.0",
-      "jsr:@std/path@^1.1.0",
+      "jsr:@std/path@^1.1.2",
       "jsr:@std/tar@~0.1.6",
       "jsr:@std/yaml@^1.0.7",
       "npm:@cloudflare/workers-types@*",
       "npm:@cloudflare/workers-types@^4.20250607.0",
       "npm:@jsdevtools/rehype-inline-svg@^1.1.4",
       "npm:@tailwindcss/postcss@^4.1.8",
+      "npm:@types/hast@^3.0.4",
+      "npm:@types/unist@^3.0.3",
       "npm:autoprefixer@^10.4.21",
       "npm:cssnano@^7.0.7",
+      "npm:hast-util-from-html@^2.0.3",
       "npm:postcss@^8.5.4",
       "npm:rehype-preset-minify@^7.0.1",
       "npm:rehype-slug@6",

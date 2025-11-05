@@ -4,5 +4,10 @@
   },
   "compilerOptions": {
     "lib": ["es2024", "dom"]
+  },
+  "imports": {
+    "@md/on-dom-ready": "jsr:@md/on-dom-ready@^0.0.1",
+    "@std/fs": "jsr:@std/fs@^1.0.19",
+    "@std/tar": "jsr:@std/tar@^0.1.9"
   }
 }

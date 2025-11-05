@@ -1,6 +1,6 @@
 import resolvable from "@md/resolvable";
-import { assertEquals } from "jsr:@std/assert";
-import type { ElementContent } from "npm:@types/hast@3.0.4";
+import { assertEquals } from "@std/assert";
+import type { ElementContent } from "hast";
 import type { LangFileContent } from "../translations.ts";
 import { type VFile, VFS } from "../vfs/mod.ts";
 import { processSvelteBlocks } from "./html.ts";

@@ -3,7 +3,7 @@ import {
   assertEquals,
   assertRejects,
   assertThrows,
-} from "jsr:@std/assert";
+} from "@std/assert";
 import { D1DatabaseLocal } from "./d1-local.ts";
 
 const TABLES = {

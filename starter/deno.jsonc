@@ -1,7 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --env-file -A --allow-scripts --watch='.env,deno.jsonc' jsr:@md/cf-page serve",
-    "build": "deno run -A --allow-scripts jsr:@md/cf-page build"
+    "dev": "deno run --env-file -A --allow-scripts --watch='.env,deno.jsonc' @md/cf-page serve",
+    "build": "deno run -A --allow-scripts @md/cf-page build"
   },
   "compilerOptions": {
     "types": ["npm:@cloudflare/workers-types"],
@@ -10,7 +10,10 @@
   "imports": {
     "@src/": "./src/",
     "@lib/": "./lib/",
-    "tailwindcss": "npm:tailwindcss@^4" // Specify the version of Tailwind CSS
+    "@std/encoding": "jsr:@std/encoding@^1.0.10",
+    "tailwindcss": "npm:tailwindcss@^4", // Specify the version of Tailwind CSS
+    "@md/on-dom-ready": "jsr:@md/on-dom-ready@^0.0.1",
+    "@md/cf-page": "jsr:@md/cf-page"
   },
   "nodeModulesDir": "auto",
   "@md/cf-page": {

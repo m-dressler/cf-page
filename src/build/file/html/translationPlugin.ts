@@ -1,5 +1,5 @@
 import { parseMarkdownToHast } from "@util/markdown.ts";
-import type { Element, Node, Parent, Text } from "npm:@types/hast@3.0.4";
+import type { Element, Node, Parent, Text } from "hast";
 import type { Transformer } from "unified";
 import { visit } from "unist-util-visit";
 import type { TranslationKV, TranslationValue } from "../../translations.ts";
