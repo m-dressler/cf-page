@@ -24,7 +24,7 @@ export const encrypt = async ({
 }: {
   value: string | BufferSource;
   secret: string;
-}): Promise<Uint8Array> => {
+}): Promise<Uint8Array<ArrayBuffer>> => {
   // Convert to BufferSource to for crypto
   if (typeof value === "string") value = new TextEncoder().encode(value);
 

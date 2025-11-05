@@ -13,7 +13,7 @@ export const PREVIEW_JS_SCRIPT = await bundle(
 export const addLiveReloadScript = (
   content: string | BufferSource,
   isSvg = false,
-): string | Uint8Array => {
+): string | Uint8Array<ArrayBuffer> => {
   const refreshScript =
     `<script type="text/javascript" src="${PREVIEW_JS_PATH}"></script>`;
 

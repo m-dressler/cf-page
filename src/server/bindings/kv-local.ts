@@ -1,10 +1,11 @@
 import { decodeBase64Url, encodeBase64Url } from "@std/encoding/base64url";
+import { toUint8Array } from "@util/buffer.ts";
 import { kvResponseToType, type TypeOrOptions } from "./kv.ts";
 
 /** The format of the KV .json files stored to disk */
 type StoredKVData = {
   /** Raw data (stored as Base64 on disk) */
-  value: Uint8Array;
+  value: Uint8Array<ArrayBuffer>;
   metadata?: unknown;
   /** Unix timestamp in seconds */
   expiration?: number;
@@ -61,7 +62,7 @@ export class KVNamespaceLocal implements KVNamespace {
   ): Promise<void> {
     const filePath = this.getFilePath(key);
 
-    let data: Uint8Array;
+    let data: Uint8Array<ArrayBuffer>;
     if (value instanceof ReadableStream) {
       const response = new Response(value);
       const arrayBuffer = await response.arrayBuffer();
@@ -71,7 +72,7 @@ export class KVNamespaceLocal implements KVNamespace {
     } else if (value instanceof ArrayBuffer) {
       data = new Uint8Array(value);
     } else {
-      data = new Uint8Array(value.buffer, value.byteOffset, value.byteLength);
+      data = toUint8Array(value);
     }
 
     let expiration: number | undefined;

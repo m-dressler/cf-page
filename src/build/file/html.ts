@@ -1,5 +1,5 @@
 import { throwIfAborted } from "@util/abortError.ts";
-import { bufferAsString } from "@util/buffer.ts";
+import { bufferAsString, toUint8Array } from "@util/buffer.ts";
 import { parseMarkdownToHtml } from "@util/markdown.ts";
 import type { ElementContent } from "hast";
 import { rehype } from "rehype";
@@ -132,6 +132,6 @@ export default {
     });
     throwIfAborted(context.abortController);
 
-    return value;
+    return typeof value === "string" ? value : toUint8Array(value);
   },
 } as const satisfies FileBuilder;

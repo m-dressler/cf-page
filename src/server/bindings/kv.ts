@@ -1,4 +1,5 @@
 import { isError } from "@md/ensure-error/is-error";
+import { toUint8Array } from "@util/buffer.ts";
 import { type Auth, cloudflareFetch } from "./mod.ts";
 
 export type TypeOrOptions =
@@ -101,7 +102,7 @@ export class KVNamespaceImpl implements KVNamespace {
       searchParams.set("expiration_ttl", options.expirationTtl.toString());
     }
 
-    let body: FormData | typeof value = value;
+    let body: FormData | ReadableStream | BufferSource | string;
     // If we have metadata, we instead need to convert the body to FormData
     if (options?.metadata) {
       body = new FormData();
@@ -112,10 +113,11 @@ export class KVNamespaceImpl implements KVNamespace {
       } else {
         body.set(
           "value",
-          new Blob([value], { type: "application/octet-stream" }),
+          new Blob([toUint8Array(value)], { type: "application/octet-stream" }),
         );
       }
-    }
+    } else if (ArrayBuffer.isView(value)) body = toUint8Array(value);
+    else body = value;
 
     const response = await this.request<KVResult<null>>(
       `/values/${encodeURIComponent(key)}?${searchParams}`,
