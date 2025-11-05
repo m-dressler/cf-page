@@ -1,6 +1,6 @@
 {
   "name": "@md/cf-page",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "license": "ISC",
   "tasks": {
     "starter:build": "( cd starter ; deno run -A ../src/mod.ts build )",
