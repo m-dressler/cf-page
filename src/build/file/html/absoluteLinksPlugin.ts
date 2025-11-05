@@ -33,7 +33,7 @@ export const absoluteLinksPlugin =
         if (!attr || !node.properties?.[attr]) return;
 
         const src = node.properties[attr];
-        if (!src.startsWith("./") || src.startsWith("../")) return;
+        if (!(src.startsWith("./") || src.startsWith("../"))) return;
 
         try {
           const url = new URL(src, "http://example.com" + htmlVFile.outPath);

@@ -1,9 +1,11 @@
 import resolvable from "@md/resolvable";
-import { assertEquals } from "@std/assert";
+import { assert, assertEquals } from "@std/assert";
 import type { ElementContent } from "hast";
+import { rehype } from "rehype";
 import type { LangFileContent } from "../translations.ts";
 import { type VFile, VFS } from "../vfs/mod.ts";
 import { processSvelteBlocks } from "./html.ts";
+import { absoluteLinksPlugin } from "./html/absoluteLinksPlugin.ts";
 import {
   getTranslationFunction,
   processMixedContent,
@@ -865,4 +867,69 @@ Deno.test("processMixedContent - mixed parameter types", () => {
       }`,
     },
   ]);
+});
+
+Deno.test("absoluteLinksPlugin - Correctly converts relative URLs to absolute", async () => {
+  const vfs = createMockVFS({});
+  vfs.addVFile(createMockVFile("en", "/blog/post.html"));
+
+  const context = {
+    mode: "prod" as const,
+    vfs,
+    warnings: [],
+    errors: [],
+  };
+
+  const html = `
+    <img src="./image.png" />
+    <script src="../script.js"></script>
+    <link href="./style.css" />
+    <a href="./page.html">Link</a>
+  `;
+
+  const result = await rehype()
+    .use(absoluteLinksPlugin, context)
+    .process({ path: "/test/src/blog/post.html", value: html });
+
+  const output = String(result);
+
+  assert(output.includes('src="/blog/image.png"'), "Local image src updated");
+  assert(
+    output.includes('src="/script.js"'),
+    "Parent script src linked to parent",
+  );
+  assert(output.includes('href="/blog/style.css"'), "Link href updated");
+  assert(output.includes('href="/blog/page.html"'), "Anchor href updated");
+});
+
+Deno.test("absoluteLinksPlugin - external URL remains static", async () => {
+  const vfs = createMockVFS({});
+  vfs.addVFile(createMockVFile("en", "/index.html"));
+
+  const context = {
+    mode: "prod" as const,
+    vfs,
+    warnings: [],
+    errors: [],
+  };
+
+  const html = `
+    <img src="https://example.com/image.png" />
+    <script src="/absolute/path.js"></script>
+  `;
+
+  const result = await rehype()
+    .use(absoluteLinksPlugin, context)
+    .process({ path: "/test/src/index.html", value: html });
+
+  const output = String(result);
+
+  assert(
+    output.includes('src="https://example.com/image.png"'),
+    "External URLs should remain unchanged",
+  );
+  assert(
+    output.includes('src="/absolute/path.js"'),
+    "Absolute paths (starting with /) should remain unchanged",
+  );
 });
