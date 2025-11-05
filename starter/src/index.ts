@@ -20,7 +20,7 @@ onDomReady(() => {
     ? "/" + pathPieces.slice(2).join("/")
     : pathPieces.join("/");
 
-  langSelect.addEventListener("change", (e) => {
+  langSelect.addEventListener("change", (e: Event) => {
     const lang = (e.target as HTMLSelectElement).value;
     // If the selected language is the default language, redirect to the root
     if (lang === "en") location.href = path;
