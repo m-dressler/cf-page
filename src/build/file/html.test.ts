@@ -1,3 +1,4 @@
+import resolvable from "@md/resolvable";
 import { assertEquals } from "jsr:@std/assert";
 import type { ElementContent } from "npm:@types/hast@3.0.4";
 import type { LangFileContent } from "../translations.ts";
@@ -18,6 +19,7 @@ const createMockVFile = (language: string, outPath: string): VFile => ({
   status: "pending",
   language,
   needsTranslation: true,
+  buildPromise: resolvable(),
 });
 
 const createMockVFS = (translations: LangFileContent): VFS => {
