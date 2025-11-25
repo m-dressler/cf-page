@@ -5,7 +5,6 @@ import { UntarStream } from "@std/tar";
 import { logPerformanceMetrics } from "@util/logPerformance.ts";
 import { build } from "./build/mod.ts";
 import { writeVFS } from "./build/vfs/writeVFS.ts";
-import { devServer } from "./server/mod.ts";
 
 export type { BuildContext } from "./build/file/mod.ts";
 export type { PluginFunction } from "./build/plugin.ts";
@@ -50,6 +49,7 @@ const commands: CLI.CommandMap = {
       },
     },
   }).runner(async (_, { "measure-performance": measurePerformance }) => {
+    const { devServer } = await import("./server/mod.ts");
     await devServer({ measurePerformance });
   }),
   init: CLI.command({
