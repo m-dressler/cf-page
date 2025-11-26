@@ -4,11 +4,11 @@
   "license": "ISC",
   "tasks": {
     "starter:build": "( cd starter ; deno run -A ../src/mod.ts build )",
-    "starter:dev": "( cd starter ; deno run -A  --env-file --watch --watch-exclude=. ../src/mod.ts serve )",
-    "starter:perf": "( cd starter ; deno run -A  --env-file --watch --watch-exclude=. ../src/mod.ts serve --measure-performance )",
+    "starter:dev": "( cd starter ; deno run -A --env-file --watch --watch-exclude=. ../src/mod.ts serve )",
+    "starter:perf": "( cd starter ; deno run -A --env-file --watch --watch-exclude=. ../src/mod.ts serve --measure-performance )",
     "docs:build": "( cd docs ; deno run -A ../src/mod.ts build )",
-    "docs:dev": "( cd docs ; deno run -A  --env-file --watch --watch-exclude=. ../src/mod.ts serve )",
-    "docs:perf": "( cd docs ; deno run -A  --env-file --watch --watch-exclude=. ../src/mod.ts serve --measure-performance )"
+    "docs:dev": "( cd docs ; deno run -A --env-file --watch --watch-exclude=. ../src/mod.ts serve )",
+    "docs:perf": "( cd docs ; deno run -A --env-file --watch --watch-exclude=. ../src/mod.ts serve --measure-performance )"
   },
   "exports": "./src/mod.ts",
   "imports": {
