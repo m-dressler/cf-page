@@ -10,6 +10,7 @@
     "docs:dev": "( cd docs ; deno run -A --env-file --watch --watch-exclude=. ../src/mod.ts serve )",
     "docs:perf": "( cd docs ; deno run -A --env-file --watch --watch-exclude=. ../src/mod.ts serve --measure-performance )"
   },
+  "unstable": ["raw-imports", "bundle"], // Enables useful unstable Deno APIs
   "exports": "./src/mod.ts",
   "imports": {
     "@util/": "./src/util/",

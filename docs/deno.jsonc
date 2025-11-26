@@ -2,6 +2,7 @@
   "tasks": {
     "build": "deno run -A ../src/mod.ts build"
   },
+  "unstable": ["raw-imports", "bundle"],
   "compilerOptions": {
     "lib": ["es2024", "dom"]
   },

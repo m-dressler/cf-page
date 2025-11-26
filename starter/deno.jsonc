@@ -3,6 +3,7 @@
     "dev": "deno run --env-file -A --allow-scripts --watch='.env,deno.jsonc' jsr:@md/cf-page serve",
     "build": "deno run -A --allow-scripts jsr:@md/cf-page build"
   },
+  "unstable": ["raw-imports", "bundle"], // Enables useful unstable Deno APIs
   "compilerOptions": {
     "types": ["npm:@cloudflare/workers-types"],
     "lib": ["es2024", "dom"]
