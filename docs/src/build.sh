@@ -3,8 +3,8 @@
 set -euo pipefail
 
 # Set install and cache directories to directory cloudflare caches 
-export DENO_INSTALL="./.cache/deno"
-export DENO_DIR="./.cache/deno_dir"
+export DENO_INSTALL=".cache/deno"
+export DENO_DIR=".cache/deno_dir"
 export DENO_BIN="$DENO_INSTALL/bin/deno"
 
 # Install Deno if not present
