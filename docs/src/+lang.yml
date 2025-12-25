@@ -326,7 +326,7 @@ en:
       - "Create a [new GitHub repository](//github.com/new)"
       - "Create a [new Cloudflare Page](//dash.cloudflare.com/?to=/:account/pages/new/provider/github)"
       - "Link the repository you just created"
-      - "Set the build command to `curl -fsSL https://cf-page.mdressler.dev/build.sh | bash`"
+      - "Set the build command to `curl -fsSL https://cf-page.mdressler.dev/build.sh | bash` (add `-s -- --verbose` for detailed logs)"
       - "Set the output directory to `dist`"
       - '"Save and Deploy" your page'
       - "Push your code to the repository using the instructions from GitHub"
@@ -751,7 +751,7 @@ de:
       - "Erstelle ein [neues GitHub-Repository](//github.com/new)"
       - "Erstelle eine [neue Cloudflare Page](//dash.cloudflare.com/?to=/:account/pages/new/provider/github)"
       - "Verknüpfe das gerade erstellte Repository"
-      - "Setze den Build-Befehl auf `curl -fsSL https://cf-page.mdressler.dev/build.sh | bash`"
+      - "Setze den Build-Befehl auf `curl -fsSL https://cf-page.mdressler.dev/build.sh | bash` (`-s -- --verbose` für detaillierte Logs)"
       - "Setze das Ausgabeverzeichnis auf `dist`"
       - "Klicke auf „Speichern und Bereitstellen“"
       - "Pushe deinen Code ins Repository mithilfe der Anweisungen von GitHub"
