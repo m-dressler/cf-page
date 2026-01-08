@@ -2,6 +2,8 @@ $defaultLanguage: en
 
 global:
   siteName: "@md/cf-page"
+  meta: 
+    og_image: http://your-domain.com/logo.png # TODO replace domain and add PNG image for this to work
 
 en:
   go_to_app: Open App
@@ -18,6 +20,11 @@ en:
   footer:
     # See https://news.ycombinator.com/item?id=34880663 for why the year can be static at build time
     copyright: Copyright © {year} mdressler. All rights reserved.
+  
+  meta:
+    description: A starter project for @md/cf-page.
+    og_title: "@md/cf-page"
+    og_image_alt: "@md/cf-page Logo"
 
 de:
   go_to_app: App Öffnen
@@ -33,3 +40,8 @@ de:
 
   footer:
     copyright: Copyright © {year} mdressler. Alle Rechte vorbehalten.
+
+  meta:
+    description: Ein Starter-Projekt für @md/cf-page.
+    og_title: "@md/cf-page"
+    og_image_alt: "@md/cf-page Logo"

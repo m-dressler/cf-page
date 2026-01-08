@@ -7,6 +7,11 @@
       <title>{siteName} | {appName}</title>
     </slot>
     <link rel="shortcut icon" href="/logo.svg" />
+    <meta name="description" content="{meta.description}">
+    <meta property="og:title" content="{meta.og_title}">
+    <meta property="og:description" content="{meta.description}">
+    <meta property="og:image" content="{meta.og_image}">
+    <meta property="og:image:alt" content="{meta.og_image_alt}">
     <link rel="stylesheet" href="../style.css" />
     <slot name="scripts" />
     <slot name="styles" />
