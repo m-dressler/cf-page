@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <slot name="head">
-      <title>{pageName} | {appName}</title>
+      <title>{siteName} | {appName}</title>
     </slot>
     <link rel="shortcut icon" href="/logo.svg" />
     <link rel="stylesheet" href="../style.css" />
@@ -21,7 +21,7 @@
           class="flex items-center gap-1 text-black dark:text-white"
         >
           <img src="/logo.svg" alt="Logo" class="dark:invert" />
-          <span>{pageName} | {appName}</span>
+          <span>{siteName} | {appName}</span>
         </a>
         <select id="lang-select" class="ml-auto mr-1">
           <option name="en" value="en" selected>🇺🇸</option>

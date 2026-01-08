@@ -1,7 +1,7 @@
 $defaultLanguage: en
 
 global:
-  pageName: "@md/cf-page"
+  siteName: "@md/cf-page"
 
 en:
   go_to_app: Open App

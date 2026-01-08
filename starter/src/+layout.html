@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <slot name="head">
-      <title>{pageName}</title>
+      <title>{siteName}</title>
     </slot>
     <link rel="shortcut icon" href="/logo.svg" />
     <link rel="stylesheet" href="/style.css" />
@@ -27,7 +27,7 @@
       <nav class="flex justify-between items-center">
         <a href="/" class="flex items-center gap-1 text-black dark:text-white">
           <img src="/logo.svg" alt="Logo" class="dark:invert" />
-          <span>{pageName}</span>
+          <span>{siteName}</span>
         </a>
         <slot name="nav">
           <div class="flex gap-2">
