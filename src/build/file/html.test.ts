@@ -869,6 +869,144 @@ Deno.test("processMixedContent - mixed parameter types", () => {
   ]);
 });
 
+// Template-related tests
+Deno.test("Template - attribute translation within template element", async () => {
+  const vFile = createMockVFile("en", "/index.html");
+  const vfs = createMockVFS({
+    en: {
+      placeholder: "Enter your name",
+      buttonLabel: "Submit form",
+    },
+  });
+
+  const context = {
+    mode: "dev" as const,
+    vfs,
+    warnings: [] as string[],
+    errors: [] as Error[],
+  };
+
+  const { translationPlugin } = await import("./html/translationPlugin.ts");
+
+  const html =
+    `<template><input placeholder="{placeholder}"><button aria-label="{buttonLabel}">Click</button></template>`;
+
+  const result = await rehype()
+    .use(translationPlugin, context, vFile)
+    .process({ path: vFile.srcPath, value: html });
+
+  const output = String(result);
+
+  assertEquals(
+    output,
+    '<html><head><template><input placeholder="Enter your name"><button aria-label="Submit form">Click</button></template></head><body></body></html>',
+  );
+});
+
+Deno.test("Template - {#each} block inside template element", () => {
+  const vFile = createMockVFile("en", "/index.html");
+  const vfs = createMockVFS({
+    en: {
+      options: ["Option A", "Option B", "Option C"],
+    },
+  });
+
+  const html =
+    `<template>{#each options as opt}<option value="{opt}">{opt}</option>{/each}</template>`;
+
+  const result = processSvelteBlocks(html, vfs, vFile);
+
+  assertEquals(
+    result,
+    '<template><option value="Option A">Option A</option><option value="Option B">Option B</option><option value="Option C">Option C</option></template>',
+  );
+});
+
+Deno.test("Template - combined text and attribute translations", async () => {
+  const vFile = createMockVFile("en", "/index.html");
+  const vfs = createMockVFS({
+    en: {
+      title: "Welcome",
+      inputPlaceholder: "Type here...",
+      helpText: "Enter your **name**",
+    },
+  });
+
+  const context = {
+    mode: "dev" as const,
+    vfs,
+    warnings: [] as string[],
+    errors: [] as Error[],
+  };
+
+  const { translationPlugin } = await import("./html/translationPlugin.ts");
+
+  const html = `<template>
+    <h1>{title}</h1>
+    <input placeholder="{inputPlaceholder}">
+    <span>{@md helpText}</span>
+  </template>`;
+
+  const result = await rehype()
+    .use(translationPlugin, context, vFile)
+    .process({ path: vFile.srcPath, value: html });
+
+  const output = String(result);
+
+  assertEquals(
+    output,
+    `<html><head><template>
+    <h1>Welcome</h1>
+    <input placeholder="Type here...">
+    <span>Enter your <strong>name</strong></span>
+  </template></head><body></body></html>`,
+  )
+});
+
+Deno.test("Template - nested template elements with translations", async () => {
+  const vFile = createMockVFile("en", "/index.html");
+  const vfs = createMockVFS({
+    en: {
+      outerLabel: "Outer",
+      innerLabel: "Inner",
+    },
+  });
+
+  const context = {
+    mode: "dev" as const,
+    vfs,
+    warnings: [] as string[],
+    errors: [] as Error[],
+  };
+
+  const { translationPlugin } = await import("./html/translationPlugin.ts");
+
+  const html = `<template>
+    <div data-label="{outerLabel}">
+      <template>
+        <span data-inner="{innerLabel}">{innerLabel}</span>
+      </template>
+    </div>
+  </template>`;
+
+  const result = await rehype()
+    .use(translationPlugin, context, vFile)
+    .process({ path: vFile.srcPath, value: html });
+
+  const output = String(result);
+
+  assertEquals(
+    output,
+    `<html><head><template>
+    <div data-label="Outer">
+      <template>
+        <span data-inner="Inner">Inner</span>
+      </template>
+    </div>
+  </template></head><body></body></html>`,
+  );
+});
+
 Deno.test("absoluteLinksPlugin - Correctly converts relative URLs to absolute", async () => {
   const vfs = createMockVFS({});
   vfs.addVFile(createMockVFile("en", "/blog/post.html"));

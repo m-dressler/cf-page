@@ -393,19 +393,8 @@ export const translationPlugin =
       }
     };
 
-    // Process all text nodes for translation variables with selective markdown parsing
-    visit(tree, "text", processTextNode);
-    // Templates have their own root so also query those
-    visit(
-      tree,
-      { tagName: "template" },
-      (node: Element) => {
-        if (node.content) visit(node.content, "text", processTextNode);
-      },
-    );
-
-    // Process element attributes for translation variables
-    visit(tree, "element", (node: Element) => {
+    /** Process element attributes for translation variables */
+    const processElementAttributes = (node: Element) => {
       if (!node.properties) return;
 
       for (const [key, value] of Object.entries(node.properties)) {
@@ -417,7 +406,30 @@ export const translationPlugin =
           node.properties[key] = result.join("\n");
         }
       }
-    });
+    };
+
+    /** Recursively process template content (text nodes, attributes, and nested templates) */
+    const processTemplateContent = (node: Element) => {
+      if (!node.content) return;
+
+      // Process text nodes
+      visit(node.content, "text", processTextNode);
+
+      // Process element attributes
+      visit(node.content, "element", processElementAttributes);
+
+      // Handle nested templates
+      visit(node.content, { tagName: "template" }, processTemplateContent);
+    };
+
+    // Process all text nodes for translation variables with selective markdown parsing
+    visit(tree, "text", processTextNode);
+
+    // Templates have their own root so also query those
+    visit(tree, { tagName: "template" }, processTemplateContent);
+
+    // Process element attributes for translation variables
+    visit(tree, "element", processElementAttributes);
 
     return tree;
   };
