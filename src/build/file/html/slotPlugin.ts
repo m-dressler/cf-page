@@ -87,8 +87,5 @@ export const slotPlugin =
     const processedHtml = processSlots(layout, contentSlots);
 
     // Parse the final HTML and replace the tree
-    return rehype().parse({
-      path: vFile.srcPath + ":processed",
-      value: processedHtml,
-    });
+    return rehype().parse({ path: vFile.srcPath, value: processedHtml });
   };
