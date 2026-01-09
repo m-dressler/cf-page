@@ -2,10 +2,11 @@ import resolvable from "@md/resolvable";
 import { assert, assertEquals } from "@std/assert";
 import type { ElementContent } from "hast";
 import { rehype } from "rehype";
+import { CONFIG } from "../../config.ts";
 import type { LangFileContent } from "../translations.ts";
 import { type VFile, VFS } from "../vfs/mod.ts";
-import { processSvelteBlocks } from "./html.ts";
 import { absoluteLinksPlugin } from "./html/absoluteLinksPlugin.ts";
+import { processSvelteBlocks } from "./html/svelteBlocksPlugin.ts";
 import {
   getTranslationFunction,
   processMixedContent,
@@ -1070,4 +1071,113 @@ Deno.test("absoluteLinksPlugin - external URL remains static", async () => {
     output.includes('src="/absolute/path.js"'),
     "Absolute paths (starting with /) should remain unchanged",
   );
+});
+
+Deno.test("Layout with Svelte blocks after slot merging", async () => {
+  const vFile = createMockVFile("en", "/index.html");
+  const vfs = createMockVFS({ en: { menu: ["Home", "About", "Contact"] } });
+
+  // Register the layout in VFS
+  vfs.buildUtils.layouts.add("/");
+
+  const context = {
+    mode: "dev" as const,
+    vfs,
+    warnings: [] as string[],
+    errors: [] as Error[],
+    abortController: new AbortController(),
+  };
+
+  // Layout HTML with Svelte blocks
+  const layoutPath = CONFIG.srcDir + "/" + CONFIG.layoutName;
+  const layoutHtml = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+  </head>
+  <body>
+    <header>
+      <menu>
+        {#each menu as item}
+        <li>{item}</li>
+        {/each}
+      </menu>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>`;
+
+  // Page content - simple HTML without Svelte blocks
+  const pageHtml = `<h1>Problem demo</h1>`;
+
+  // Mock Deno.readTextFile to return our layout
+  const originalReadTextFile = Deno.readTextFile;
+  Deno.readTextFile = ((path: string) => {
+    if (path === layoutPath) return Promise.resolve(layoutHtml);
+    return originalReadTextFile(path);
+  }) as typeof Deno.readTextFile;
+
+  try {
+    // Import the full HTML builder to test the actual implementation
+    const htmlBuilder = await import("./html.ts");
+
+    // Build the HTML using the actual build function
+    const result = await htmlBuilder.default.build(
+      { ...vFile, srcContents: new TextEncoder().encode(pageHtml) },
+      context,
+    );
+
+    const output = typeof result === "string"
+      ? result
+      : new TextDecoder().decode(result);
+
+    // This test will FAIL if svelteBlocksPlugin uses file.value instead of tree
+    // because file.value contains only the page content, not the merged layout
+    assertEquals(
+      output.includes("<li>Home</li>"),
+      true,
+      "Layout's Svelte blocks must be processed - if this fails, svelteBlocksPlugin is not receiving the merged HTML",
+    );
+    assertEquals(
+      output.includes("<li>About</li>"),
+      true,
+      "Layout should have processed About menu item",
+    );
+    assertEquals(
+      output.includes("<li>Contact</li>"),
+      true,
+      "Layout should have processed Contact menu item",
+    );
+    assertEquals(
+      output.includes("{#each"),
+      false,
+      "Svelte syntax should be removed from layout",
+    );
+    assertEquals(
+      output.includes("<h1"),
+      true,
+      "Page content should be present",
+    );
+    assertEquals(
+      output.includes("Problem demo"),
+      true,
+      "Page content text should be present",
+    );
+    assertEquals(
+      output.includes("<header>"),
+      true,
+      "Layout structure (header) should be present",
+    );
+    assertEquals(
+      output.includes("<menu>"),
+      true,
+      "Layout structure (menu) should be present",
+    );
+  } finally {
+    // Restore original function
+    Deno.readTextFile = originalReadTextFile;
+  }
 });
