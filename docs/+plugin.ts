@@ -2,7 +2,7 @@
 /**
  * @module docs/zip-starter.ts
  * @description This module provides a task to zip the starter files into `./src`.
-*/
+ */
 import { walk } from "@std/fs/walk";
 import { TarStream, type TarStreamInput } from "@std/tar/tar-stream";
 import type { PluginFunction } from "../src/mod.ts";

@@ -1,9 +1,4 @@
-import {
-  assert,
-  assertEquals,
-  assertRejects,
-  assertThrows,
-} from "@std/assert";
+import { assert, assertEquals, assertRejects, assertThrows } from "@std/assert";
 import { D1DatabaseLocal } from "./d1-local.ts";
 
 const TABLES = {

@@ -961,7 +961,7 @@ Deno.test("Template - combined text and attribute translations", async () => {
     <input placeholder="Type here...">
     <span>Enter your <strong>name</strong></span>
   </template></head><body></body></html>`,
-  )
+  );
 });
 
 Deno.test("Template - nested template elements with translations", async () => {

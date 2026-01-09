@@ -1,4 +1,3 @@
-
 /** Uses `deno bundle` since there's no runtime API available yet (https://docs.deno.com/runtime/reference/bundling/) */
 export const bundle = async (
   filePath: string | URL,

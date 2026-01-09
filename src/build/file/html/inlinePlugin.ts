@@ -32,7 +32,8 @@ export const inlinePlugin =
       }
 
       // Try loading from VFS build output first (for transpiled files)
-      const vFileInVfs = context.vfs.source.get(srcPath) || context.vfs.build.get(srcPath);
+      const vFileInVfs = context.vfs.source.get(srcPath) ||
+        context.vfs.build.get(srcPath);
       if (vFileInVfs && !["skipped", "deleted"].includes(vFileInVfs.status)) {
         // Ensure build is complete
         await vFileInVfs.buildPromise;
