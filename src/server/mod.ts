@@ -396,7 +396,7 @@ export const devServer = async (
     });
   } catch (err) {
     if (err instanceof Deno.errors.AddrInUse) {
-      await print(`Port ${CONFIG.port} is already in use\n`);
+      await print(`Port ${PORT} is already in use\n`);
     } else {
       console.error(err);
     }
