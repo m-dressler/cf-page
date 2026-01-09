@@ -39,8 +39,8 @@ const findLayout = async (
     pathParts.splice(1, 1);
   }
   for (let i = pathParts.length - 1; i >= 0; i--) {
-    const path = pathParts.slice(0, i).join("/") || "/";
-    if (context.vfs.buildUtils.layouts.has(path)) {
+    const path = pathParts.slice(0, i).join("/");
+    if (context.vfs.buildUtils.layouts.has(path || "/")) {
       try {
         return await Deno.readTextFile(
           CONFIG.srcDir + path + "/" + CONFIG.layoutName,
