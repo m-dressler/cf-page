@@ -343,6 +343,58 @@
       </div>
     </details>
 
+    <!-- Inline Assets Plugin -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.inlinePlugin.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{features.inlinePlugin.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.inlinePlugin.featuresTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.inlinePlugin.features as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.inlinePlugin.svgExampleTitle}</h4>
+          <pre><code>{features.inlinePlugin.svgExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.inlinePlugin.svgExampleDescription}
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.inlinePlugin.scriptExampleTitle}</h4>
+          <pre><code>{features.inlinePlugin.scriptExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.inlinePlugin.scriptExampleDescription}
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.inlinePlugin.cssExampleTitle}</h4>
+          <pre><code>{features.inlinePlugin.cssExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.inlinePlugin.cssExampleDescription}
+          </p>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.inlinePlugin.benefitsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.inlinePlugin.benefits as benefit}
+            <li>{@md benefit}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
     <!-- SASS/SCSS -->
     <details class="feature-box">
       <summary class="feature-summary">
@@ -549,6 +601,135 @@
         </div>
       </div>
     </details>
+
+    <!-- Cloudflare Bindings -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.cloudflareBindings.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.cloudflareBindings.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.cloudflareBindings.localDevelopmentTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.cloudflareBindings.localDevelopment as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.cloudflareBindings.configurationTitle}</h4>
+          <p class="mb-2">{features.cloudflareBindings.configurationDescription}</p>
+          <pre><code>{features.cloudflareBindings.configurationCode}</code></pre>
+        </div>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.cloudflareBindings.environmentVariablesTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.cloudflareBindings.environmentVariables as envVar}
+            <li>{@md envVar}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.cloudflareBindings.d1ExampleTitle}</h4>
+          <pre><code>{features.cloudflareBindings.d1ExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.cloudflareBindings.d1ExampleDescription}
+          </p>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.cloudflareBindings.kvExampleTitle}</h4>
+          <pre><code>{features.cloudflareBindings.kvExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.cloudflareBindings.kvExampleDescription}
+          </p>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.cloudflareBindings.supportedOperationsTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.cloudflareBindings.supportedOperations as operation}
+            <li>{@md operation}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Custom Plugin System -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.customPluginSystem.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.customPluginSystem.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.customPluginSystem.hooksTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.customPluginSystem.hooks as hook}
+            <li>{@md hook}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.customPluginSystem.pluginExampleTitle}</h4>
+          <pre><code>{features.customPluginSystem.pluginExampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.customPluginSystem.pluginExampleDescription}
+          </p>
+        </div>
+
+        <div class="feature-detail">
+          <h4>{features.customPluginSystem.useCasesTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.customPluginSystem.useCases as useCase}
+            <li>{@md useCase}</li>
+            {/each}
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- Markdown Files -->
+    <details class="feature-box">
+      <summary class="feature-summary">
+        <h3>{features.markdownFiles.title}</h3>
+      </summary>
+      <div class="feature-content">
+        <p class="mb-4">{@md features.markdownFiles.description}</p>
+
+        <div class="feature-detail mb-4">
+          <h4>{features.markdownFiles.featuresTitle}</h4>
+          <ul class="list-disc pl-5 text-sm space-y-1">
+            {#each features.markdownFiles.features as feature}
+            <li>{@md feature}</li>
+            {/each}
+          </ul>
+        </div>
+
+        <div class="mb-4">
+          <h4>{features.markdownFiles.exampleTitle}</h4>
+          <pre><code>{features.markdownFiles.exampleCode}</code></pre>
+          <p class="text-sm text-secondary mt-2">
+            {features.markdownFiles.exampleDescription}
+          </p>
+        </div>
+
+        <div>
+          <h4>{features.markdownFiles.disableTitle}</h4>
+          <p class="text-sm">
+            {@md features.markdownFiles.disableDescription}
+          </p>
+        </div>
+      </div>
+    </details>
   </section>
 
   <!-- Configuration -->
@@ -605,16 +786,29 @@
         <div class="feature-card">
           <h4>{apiReference.commands.init.title}</h4>
           <pre><code>{apiReference.commands.init.code}</code></pre>
+          <p class="text-sm mt-2">{apiReference.commands.init.description}</p>
         </div>
 
         <div class="feature-card">
           <h4>{apiReference.commands.serve.title}</h4>
           <pre><code>{apiReference.commands.serve.code}</code></pre>
+          <p class="text-sm mt-2">{apiReference.commands.serve.description}</p>
+          <ul class="list-disc pl-5 text-sm mt-2 space-y-1">
+            {#each apiReference.commands.serve.flags as flag}
+            <li>{@md flag}</li>
+            {/each}
+          </ul>
         </div>
 
         <div class="feature-card">
           <h4>{apiReference.commands.build.title}</h4>
           <pre><code>{apiReference.commands.build.code}</code></pre>
+          <p class="text-sm mt-2">{apiReference.commands.build.description}</p>
+          <ul class="list-disc pl-5 text-sm mt-2 space-y-1">
+            {#each apiReference.commands.build.flags as flag}
+            <li>{@md flag}</li>
+            {/each}
+          </ul>
         </div>
       </div>
     </div>

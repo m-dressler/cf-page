@@ -34,7 +34,6 @@ en:
   features:
     title: "Features"
 
-    # TypeScript & Bundling
     typescript:
       title: "⚡ TypeScript Transpilation & Bundling"
       description: "Automatic [TypeScript](https://www.typescriptlang.org/) compilation with full bundling support using [Deno's native bundler](https://docs.deno.com/runtime/reference/bundling/)."
@@ -56,7 +55,6 @@ en:
       exampleCode: "// src/main.ts\nimport { serve } from \"https://deno.land/std/http/server.ts\";\nimport { helper } from \"./utils.ts\";\n\nexport default function() {\n  return helper(\"Hello TypeScript!\");\n}"
       exampleDescription: "This TypeScript file will be automatically transpiled, bundled with its dependencies, and served as optimized JavaScript."
 
-    # Tailwind CSS
     tailwind:
       title: "🎨 Tailwind CSS"
       description: "Built-in [Tailwind CSS 4](https://tailwindcss.com/) support for utility-first styling. See the [Tailwind documentation](https://tailwindcss.com/docs) for complete class reference and usage patterns."
@@ -67,7 +65,6 @@ en:
         - "Custom component layers support"
         - "Dark mode variants"
 
-    # File Minification
     minification:
       title: "🗜️ File Minification"
       description: "Intelligent file optimization that automatically reduces file sizes in production builds while preserving functionality and maintaining development-friendly source code."
@@ -93,7 +90,6 @@ en:
       devVsProdCode: "// Development: Readable, unminified code\n.header {\n  background-color: #ffffff;\n  padding: 1rem 2rem;\n}\n\n// Production: Minified and optimized\n.header{background:#fff;padding:1rem 2rem}"
       devVsProdDescription: "Minification only occurs during production builds, keeping your development experience fast and debuggable."
 
-    # Cache-Busting
     cacheBusting:
       title: "🔄 Automatic Cache-Busting"
       description: "Intelligent cache-busting system that automatically adds version parameters to asset URLs, ensuring users always receive the latest versions while enabling aggressive browser caching."
@@ -120,7 +116,6 @@ en:
         - "**CDN Optimization**: Perfect compatibility with CDN caching strategies"
         - "**Zero Configuration**: Works automatically on all supported asset types"
 
-    # HTML Templating
     templating:
       title: "📄 Compile-time HTML Templating"
       description: "Advanced slot-based templating system with layout inheritance that processes templates at build time, ensuring zero runtime overhead and optimal performance."
@@ -149,7 +144,6 @@ en:
         - "Maintainable: Shared layouts reduce code duplication"
         - "Flexible: Named slots allow precise content placement"
 
-    # Translation Engine
     translation:
       title: "🌍 Translation Engine"
       description: "Built-in multi-language support with YAML translation files, parameter interpolation, and conditional rendering capabilities."
@@ -186,7 +180,6 @@ en:
       htmlUsageTitle: "Using Translations in HTML"
       htmlUsageCode: "<!-- src/index.html -->\n<h1>{welcome, name: {siteName}}</h1>\n\n<!-- Conditional user interface -->\n{#if userLoggedIn}\n  <p>Welcome back, {userName}!</p>\n  <a href=\"/logout\">Logout</a>\n{#else}\n  <p>Please log in to continue.</p>\n  <a href=\"/login\">Login</a>\n{/if}\n\n<!-- Dynamic navigation with arrays -->\n<nav>\n  <ul>\n    {#each menuItems as item}\n      <li>\n        <a href=\"/{item}\">{navigation[item]}</a>\n        <!-- Use @md directive to process markdown formatting -->\n        <small>{@md item} section</small>\n      </li>\n    {/each}\n  </ul>\n</nav>\n\n<!-- Feature flag example -->\n{#if featureEnabled}\n  <div class=\"feature-banner\">\n    <h3>🎉 New Feature Available!</h3>\n    <p>{newFeatureDescription}</p>\n  </div>\n{/if}"
 
-    # Image Optimization
     imageOptimization:
       title: "🖼️ Automatic Image Optimization"
       description: "Intelligent image processing for optimal web delivery without quality loss."
@@ -197,7 +190,31 @@ en:
         - "SVG minification and cleaning"
         - "Automatic format selection"
 
-    # SASS/SCSS
+    inlinePlugin:
+      title: "📦 Inline Assets"
+      description: "Inline external resources directly into your HTML for reduced HTTP requests and faster page loads."
+      featuresTitle: "Inline Capabilities:"
+      features:
+        - '**SVG Images**: `&lt;img inline src="logo.svg" />` - Inlines SVG as inline SVG element'
+        - '**Scripts**: `&lt;script inline src="script.js">&lt;/script>` - Inlines JavaScript content'
+        - '**Stylesheets**: `&lt;link inline rel="stylesheet" href="style.css" />` - Inlines CSS as &lt;style> tag'
+        - "**Import Map Support**: Paths can use deno.json import map aliases"
+      svgExampleTitle: "SVG Inlining Example"
+      svgExampleCode: "<!-- Before -->\n<img inline src=\"./logo.svg\" class=\"logo\" alt=\"Logo\" />\n\n<!-- After (SVG content inlined) -->\n<svg class=\"logo\" viewBox=\"0 0 100 100\">\n  <circle cx=\"50\" cy=\"50\" r=\"40\" />\n</svg>"
+      svgExampleDescription: "Attributes from the img tag are preserved and applied to the SVG element."
+      scriptExampleTitle: "Script Inlining Example"
+      scriptExampleCode: "<!-- Before -->\n<script inline src=\"./analytics.js\"></script>\n\n<!-- After (script content inlined) -->\n<script>\n  // Full content of analytics.js embedded here\n  console.log('Analytics loaded');\n</script>"
+      scriptExampleDescription: "TypeScript files are transpiled before inlining."
+      cssExampleTitle: "CSS Inlining Example"
+      cssExampleCode: "<!-- Before -->\n<link inline rel=\"stylesheet\" href=\"./critical.css\" />\n\n<!-- After (CSS content inlined) -->\n<style>\n  /* Full content of critical.css embedded here */\n  .header { background: #fff; }\n</style>"
+      cssExampleDescription: "SCSS/SASS files are compiled to CSS before inlining."
+      benefitsTitle: "Benefits:"
+      benefits:
+        - "**Reduced HTTP Requests**: Critical assets loaded immediately without extra requests"
+        - "**Critical CSS**: Inline critical styles for faster first paint"
+        - "**SVG Styling**: Inline SVGs can be styled with CSS"
+        - "**Zero Configuration**: Just add the `inline` attribute"
+
     sass:
       title: "🎨 SASS/SCSS Transpilation"
       description: "Complete [SASS and SCSS](https://sass-lang.com/) preprocessing support using the official [Dart Sass compiler](https://sass-lang.com/dart-sass/), providing all modern SASS features with automatic compilation to optimized CSS."
@@ -232,7 +249,6 @@ en:
         - "Full Documentation: All [SASS documentation](https://sass-lang.com/documentation/) applies"
         - "Production Ready: Integrates with minification and optimization pipeline"
 
-    # Live Reload
     liveReload:
       title: "🔄 Live Reload"
       description: "Advanced development server with intelligent file watching that automatically rebuilds and refreshes your browser when source files change, featuring smart CSS hot-reloading and build error reporting."
@@ -263,7 +279,6 @@ en:
         - "Full Page Reload: Complete refresh for HTML, JavaScript, and other asset changes"
         - "Error Recovery: Automatically retries failed builds and reports errors"
 
-    # Hot CSS Reload
     hotCssReload:
       title: "🔥 Hot CSS Reload"
       description: "Advanced CSS hot-reloading that intelligently updates stylesheets without page refresh, providing the fastest possible development feedback loop."
@@ -289,14 +304,13 @@ en:
         - "Cross-browser Testing: Multiple browser windows stay in sync"
         - "Complex State Testing: Style modal dialogs, complex forms without re-setup"
 
-    # Function Emulation
     functionEmulation:
       title: "⚡ Cloudflare Function Emulation"
       description: "@md/cf-page provides full local emulation of [Cloudflare Pages Functions](https://developers.cloudflare.com/pages/functions/). Files named `+fn.ts` become API endpoints with the same API as production."
       localDevTitle: "Local Development Features:"
       localDev:
         - "Perfect Emulation: Full `EventContext` object with request, env, and utilities"
-        - "HTTP Methods: Support for all [HTTP method handlers](https://developers.cloudflare.com/pages/functions/routing/#functions)"
+        - "HTTP Methods: Support for all [HTTP method handlers](https://developers.cloudflare.com/pages/functions/routing/#functions), including [dynamic route matching](https://developers.cloudflare.com/pages/functions/routing/#dynamic-routes)"
         - "Environment Variables: Access via `context.env` just like in production"
         - "Assets API: Local `context.env.ASSETS` serving"
         - "Cloudflare-compatible request/response handling"
@@ -304,13 +318,12 @@ en:
       quickExampleCode: "// src/api/hello/+fn.ts\nexport const onRequest: PagesFunction = async (context) => {\n  return new Response(\"Hello World!\");\n};"
       quickExampleDescription: "For complete API documentation, see [Cloudflare Pages Functions API Reference](https://developers.cloudflare.com/pages/functions/api/)."
 
-    # Middleware Emulation
     middlewareEmulation:
       title: "🔒 Cloudflare Middleware Emulation"
       description: "@md/cf-page supports [Cloudflare Pages Middleware](https://developers.cloudflare.com/pages/functions/middleware/) with full local emulation. Files named `+middleware.ts` run before pages and functions."
       localMiddlewareTitle: "Local Middleware Features:"
       localMiddleware:
-        - "Directory-based Execution: Middleware hierarchy matches [Cloudflare's path matching](https://developers.cloudflare.com/pages/functions/middleware/#middleware-path-matching)"
+        - "Directory-based Execution: Middleware hierarchy matches [Cloudflare's path matching](https://developers.cloudflare.com/pages/functions/middleware/#middleware-path-matching), including [dynamic route matching](https://developers.cloudflare.com/pages/functions/routing/#dynamic-routes)"
         - "Request Context: Full `context.next()` and context sharing support"
         - "Authentication Patterns: Perfect for protecting routes and handling auth"
         - "Production Parity: Same execution order as Cloudflare Pages"
@@ -318,7 +331,69 @@ en:
       middlewareExampleCode: "// src/admin/+middleware.ts\nexport const onRequest: PagesFunction = async (context) => {\n  const isAuthenticated = checkAuth(context.request);\n  \n  if (!isAuthenticated) {\n    return new Response(\"Unauthorized\", { status: 401 });\n  }\n\n  return context.next();\n};"
       middlewareExampleDescription: "For complete middleware documentation, see [Cloudflare Pages Middleware Guide](https://developers.cloudflare.com/pages/functions/middleware/)."
 
-  # Deploy Section
+    cloudflareBindings:
+      title: "🗄️ Cloudflare Bindings (D1 & KV)"
+      description: "Full support for [Cloudflare D1 Databases](https://developers.cloudflare.com/d1/) and [KV Namespaces](https://developers.cloudflare.com/kv/) with seamless local development."
+      localDevelopmentTitle: "Local Development:"
+      localDevelopment:
+        - "**Local Storage**: Bindings stored in `.bindings.local/` directory"
+        - "**D1 Databases**: SQLite files in `.bindings.local/d1/{id}.sqlite`"
+        - "**KV Namespaces**: File-based storage in `.bindings.local/kv/{id}/`"
+        - "**No Credentials Required**: Works offline for local development"
+        - "**Production Parity**: Same API as Cloudflare production"
+      configurationTitle: "Configuration"
+      configurationDescription: "Add bindings to your deno.jsonc configuration:"
+      configurationCode: "{\n  \"@md/cf-page\": {\n    \"bindings\": {\n      \"DB\": { \"type\": \"D1\", \"id\": \"your-d1-database-id\" },\n      \"CACHE\": { \"type\": \"KV\", \"id\": \"your-kv-namespace-id\" }\n    }\n  }\n}"
+      environmentVariablesTitle: "Environment Variables:"
+      environmentVariables:
+        - "**CLOUDFLARE_LOCAL**: Set to `\"true\"` for local-only development"
+        - "**CLOUDFLARE_ACCOUNT_ID**: Your Cloudflare account ID (for remote bindings)"
+        - "**CLOUDFLARE_API_TOKEN**: API token with D1/KV permissions (for remote bindings)"
+      d1ExampleTitle: "D1 Database Example"
+      d1ExampleCode: "// src/api/users/+fn.ts\nexport const onRequestGet: PagesFunction<Env> = async (context) => {\n  const db = context.env.DB;\n  \n  // Query database\n  const users = await db.prepare(\n    \"SELECT * FROM users WHERE active = ?\"\n  ).bind(1).all();\n  \n  return Response.json(users.results);\n};\n\nexport const onRequestPost: PagesFunction<Env> = async (context) => {\n  const db = context.env.DB;\n  const data = await context.request.json();\n  \n  // Insert data\n  await db.prepare(\n    \"INSERT INTO users (name, email) VALUES (?, ?)\"\n  ).bind(data.name, data.email).run();\n  \n  return new Response(\"User created\", { status: 201 });\n};"
+      d1ExampleDescription: "D1 provides a full SQL database with prepared statements, transactions, and batch operations."
+      kvExampleTitle: "KV Namespace Example"
+      kvExampleCode: "// src/api/cache/+fn.ts\nexport const onRequestGet: PagesFunction<Env> = async (context) => {\n  const kv = context.env.CACHE;\n  \n  // Get value from KV\n  const cached = await kv.get(\"user:123\", \"json\");\n  \n  if (cached) {\n    return Response.json(cached);\n  }\n  \n  // Fetch fresh data and cache it\n  const freshData = { name: \"John\", age: 30 };\n  await kv.put(\"user:123\", JSON.stringify(freshData), {\n    expirationTtl: 3600 // 1 hour\n  });\n  \n  return Response.json(freshData);\n};\n\nexport const onRequestDelete: PagesFunction<Env> = async (context) => {\n  await context.env.CACHE.delete(\"user:123\");\n  return new Response(\"Cache cleared\", { status: 200 });\n};"
+      kvExampleDescription: "KV provides simple key-value storage with optional expiration and metadata."
+      supportedOperationsTitle: "Supported Operations:"
+      supportedOperations:
+        - "**D1**: prepare(), query(), batch(), exec(), first(), all(), run(), bind()"
+        - "**KV**: get(), put(), delete(), list(), getWithMetadata()"
+        - "**Types**: String, JSON, ArrayBuffer, Stream (KV); All SQL types (D1)"
+
+    customPluginSystem:
+      title: "🔌 Custom Plugin System"
+      description: "Extend the build process with custom plugins using `+plugin.ts` files for advanced VFS manipulation."
+      hooksTitle: "Plugin Hooks:"
+      hooks:
+        - '**before(context)**: Runs before building files - modify VFS, add synthetic files'
+        - '**after(context)**: Runs after building files - post-process output, generate files'
+      pluginExampleTitle: "Plugin Example"
+      pluginExampleCode: "// src/+plugin.ts\nimport type { BuildContext } from \"@md/cf-page\";\n\nexport const before = (context: BuildContext) => {\n  // Add a synthetic robots.txt file\n  const robotsTxt = context.vfs.addSyntheticFile(\"/robots.txt\");\n  robotsTxt.buildContents = new TextEncoder().encode(\n    \"User-agent: *\\nAllow: /\"\n  );\n};\n\nexport const after = (context: BuildContext) => {\n  // Log build statistics\n  const fileCount = context.vfs.build.size;\n  console.log(`Built ${fileCount} files`);\n  \n  // Generate sitemap.xml from built files\n  const urls = Array.from(context.vfs.build.keys())\n    .filter(path => path.endsWith(\".html\"))\n    .map(path => `<url><loc>https://example.com${path}</loc></url>`)\n    .join(\"\\n\");\n  \n  const sitemap = context.vfs.addSyntheticFile(\"/sitemap.xml\");\n  sitemap.buildContents = new TextEncoder().encode(\n    `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\\n<urlset>${urls}</urlset>`\n  );\n};"
+      pluginExampleDescription: "Plugins have full access to the Virtual File System (VFS) for advanced build customization."
+      useCasesTitle: "Common Use Cases:"
+      useCases:
+        - "**Generate Files**: Create sitemaps, RSS feeds, manifest files"
+        - "**Modify Files**: Transform content, inject scripts, optimize assets"
+        - "**Delete Files**: Remove unwanted outputs conditionally"
+        - "**Build Reports**: Log statistics, generate build metadata"
+        - "**Integration**: Connect to external APIs, fetch data at build time"
+
+    markdownFiles:
+      title: "📝 Markdown File Support"
+      description: "Automatically convert Markdown (`.md`) files to HTML with full processing pipeline support."
+      featuresTitle: "Features:"
+      features:
+        - "**Automatic Conversion**: `.md` files become `.html` in output"
+        - "**Full Pipeline**: Markdown files go through same HTML processing (layouts, translations, cache-busting)"
+        - "**Remark Support**: Uses remark + remark-rehype for parsing"
+        - "**Layout Inheritance**: Markdown files can use `+layout.html` templates"
+      exampleTitle: "Example"
+      exampleCode: "<!-- src/blog/post.md -->\n# My Blog Post\n\nThis is a **markdown** file with [links](/about) and `code`.\n\n## Features\n\n- Automatic HTML conversion\n- Layout inheritance\n- Translation support\n\n<!-- Becomes /blog/post.html after build -->"
+      exampleDescription: "Markdown files are converted to HTML and processed like regular HTML files."
+      disableTitle: "Disable Markdown Conversion:"
+      disableDescription: "Set `markdownToHTML: false` in configuration to keep `.md` files as-is."
+
   deploy:
     title: "Deploying to Cloudflare Pages"
     description: "The easiest way to deploy your @md/cf-page project is by connecting it to [GitHub](//github.com). Follow these steps to get started:"
@@ -332,7 +407,6 @@ en:
       - "Push your code to the repository using the instructions from GitHub"
       - "You can then also enable build caching for faster builds"
 
-  # Configuration Section
   configuration:
     title: "Configuration"
     description: "Configure @md/cf-page by adding settings to your deno.jsonc or deno.json file under the @md/cf-page key:"
@@ -417,12 +491,20 @@ en:
       init:
         title: "init - Initialize a new project with the starter template."
         code: "deno run -A jsr:@md/cf-page init"
+        description: "Downloads starter template, prompts for domain name, provides deployment instructions."
       serve:
         title: "serve - Start the development server with live reload."
-        code: "deno run -A jsr:@md/cf-page serve"
+        code: "deno run -A jsr:@md/cf-page serve [--measure-performance]"
+        description: "Starts dev server on configured port (default 3000). Use PORT env var to override."
+        flags:
+          - "`--measure-performance`: Log detailed build performance metrics"
       build:
         title: "build - Build the project for production or development."
-        code: "deno run -A jsr:@md/cf-page build"
+        code: "deno run -A jsr:@md/cf-page build [--dev] [--measure-performance]"
+        description: "Builds project to output directory. Production build by default."
+        flags:
+          - "`--dev`: Build in development mode (no minification)"
+          - "`--measure-performance`: Log detailed build performance metrics"
 
   # Footer
   footer:
@@ -459,7 +541,6 @@ de:
   features:
     title: "Funktionen"
 
-    # TypeScript & Bundling
     typescript:
       title: "⚡ TypeScript-Transpilation & Bundling"
       description: "Automatische [TypeScript](https://www.typescriptlang.org/)-Kompilierung mit vollständiger Bundling-Unterstützung unter Verwendung von [Denos nativem Bundler](https://docs.deno.com/runtime/reference/bundling/)."
@@ -481,7 +562,6 @@ de:
       exampleCode: "// src/main.ts\nimport { serve } from \"https://deno.land/std/http/server.ts\";\nimport { helper } from \"./utils.ts\";\n\nexport default function() {\n  return helper(\"Hallo TypeScript!\");\n}"
       exampleDescription: "Diese TypeScript-Datei wird automatisch transpiliert, mit ihren Abhängigkeiten gebündelt und als optimiertes JavaScript bereitgestellt."
 
-    # Tailwind CSS
     tailwind:
       title: "🎨 Tailwind CSS"
       description: "Eingebaute [Tailwind CSS 4](https://tailwindcss.com/)-Unterstützung für Utility-First-Styling. Siehe die [Tailwind-Dokumentation](https://tailwindcss.com/docs) für vollständige Klassenreferenz und Verwendungsmuster."
@@ -492,7 +572,6 @@ de:
         - "Unterstützung für benutzerdefinierte Komponentenebenen"
         - "Dark-Mode-Varianten"
 
-    # File Minification
     minification:
       title: "🗜️ Datei-Minifikation"
       description: "Intelligente Dateioptimierung, die automatisch Dateigrößen in Produktions-Builds reduziert, während Funktionalität erhalten bleibt und entwicklerfreundlicher Quellcode beibehalten wird."
@@ -518,7 +597,6 @@ de:
       devVsProdCode: "// Entwicklung: Lesbarer, nicht-minifizierter Code\n.header {\n  background-color: #ffffff;\n  padding: 1rem 2rem;\n}\n\n// Produktion: Minifiziert und optimiert\n.header{background:#fff;padding:1rem 2rem}"
       devVsProdDescription: "Minifikation erfolgt nur während Produktions-Builds, was Ihre Entwicklungserfahrung schnell und debuggbar hält."
 
-    # Cache-Busting
     cacheBusting:
       title: "🔄 Automatisches Cache-Busting"
       description: "Intelligentes Cache-Busting-System, das automatisch Versionsparameter zu Asset-URLs hinzufügt, um sicherzustellen, dass Benutzer immer die neuesten Versionen erhalten, während aggressives Browser-Caching ermöglicht wird."
@@ -545,7 +623,6 @@ de:
         - "**CDN-Optimierung**: Perfekte Kompatibilität mit CDN-Caching-Strategien"
         - "**Null-Konfiguration**: Funktioniert automatisch bei allen unterstützten Asset-Typen"
 
-    # HTML Templating
     templating:
       title: "📄 Compile-Time HTML Templating"
       description: "Erweiterte slot-basierte Templating-System mit Layout-Vererbung, das Templates zur Build-Zeit verarbeitet und null Runtime-Overhead sowie optimale Performance gewährleistet."
@@ -574,7 +651,6 @@ de:
         - "Wartbar: Geteilte Layouts reduzieren Code-Duplikation"
         - "Flexibel: Benannte Slots ermöglichen präzise Inhaltsplatzierung"
 
-    # Translation Engine
     translation:
       title: "🌍 Übersetzungs-Engine"
       description: "Eingebaute Mehrsprachigkeitsunterstützung mit YAML-Übersetzungsdateien, Parameter-Interpolation und bedingten Rendering-Fähigkeiten."
@@ -611,7 +687,6 @@ de:
       htmlUsageTitle: "Verwenden von Übersetzungen in HTML"
       htmlUsageCode: "<!-- src/index.html -->\n<h1>{welcome, name: {siteName}}</h1>\n\n<!-- Bedingte Benutzeroberfläche -->\n{#if userLoggedIn}\n  <p>Willkommen zurück, {userName}!</p>\n  <a href=\"/logout\">Abmelden</a>\n{#else}\n  <p>Bitte melden Sie sich an um fortzufahren.</p>\n  <a href=\"/login\">Anmelden</a>\n{/if}\n\n<!-- Dynamische Navigation mit Arrays -->\n<nav>\n  <ul>\n    {#each menuItems as item}\n      <li>\n        <a href=\"/{item}\">{navigation[item]}</a>\n        <!-- Verwenden Sie @md Direktive um Markdown-Formatierung zu verarbeiten -->\n        <small>{@md item} Bereich</small>\n      </li>\n    {/each}\n  </ul>\n</nav>\n\n<!-- Feature-Flag Beispiel -->\n{#if featureEnabled}\n  <div class=\"feature-banner\">\n    <h3>🎉 Neue Funktion verfügbar!</h3>\n    <p>{newFeatureDescription}</p>\n  </div>\n{/if}"
 
-    # Image Optimization
     imageOptimization:
       title: "🖼️ Automatische Bildoptimierung"
       description: "Intelligente Bildverarbeitung für optimale Web-Bereitstellung ohne Qualitätsverlust."
@@ -622,7 +697,31 @@ de:
         - "SVG-Minifikation und -Bereinigung"
         - "Automatische Formatauswahl"
 
-    # SASS/SCSS
+    inlinePlugin:
+      title: "📦 Inline Assets"
+      description: "Betten Sie externe Ressourcen direkt in Ihr HTML ein für reduzierte HTTP-Anfragen und schnellere Seitenladezeiten."
+      featuresTitle: "Inline-Fähigkeiten:"
+      features:
+        - '**SVG-Bilder**: `&lt;img inline src="logo.svg" />` - Bettet SVG als Inline-SVG-Element ein'
+        - '**Skripte**: `&lt;script inline src="script.js">&lt;/script>` - Bettet JavaScript-Inhalt ein'
+        - '**Stylesheets**: `&lt;link inline rel="stylesheet" href="style.css" />` - Bettet CSS als &lt;style>-Tag ein'
+        - "**Import-Map-Unterstützung**: Pfade können deno.json Import-Map-Aliase verwenden"
+      svgExampleTitle: "SVG-Inlining Beispiel"
+      svgExampleCode: "<!-- Vorher -->\n<img inline src=\"./logo.svg\" class=\"logo\" alt=\"Logo\" />\n\n<!-- Nachher (SVG-Inhalt eingebettet) -->\n<svg class=\"logo\" viewBox=\"0 0 100 100\">\n  <circle cx=\"50\" cy=\"50\" r=\"40\" />\n</svg>"
+      svgExampleDescription: "Attribute vom img-Tag werden beibehalten und auf das SVG-Element angewendet."
+      scriptExampleTitle: "Script-Inlining Beispiel"
+      scriptExampleCode: "<!-- Vorher -->\n<script inline src=\"./analytics.js\"></script>\n\n<!-- Nachher (Script-Inhalt eingebettet) -->\n<script>\n  // Vollständiger Inhalt von analytics.js hier eingebettet\n  console.log('Analytics loaded');\n</script>"
+      scriptExampleDescription: "TypeScript-Dateien werden vor dem Einbetten transpiliert."
+      cssExampleTitle: "CSS-Inlining Beispiel"
+      cssExampleCode: "<!-- Vorher -->\n<link inline rel=\"stylesheet\" href=\"./critical.css\" />\n\n<!-- Nachher (CSS-Inhalt eingebettet) -->\n<style>\n  /* Vollständiger Inhalt von critical.css hier eingebettet */\n  .header { background: #fff; }\n</style>"
+      cssExampleDescription: "SCSS/SASS-Dateien werden zu CSS kompiliert vor dem Einbetten."
+      benefitsTitle: "Vorteile:"
+      benefits:
+        - "**Reduzierte HTTP-Anfragen**: Kritische Assets werden sofort ohne zusätzliche Anfragen geladen"
+        - "**Critical CSS**: Betten Sie kritische Styles ein für schnelleren First Paint"
+        - "**SVG-Styling**: Inline-SVGs können mit CSS gestylt werden"
+        - "**Null-Konfiguration**: Fügen Sie einfach das `inline` Attribut hinzu"
+
     sass:
       title: "🎨 SASS/SCSS Transpilation"
       description: "Vollständige [SASS und SCSS](https://sass-lang.com/) Preprocessing-Unterstützung unter Verwendung des offiziellen [Dart Sass Compilers](https://sass-lang.com/dart-sass/), der alle modernen SASS-Funktionen mit automatischer Kompilierung zu optimiertem CSS bietet."
@@ -657,7 +756,6 @@ de:
         - "Vollständige Dokumentation: Alle [SASS-Dokumentation](https://sass-lang.com/documentation/) gilt"
         - "Produktionsbereit: Integriert in Minifikations- und Optimierungspipeline"
 
-    # Live Reload
     liveReload:
       title: "🔄 Live Reload"
       description: "Erweiterte Entwicklungsserver mit intelligenter Dateiüberwachung, der automatisch rebuildet und Ihren Browser aktualisiert, wenn sich Quelldateien ändern, mit intelligentem CSS-Hot-Reloading und Build-Fehlerberichterstattung."
@@ -688,7 +786,6 @@ de:
         - "Vollständige Seitenaktualisierung: Komplette Aktualisierung für HTML, JavaScript und andere Asset-Änderungen"
         - "Fehlerwiederherstellung: Wiederholt automatisch fehlgeschlagene Builds und meldet Fehler"
 
-    # Hot CSS Reload
     hotCssReload:
       title: "🔥 Hot CSS Reload"
       description: "Erweiterte CSS-Hot-Reload-Funktion, die Stylesheets intelligent ohne Seitenaktualisierung aktualisiert und die schnellstmögliche Entwicklungsrückmeldung bietet."
@@ -714,14 +811,13 @@ de:
         - "Cross-Browser-Tests: Mehrere Browserfenster bleiben synchron"
         - "Komplexe Zustandstests: Style-Modal-Dialoge, komplexe Formulare ohne Neueinrichtung"
 
-    # Function Emulation
     functionEmulation:
       title: "⚡ Cloudflare Function Emulation"
       description: "@md/cf-page bietet vollständige lokale Emulation von [Cloudflare Pages Functions](https://developers.cloudflare.com/pages/functions/). Dateien namens `+fn.ts` werden zu API-Endpunkten mit derselben API wie in der Produktion."
       localDevTitle: "Lokale Entwicklungsfeatures:"
       localDev:
         - "Perfekte Emulation: Vollständiges `EventContext`-Objekt mit request, env und Utilities"
-        - "HTTP-Methoden: Unterstützung für alle [HTTP-Methoden-Handler](https://developers.cloudflare.com/pages/functions/routing/#functions)"
+        - "HTTP-Methoden: Unterstützung für alle [HTTP-Methoden-Handler](https://developers.cloudflare.com/pages/functions/routing/#functions), inklusive [dynamisches Route-Matching](https://developers.cloudflare.com/pages/functions/routing/#dynamic-routes)"
         - "Umgebungsvariablen: Zugriff über `context.env` genau wie in der Produktion"
         - "Assets API: Lokale `context.env.ASSETS` Bereitstellung"
         - "Cloudflare-kompatible Request/Response-Behandlung"
@@ -729,19 +825,81 @@ de:
       quickExampleCode: "// src/api/hello/+fn.ts\nexport const onRequest: PagesFunction = async (context) => {\n  return new Response(\"Hello World!\");\n};"
       quickExampleDescription: "Für vollständige API-Dokumentation siehe [Cloudflare Pages Functions API Reference](https://developers.cloudflare.com/pages/functions/api/)."
 
-    # Middleware Emulation
     middlewareEmulation:
       title: "🔒 Cloudflare Middleware Emulation"
       description: "@md/cf-page unterstützt [Cloudflare Pages Middleware](https://developers.cloudflare.com/pages/functions/middleware/) mit vollständiger lokaler Emulation. Dateien namens `+middleware.ts` laufen vor Seiten und Funktionen."
       localMiddlewareTitle: "Lokale Middleware-Features:"
       localMiddleware:
-        - "Verzeichnisbasierte Ausführung: Middleware-Hierarchie entspricht [Cloudflares Pfad-Matching](https://developers.cloudflare.com/pages/functions/middleware/#middleware-path-matching)"
+        - "Verzeichnisbasierte Ausführung: Middleware-Hierarchie entspricht [Cloudflares Pfad-Matching](https://developers.cloudflare.com/pages/functions/middleware/#middleware-path-matching), inklusive [dynamisches Route-Matching](https://developers.cloudflare.com/pages/functions/routing/#dynamic-routes)"
         - "Request-Kontext: Vollständige `context.next()` und Kontext-Sharing-Unterstützung"
         - "Authentifizierungsmuster: Perfekt für Routenschutz und Auth-Behandlung"
         - "Produktionsparität: Gleiche Ausführungsreihenfolge wie Cloudflare Pages"
       middlewareExampleTitle: "Schnelles Beispiel"
       middlewareExampleCode: "// src/admin/+middleware.ts\nexport const onRequest: PagesFunction = async (context) => {\n  const isAuthenticated = checkAuth(context.request);\n  \n  if (!isAuthenticated) {\n    return new Response(\"Unauthorized\", { status: 401 });\n  }\n\n  return context.next();\n};"
       middlewareExampleDescription: "Für vollständige Middleware-Dokumentation siehe [Cloudflare Pages Middleware Guide](https://developers.cloudflare.com/pages/functions/middleware/)."
+
+    cloudflareBindings:
+      title: "🗄️ Cloudflare Bindings (D1 & KV)"
+      description: "Vollständige Unterstützung für [Cloudflare D1 Databases](https://developers.cloudflare.com/d1/) und [KV Namespaces](https://developers.cloudflare.com/kv/) mit nahtloser lokaler Entwicklung."
+      localDevelopmentTitle: "Lokale Entwicklung:"
+      localDevelopment:
+        - "**Lokaler Speicher**: Bindings werden im `.bindings.local/` Verzeichnis gespeichert"
+        - "**D1 Datenbanken**: SQLite-Dateien in `.bindings.local/d1/{id}.sqlite`"
+        - "**KV Namespaces**: Dateibasierter Speicher in `.bindings.local/kv/{id}/`"
+        - "**Keine Anmeldedaten erforderlich**: Funktioniert offline für lokale Entwicklung"
+        - "**Produktionsparität**: Gleiche API wie Cloudflare-Produktion"
+      configurationTitle: "Konfiguration"
+      configurationDescription: "Fügen Sie Bindings zu Ihrer deno.jsonc Konfiguration hinzu:"
+      configurationCode: "{\n  \"@md/cf-page\": {\n    \"bindings\": {\n      \"DB\": { \"type\": \"D1\", \"id\": \"your-d1-database-id\" },\n      \"CACHE\": { \"type\": \"KV\", \"id\": \"your-kv-namespace-id\" }\n    }\n  }\n}"
+      environmentVariablesTitle: "Umgebungsvariablen:"
+      environmentVariables:
+        - "**CLOUDFLARE_LOCAL**: Auf `\"true\"` setzen für reine lokale Entwicklung"
+        - "**CLOUDFLARE_ACCOUNT_ID**: Ihre Cloudflare Account ID (für Remote-Bindings)"
+        - "**CLOUDFLARE_API_TOKEN**: API-Token mit D1/KV-Berechtigungen (für Remote-Bindings)"
+      d1ExampleTitle: "D1 Datenbank Beispiel"
+      d1ExampleCode: "// src/api/users/+fn.ts\nexport const onRequestGet: PagesFunction<Env> = async (context) => {\n  const db = context.env.DB;\n  \n  // Datenbank abfragen\n  const users = await db.prepare(\n    \"SELECT * FROM users WHERE active = ?\"\n  ).bind(1).all();\n  \n  return Response.json(users.results);\n};\n\nexport const onRequestPost: PagesFunction<Env> = async (context) => {\n  const db = context.env.DB;\n  const data = await context.request.json();\n  \n  // Daten einfügen\n  await db.prepare(\n    \"INSERT INTO users (name, email) VALUES (?, ?)\"\n  ).bind(data.name, data.email).run();\n  \n  return new Response(\"User created\", { status: 201 });\n};"
+      d1ExampleDescription: "D1 bietet eine vollständige SQL-Datenbank mit Prepared Statements, Transaktionen und Batch-Operationen."
+      kvExampleTitle: "KV Namespace Beispiel"
+      kvExampleCode: "// src/api/cache/+fn.ts\nexport const onRequestGet: PagesFunction<Env> = async (context) => {\n  const kv = context.env.CACHE;\n  \n  // Wert aus KV abrufen\n  const cached = await kv.get(\"user:123\", \"json\");\n  \n  if (cached) {\n    return Response.json(cached);\n  }\n  \n  // Frische Daten abrufen und cachen\n  const freshData = { name: \"John\", age: 30 };\n  await kv.put(\"user:123\", JSON.stringify(freshData), {\n    expirationTtl: 3600 // 1 Stunde\n  });\n  \n  return Response.json(freshData);\n};\n\nexport const onRequestDelete: PagesFunction<Env> = async (context) => {\n  await context.env.CACHE.delete(\"user:123\");\n  return new Response(\"Cache cleared\", { status: 200 });\n};"
+      kvExampleDescription: "KV bietet einfachen Key-Value-Speicher mit optionaler Ablaufzeit und Metadaten."
+      supportedOperationsTitle: "Unterstützte Operationen:"
+      supportedOperations:
+        - "**D1**: prepare(), query(), batch(), exec(), first(), all(), run(), bind()"
+        - "**KV**: get(), put(), delete(), list(), getWithMetadata()"
+        - "**Typen**: String, JSON, ArrayBuffer, Stream (KV); Alle SQL-Typen (D1)"
+
+    customPluginSystem:
+      title: "🔌 Benutzerdefiniertes Plugin-System"
+      description: "Erweitern Sie den Build-Prozess mit benutzerdefinierten Plugins über `+plugin.ts` Dateien für erweiterte VFS-Manipulation."
+      hooksTitle: "Plugin-Hooks:"
+      hooks:
+        - '**before(context)**: Läuft vor dem Bauen von Dateien - VFS modifizieren, synthetische Dateien hinzufügen'
+        - '**after(context)**: Läuft nach dem Bauen von Dateien - Ausgabe nachbearbeiten, Dateien generieren'
+      pluginExampleTitle: "Plugin Beispiel"
+      pluginExampleCode: "// src/+plugin.ts\nimport type { BuildContext } from \"@md/cf-page\";\n\nexport const before = (context: BuildContext) => {\n  // Synthetische robots.txt Datei hinzufügen\n  const robotsTxt = context.vfs.addSyntheticFile(\"/robots.txt\");\n  robotsTxt.buildContents = new TextEncoder().encode(\n    \"User-agent: *\\nAllow: /\"\n  );\n};\n\nexport const after = (context: BuildContext) => {\n  // Build-Statistiken protokollieren\n  const fileCount = context.vfs.build.size;\n  console.log(`Built ${fileCount} files`);\n  \n  // sitemap.xml aus gebauten Dateien generieren\n  const urls = Array.from(context.vfs.build.keys())\n    .filter(path => path.endsWith(\".html\"))\n    .map(path => `<url><loc>https://example.com${path}</loc></url>`)\n    .join(\"\\n\");\n  \n  const sitemap = context.vfs.addSyntheticFile(\"/sitemap.xml\");\n  sitemap.buildContents = new TextEncoder().encode(\n    `<?xml version=\"1.0\" encoding=\"UTF-8\"?>\\n<urlset>${urls}</urlset>`\n  );\n};"
+      pluginExampleDescription: "Plugins haben vollständigen Zugriff auf das Virtual File System (VFS) für erweiterte Build-Anpassung."
+      useCasesTitle: "Häufige Anwendungsfälle:"
+      useCases:
+        - "**Dateien generieren**: Sitemaps, RSS-Feeds, Manifest-Dateien erstellen"
+        - "**Dateien modifizieren**: Inhalt transformieren, Skripte injizieren, Assets optimieren"
+        - "**Dateien löschen**: Unerwünschte Ausgaben bedingt entfernen"
+        - "**Build-Berichte**: Statistiken protokollieren, Build-Metadaten generieren"
+        - "**Integration**: Mit externen APIs verbinden, Daten zur Build-Zeit abrufen"
+
+    markdownFiles:
+      title: "📝 Markdown-Datei-Unterstützung"
+      description: "Konvertieren Sie Markdown (`.md`) Dateien automatisch zu HTML mit vollständiger Processing-Pipeline-Unterstützung."
+      featuresTitle: "Features:"
+      features:
+        - "**Automatische Konvertierung**: `.md` Dateien werden zu `.html` in der Ausgabe"
+        - "**Vollständige Pipeline**: Markdown-Dateien durchlaufen dieselbe HTML-Verarbeitung (Layouts, Übersetzungen, Cache-Busting)"
+        - "**Remark-Unterstützung**: Verwendet remark + remark-rehype zum Parsen"
+        - "**Layout-Vererbung**: Markdown-Dateien können `+layout.html` Templates verwenden"
+      exampleTitle: "Beispiel"
+      exampleCode: "<!-- src/blog/post.md -->\n# Mein Blog-Post\n\nDies ist eine **Markdown** Datei mit [Links](/about) und `Code`.\n\n## Features\n\n- Automatische HTML-Konvertierung\n- Layout-Vererbung\n- Übersetzungsunterstützung\n\n<!-- Wird zu /blog/post.html nach dem Build -->"
+      exampleDescription: "Markdown-Dateien werden zu HTML konvertiert und wie normale HTML-Dateien verarbeitet."
+      disableTitle: "Markdown-Konvertierung deaktivieren:"
+      disableDescription: "Setzen Sie `markdownToHTML: false` in der Konfiguration um `.md` Dateien unverändert zu behalten."
 
   # Deployment Section
   deploy:
@@ -842,12 +1000,20 @@ de:
       init:
         title: "init - Initialisiert ein neues Projekt mit der Starter-Vorlage."
         code: "deno run -A jsr:@md/cf-page init"
+        description: "Lädt Starter-Template herunter, fragt nach Domainname, bietet Bereitstellungsanweisungen."
       serve:
         title: "serve - Startet den Entwicklungsserver mit Live-Reload."
-        code: "deno run -A jsr:@md/cf-page serve"
+        code: "deno run -A jsr:@md/cf-page serve [--measure-performance]"
+        description: "Startet Dev-Server auf konfiguriertem Port (Standard 3000). Verwenden Sie PORT Umgebungsvariable zum Überschreiben."
+        flags:
+          - "`--measure-performance`: Detaillierte Build-Performance-Metriken protokollieren"
       build:
         title: "build - Baut das Projekt für Produktion oder Entwicklung."
-        code: "deno run -A jsr:@md/cf-page build"
+        code: "deno run -A jsr:@md/cf-page build [--dev] [--measure-performance]"
+        description: "Baut Projekt ins Ausgabeverzeichnis. Produktions-Build standardmäßig."
+        flags:
+          - "`--dev`: Im Entwicklungsmodus bauen (keine Minifikation)"
+          - "`--measure-performance`: Detaillierte Build-Performance-Metriken protokollieren"
 
   # Footer
   footer:
