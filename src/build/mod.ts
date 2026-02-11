@@ -1,5 +1,7 @@
 import { ensureError } from "@md/ensure-error/ensure-error";
 import { throwIfAborted } from "@util/abortError.ts";
+import { getBuildConcurrencyLimit } from "@util/concurrencyLimit.ts";
+import { mapConcurrent } from "@util/mapAsync.ts";
 import { type BuildContext, buildFile } from "./file/mod.ts";
 import { loadPlugin } from "./plugin.ts";
 import { gatherVFS } from "./vfs/gatherVFS.ts";
@@ -49,9 +51,12 @@ export const build = async (
     }
   }
 
-  // Process all source files
-  await Promise.all(
-    vfs.source.values().map((vFile) => buildFile(vFile, buildContext)),
+  // Process all source files with limited concurrency to prevent resource
+  // exhaustion on low-spec machines (e.g., Cloudflare Pages runners)
+  await mapConcurrent(
+    vfs.source.values(),
+    (vFile) => buildFile(vFile, buildContext),
+    getBuildConcurrencyLimit(),
   );
 
   if (plugin.after) {
