@@ -574,6 +574,17 @@ Deno.test("D1DatabaseLocal - handles empty parameter arrays", async () => {
   assertEquals(result, { count: 2 });
 });
 
+Deno.test("D1PreparedStatement - INSERT ... RETURNING * returns inserted row via first()", async () => {
+  const db = createTestDb({ users: "dummy" });
+
+  const result = await db
+    .prepare("INSERT INTO users (name, email) VALUES (?, ?) RETURNING *")
+    .bind("New User", "new@example.com")
+    .first<{ id: number; name: string; email: string }>();
+
+  assertEquals(result, { id: 3, name: "New User", email: "new@example.com" });
+});
+
 Deno.test("D1DatabaseLocal - handles queries with no parameters", async () => {
   const db = createTestDb({ users: "dummy", posts: "dummy" });
 

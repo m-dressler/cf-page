@@ -46,10 +46,16 @@ export class D1DatabaseLocal extends D1DatabaseImpl {
       let rows: Record<string, unknown>[];
       let changes: StatementResultingChanges;
 
+      const sqlStripped = sql.replace(/'([^']|'')*'/g, "''");
+      const hasReturning = /\breturning\b/i.test(sqlStripped);
+
       // Run query based on operation type
-      if (isWriteOp) {
+      if (isWriteOp && !hasReturning) {
         rows = [];
         changes = stmt.run(...params);
+      } else if (isWriteOp && hasReturning) {
+        rows = stmt.all(...params) as Record<string, unknown>[];
+        changes = { changes: rows.length, lastInsertRowid: BigInt(0) };
       } else {
         rows = stmt.all(...params) as Record<string, unknown>[];
         changes = { changes: 0, lastInsertRowid: 0 };
